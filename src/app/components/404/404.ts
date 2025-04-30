@@ -21,7 +21,6 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
     super(Tags.DIV, id, className);
 
     this.h3 = createH3(undefined, 'heading-3');
-    this.addEventListeners();
   }
 
   /**
@@ -34,7 +33,7 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
   /**
    * Adds event listeners to the component.
    */
-  private addEventListeners() {
+  protected addEventListeners() {
     this.addEventListenerHeading3();
   }
 
@@ -51,7 +50,7 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
    * Adds a click event listener to the h3 element.
    */
   private addEventListenerHeading3() {
-    this.addEventListener('click', () => {
+    this.h3.addEventListener('click', () => {
       console.log('clicked');
     });
   }

@@ -11,9 +11,13 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
     super(Tags.DIV, id, className);
   }
 
-  protected renderComponent() {
+  protected renderComponent(): void {
     // If we need by default load component during rendering PageWrapperComponent
     this.renderNotFoundComponent();
+  }
+
+  protected addEventListeners(): void {
+    return;
   }
 
   private renderNotFoundComponent() {

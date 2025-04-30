@@ -1,12 +1,26 @@
 import BaseComponent from './base-component';
 import { Tags } from './tags';
 
+class FactoryComponent<T extends HTMLElement> extends BaseComponent<T> {
+  constructor(tag: Tags, id: string, className: string) {
+    super(tag, id, className);
+  }
+
+  protected renderComponent(): void {
+    return;
+  }
+
+  protected addEventListeners(): void {
+    return;
+  }
+}
+
 function createElement<T extends HTMLElement>(
   tag: Tags,
   id = '',
   className = '',
 ): BaseComponent<T> {
-  return new BaseComponent<T>(tag, id, className);
+  return new FactoryComponent<T>(tag, id, className)
 }
 
 export const createDiv = (id = '', className: string = Tags.DIV): BaseComponent<HTMLDivElement> =>
