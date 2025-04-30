@@ -1,6 +1,6 @@
 1. Summary: What has been done?
 2. Jira task: [link](https://github.com/)
-3. RsSchool task: [link](https://github.com/)
+3. RSSchool task: [link](https://github.com/)
 4. (optional) Screenshot:
 5. (optional) Detailed description:
   - [x] Application is divided to logical modules / layers
