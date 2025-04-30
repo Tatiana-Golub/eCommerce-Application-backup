@@ -1,0 +1,14 @@
+{
+  "name": "ecommerce-application",
+  "version": "1.0.0",
+  "description": "Comprehensive online shopping portal",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+  }
+}
