@@ -1,4 +1,4 @@
-import type { Tags } from './tags';
+import type { Tags } from '@common-components/tags';
 
 export default abstract class BaseComponent<T extends HTMLElement> {
   protected id: string;

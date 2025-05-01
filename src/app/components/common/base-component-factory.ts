@@ -1,5 +1,5 @@
-import BaseComponent from './base-component';
-import { Tags } from './tags';
+import { Tags } from '@common-components/tags';
+import BaseComponent from '@common-components/base-component';
 
 class FactoryComponent<T extends HTMLElement> extends BaseComponent<T> {
   constructor(tag: Tags, id: string, className: string) {
