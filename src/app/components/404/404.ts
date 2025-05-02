@@ -1,6 +1,6 @@
+import BaseComponent from '@common-components/base-component';
 import { createH3 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import BaseComponent from '@common-components/base-component';
 import './404.scss';
 
 // TODO: Clean up comments in this component
@@ -27,14 +27,14 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
   /**
    * Renders the component.
    */
-  protected renderComponent() {
+  protected renderComponent(): void {
     this.renderHeading3();
   }
 
   /**
    * Adds event listeners to the component.
    */
-  protected addEventListeners() {
+  protected addEventListeners(): void {
     this.addEventListenerHeading3();
   }
 
@@ -42,7 +42,7 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
    * Appends the h3 element to the current component and sets its attributes to display
    * '404 - Page Not Found'.
    */
-  private renderHeading3() {
+  private renderHeading3(): void {
     this.h3.appendTo(this.getElement());
     this.h3.setText('404 - Page Not Found');
   }
@@ -50,7 +50,7 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
   /**
    * Adds a click event listener to the h3 element.
    */
-  private addEventListenerHeading3() {
+  private addEventListenerHeading3(): void {
     this.h3.addEventListener('click', () => {
       console.log('clicked');
     });
