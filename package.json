@@ -12,8 +12,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^22.13.10",
     "sass": "^1.87.0",
+    "typescript": "^5.8.3",
     "vite": "^6.3.4",
-    "@types/node": "^22.13.10"
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

@@ -49,13 +49,13 @@ To support consistent development workflows, the project includes a variety of h
 - `npm run format`
   Runs Prettier to format all code files according to the project's code style rules.
 - `npm run build`
-  Bundles the application for production using Vite. Outputs the files to the dist directory.
+  Bundles the application for production using Vite. Outputs the files to the deploy directory.
 
 
 ## 🚀 Install and Run the Application
 
 - clone the repository
-- install the dependencies with `npm i`
+- install the dependencies with `npm install`
 - start the local server using `npm run start`
 
 ## Demo

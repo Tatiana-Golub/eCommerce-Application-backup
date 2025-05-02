@@ -1,7 +1,7 @@
-import { createDiv } from './components/common/base-component-factory';
-import { PageWrapper } from './page';
-import { router } from './router';
-import BaseComponent from './components/common/base-component';
+import { createDiv } from '@common-components/base-component-factory';
+import { PageWrapper } from '@app/page';
+import { router } from '@app/router';
+import BaseComponent from '@common-components/base-component';
 import './app.scss';
 
 class App {

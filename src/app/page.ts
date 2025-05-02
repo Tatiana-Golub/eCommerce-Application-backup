@@ -1,6 +1,6 @@
-import { NotFound } from './components/404/404';
-import BaseComponent from './components/common/base-component';
-import { Tags } from './components/common/tags';
+import { NotFound } from '@components/404/404';
+import BaseComponent from '@common-components/base-component';
+import { Tags } from '@common-components/tags';
 import './page.scss';
 
 // TODO: Clean up comments in this component

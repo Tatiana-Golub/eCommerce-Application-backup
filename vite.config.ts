@@ -1,18 +1,14 @@
-import path from 'path';
 import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   root: '.',
   base: './',
+  plugins: [tsconfigPaths()],
 
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-    },
-  },
   build: {
     outDir: 'deploy',
     emptyOutDir: true,
+    sourcemap: true,
   },
 });

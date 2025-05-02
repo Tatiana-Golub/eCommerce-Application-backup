@@ -1,6 +1,6 @@
-import BaseComponent from '../common/base-component';
-import { createH3 } from '../common/base-component-factory';
-import { Tags } from '../common/tags';
+import { createH3 } from '@common-components/base-component-factory';
+import { Tags } from '@common-components/tags';
+import BaseComponent from '@common-components/base-component';
 import './404.scss';
 
 // TODO: Clean up comments in this component
