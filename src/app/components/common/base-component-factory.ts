@@ -20,7 +20,7 @@ function createElement<T extends HTMLElement>(
   id = '',
   className = '',
 ): BaseComponent<T> {
-  return new FactoryComponent<T>(tag, id, className)
+  return new FactoryComponent<T>(tag, id, className);
 }
 
 export const createDiv = (id = '', className: string = Tags.DIV): BaseComponent<HTMLDivElement> =>

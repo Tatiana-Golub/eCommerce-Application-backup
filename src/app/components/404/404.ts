@@ -5,12 +5,11 @@ import './404.scss';
 
 // TODO: Clean up comments in this component
 class NotFoundComponent extends BaseComponent<HTMLDivElement> {
-  
   /**
    * Inner components for the NotFoundComponent.
    */
   private readonly h3: BaseComponent<HTMLHeadingElement>;
-  
+
   /**
    * Constructor for the NotFoundComponent.
    *
@@ -21,7 +20,7 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
     super(Tags.DIV, id, className);
 
     this.h3 = createH3(undefined, 'heading-3');
-    
+
     this.init();
   }
 

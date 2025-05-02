@@ -9,7 +9,7 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
 
   constructor(id: string = 'page-wrapper-component', className: string = 'page-wrapper-component') {
     super(Tags.DIV, id, className);
-    
+
     this.init();
   }
 
