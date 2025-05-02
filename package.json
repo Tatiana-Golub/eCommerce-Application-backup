@@ -6,16 +6,20 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^22.13.10",
+    "@types/node": "^22.15.3",
+    "jsdom": "^26.1.0",
     "sass": "^1.87.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.4",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.2"
   }
 }
