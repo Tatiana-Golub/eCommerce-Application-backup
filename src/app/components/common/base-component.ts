@@ -20,7 +20,7 @@ export default abstract class BaseComponent<T extends HTMLElement> {
   }
 
   protected abstract renderComponent(): void;
-  
+
   protected abstract addEventListeners(): void;
 
   public getElement(): T {

@@ -51,7 +51,6 @@ To support consistent development workflows, the project includes a variety of h
 - `npm run build`
   Bundles the application for production using Vite. Outputs the files to the deploy directory.
 
-
 ## 🚀 Install and Run the Application
 
 - clone the repository
@@ -66,4 +65,3 @@ Instructions:
 
 Register: First, create an account by registering.
 Login: Use your registered account to log in.
-
