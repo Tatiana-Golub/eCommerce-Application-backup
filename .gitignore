@@ -139,3 +139,6 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+# Vitest coverage reports
+coverage/
