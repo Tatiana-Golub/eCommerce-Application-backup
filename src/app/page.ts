@@ -1,6 +1,6 @@
-import { NotFound } from '@components/404/404';
 import BaseComponent from '@common-components/base-component';
 import { Tags } from '@common-components/tags';
+import { NotFound } from '@components/404/404';
 import './page.scss';
 
 // TODO: Clean up comments in this component
@@ -11,6 +11,14 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
     super(Tags.DIV, id, className);
 
     this.init();
+  }
+
+  /**
+   * On-demand open for routings in App.ts.
+   * Adds the notFound component to the page wrapper container.
+   */
+  public openNotFound(): void {
+    this.notFound.appendTo(this.getElement());
   }
 
   protected renderComponent(): void {
@@ -25,14 +33,6 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   private renderNotFoundComponent(): void {
     console.log('openNotFound');
     console.log(this.notFound);
-    this.notFound.appendTo(this.getElement());
-  }
-
-  /**
-   * On-demand open for routings in App.ts.
-   * Adds the notFound component to the page wrapper container.
-   */
-  public openNotFound(): void {
     this.notFound.appendTo(this.getElement());
   }
 }

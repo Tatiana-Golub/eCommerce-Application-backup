@@ -26,13 +26,13 @@ export default tseslintConfig.config([
     },
     rules: {
       'import/order': [
-        'warn',
+        'error',
         {
           groups: [['builtin', 'external'], ['internal'], ['parent', 'sibling', 'index']],
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-      'import/no-duplicates': 'warn',
+      'import/no-duplicates': 'error',
       'max-lines-per-function': ['error', { max: 40, skipComments: true, skipBlankLines: true }],
       '@typescript-eslint/consistent-type-assertions': ['warn', { assertionStyle: 'never' }],
       '@typescript-eslint/consistent-type-imports': 'error',
@@ -45,7 +45,7 @@ export default tseslintConfig.config([
         },
       ],
       '@typescript-eslint/member-ordering': 'error',
-      'class-methods-use-this': 'error',
+      'class-methods-use-this': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       'unicorn/prefer-string-replace-all': 'warn',

@@ -1,11 +1,7 @@
-import { Tags } from '@common-components/tags';
 import BaseComponent from '@common-components/base-component';
+import { Tags } from '@common-components/tags';
 
 class FactoryComponent<T extends HTMLElement> extends BaseComponent<T> {
-  constructor(tag: Tags, id: string, className: string) {
-    super(tag, id, className);
-  }
-
   protected renderComponent(): void {
     return;
   }
