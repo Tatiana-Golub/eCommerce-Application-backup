@@ -59,6 +59,7 @@ To support consistent development workflows, the project includes a variety of h
 
 - clone the repository
 - install the dependencies with `npm install`
+- install Husky Git hooks once after the first cloning `npm run prepare`
 - start the local server using `npm run start`
 
 ## Demo
@@ -67,5 +68,5 @@ You can try the demo here.
 
 Instructions:
 
-Register: First, create an account by registering.
+Register: First, create an account by registering.  
 Login: Use your registered account to log in.
