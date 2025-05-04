@@ -34,7 +34,7 @@ This platform offering convenience and a seamless shopping experience that’s h
 - Use TypeScript
 - Vite for bundling
 - Backend is powered by **[Commercetools](https://commercetools.com/)**
-- Additional tools: ESLint, Prettier, Husky, Jest
+- Additional tools: ESLint, Prettier, Husky, Vitest
 
 ---
 
@@ -43,7 +43,11 @@ This platform offering convenience and a seamless shopping experience that’s h
 To support consistent development workflows, the project includes a variety of helpful scripts. These scripts are defined in `package.json` and are used to run, test, lint, format, and prepare code for production.
 
 - `npm run test`
-  Runs unit tests using Jest. Ensures individual components and functions behave as expected.
+  Runs unit tests using Vitest. Ensures individual components and functions behave as expected.
+- `npm run test:watch`
+  Runs tests in watch mode (reruns on file changes).
+- `npm run test:report`
+  Runs tests and generates a coverage report.
 - `npm run lint`
   Runs ESLint across the codebase to catch code quality and stylistic issues.
 - `npm run format`
