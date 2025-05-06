@@ -2,10 +2,14 @@ type RouteHandler = () => void;
 
 class Router {
   private routes: Map<string, RouteHandler> = new Map();
+  private flag: boolean = false;
 
   constructor() {
     globalThis.addEventListener('hashchange', () => {
-      this.handleRoute();
+      if (this.flag) {
+        this.handleRoute();
+      }
+      this.flag = true;
     });
   }
 
@@ -16,9 +20,13 @@ class Router {
   }
 
   public navigate(path: string): void {
+    this.flag = true;
     console.log(`navigating to path: ${path}`);
     globalThis.location.hash = path;
-    this.handleRoute();
+    if (this.flag) {
+      this.handleRoute();
+    }
+    this.flag = false;
   }
 
   public handleInitialRoute(): void {
