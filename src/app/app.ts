@@ -25,7 +25,7 @@ class App {
     });
 
     router.addRoute('#/main', () => {
-      this.pageWrapper.openNotFound();
+      this.pageWrapper.openMain();
     });
 
     router.addRoute('#/not-found', () => {

@@ -42,18 +42,18 @@ This platform offering convenience and a seamless shopping experience that’s h
 
 To support consistent development workflows, the project includes a variety of helpful scripts. These scripts are defined in `package.json` and are used to run, test, lint, format, and prepare code for production.
 
-#### Main Scripts:  
+#### Main Scripts:
 
 - `npm run start`
   Runs code formatting and then starts the Vite development server.
 - `npm run build`
   Bundles the application for production using Vite. Outputs the files to the deploy directory.
-  
+
 #### Project Setup:
 
 - `npm run prepare`
   Installs Husky Git hooks. Should be used once after the first cloning.
-  
+
 #### Code Styling:
 
 - `npm run format`
@@ -78,7 +78,7 @@ To support consistent development workflows, the project includes a variety of h
 - `npm run test:watch`
   Runs tests in watch mode (reruns on file changes).
 - `npm run test:report`
-  Runs tests and generates a coverage report.  
+  Runs tests and generates a coverage report.
 
 ## 🚀 Install and Run the Application
 
