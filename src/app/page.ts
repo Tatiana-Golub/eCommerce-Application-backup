@@ -3,6 +3,7 @@ import { Tags } from '@common-components/tags';
 import { NotFound } from '@components/404/404';
 import { Header } from './components/header/header';
 import { Main } from './components/main/main';
+import { PlaceholderPage } from './components/under-construction/under-construction';
 import './page.scss';
 
 // TODO: Clean up comments in this component
@@ -10,6 +11,7 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   private readonly notFound = NotFound();
   private readonly main = Main();
   private readonly header = Header();
+  private readonly placeholder = PlaceholderPage();
 
   constructor(id: string = 'page-wrapper-component', className: string = 'page-wrapper-component') {
     super(Tags.DIV, id, className);
@@ -24,17 +26,61 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   public openNotFound(): void {
     this.header.appendTo(this.getElement());
     this.main.remove();
+    this.placeholder.remove();
     this.notFound.appendTo(this.getElement());
   }
 
   public openMain(): void {
     this.header.appendTo(this.getElement());
     this.main.appendTo(this.getElement());
+    this.placeholder.remove();
+    this.notFound.remove();
+  }
+
+  public openStore(): void {
+    this.header.appendTo(this.getElement());
+    this.placeholder.appendTo(this.getElement());
+    this.main.remove();
+    this.notFound.remove();
+  }
+
+  public openAboutUs(): void {
+    this.header.appendTo(this.getElement());
+    this.placeholder.appendTo(this.getElement());
+    this.main.remove();
+    this.notFound.remove();
+  }
+
+  public openCart(): void {
+    this.header.appendTo(this.getElement());
+    this.placeholder.appendTo(this.getElement());
+    this.main.remove();
+    this.notFound.remove();
+  }
+
+  public openLogin(): void {
+    this.header.appendTo(this.getElement());
+    this.placeholder.appendTo(this.getElement());
+    this.main.remove();
+    this.notFound.remove();
+  }
+
+  public openRegister(): void {
+    this.header.appendTo(this.getElement());
+    this.placeholder.appendTo(this.getElement());
+    this.main.remove();
+    this.notFound.remove();
+  }
+
+  public openProfile(): void {
+    this.header.appendTo(this.getElement());
+    this.placeholder.appendTo(this.getElement());
+    this.main.remove();
     this.notFound.remove();
   }
 
   protected renderComponent(): void {
-    this.renderHeaderComponent();
+    this.openMain();
   }
 
   protected addEventListeners(): void {
@@ -42,7 +88,7 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   }
 
   private renderHeaderComponent(): void {
-    this.notFound.appendTo(this.getElement());
+    this.header.appendTo(this.getElement());
   }
 }
 

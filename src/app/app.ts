@@ -21,7 +21,7 @@ class App {
 
   public setupRoutes(): void {
     router.addRoute('#/', () => {
-      this.pageWrapper.openNotFound();
+      this.pageWrapper.openMain();
     });
 
     router.addRoute('#/main', () => {
@@ -31,6 +31,37 @@ class App {
     router.addRoute('#/not-found', () => {
       this.pageWrapper.openNotFound();
     });
+
+    router.addRoute('#/store', () => {
+      this.pageWrapper.openStore();
+    });
+
+    router.addRoute('#/about-us', () => {
+      this.pageWrapper.openAboutUs();
+    });
+
+    router.addRoute('#/cart', () => {
+      this.pageWrapper.openCart();
+    });
+
+    router.addRoute('#/login', () => {
+      this.pageWrapper.openLogin();
+    });
+
+    router.addRoute('#/register', () => {
+      this.pageWrapper.openRegister();
+    });
+
+    router.addRoute('#/profile', () => {
+      this.pageWrapper.openProfile();
+    });
+
+    /* No need, made it just in case...
+    *
+    router.addRoute('#/logout', () => {
+      this.pageWrapper.openLogout();
+    });
+    */
   }
 }
 

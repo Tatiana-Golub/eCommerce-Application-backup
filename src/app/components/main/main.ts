@@ -1,45 +1,47 @@
+import { PlaceholderPage } from '@app/components/under-construction/under-construction';
 import BaseComponent from '@common-components/base-component';
-import { createDiv, createH3 } from '@common-components/base-component-factory';
+import { createDiv, createH1 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import './main.scss';
 import { router } from '@/app/router';
+import './main.scss';
 
 class MainComponent extends BaseComponent<HTMLDivElement> {
-  private readonly h3: BaseComponent<HTMLHeadingElement>;
-  private readonly section: BaseComponent<HTMLDivElement>;
+  private readonly h1: BaseComponent<HTMLHeadingElement>;
+  private readonly placeholder: BaseComponent<HTMLDivElement>;
 
   constructor(id: string = 'main-component', className: string = 'main-component') {
     super(Tags.DIV, id, className);
 
-    this.h3 = createH3(undefined, 'heading-3');
-    this.section = createDiv(undefined, 'section');
+    this.h1 = createH1(undefined, 'heading-1');
+    this.placeholder = PlaceholderPage();
 
     this.init();
   }
 
   protected renderComponent(): void {
-    this.renderHeading3();
-    this.renderSection();
+    this.renderHeading1();
+    this.renderPlaceholder();
   }
 
   protected addEventListeners(): void {
-    this.addEventListenerHeading3();
+    this.addEventListenerHeading1();
   }
 
-  private renderHeading3(): void {
-    this.h3.appendTo(this.getElement());
-    this.h3.setText('main');
+  private renderHeading1(): void {
+    this.h1.appendTo(this.getElement());
+    this.h1.setText('Main Page');
   }
 
-  private renderSection(): void {
-    this.section.appendTo(this.getElement());
-    this.section.setText('section');
+  private renderPlaceholder(): void {
+    this.placeholder.appendTo(this.getElement());
   }
 
-  private addEventListenerHeading3(): void {
+  private addEventListenerHeading1(): void {
+    /*
     this.h3.addEventListener('click', () => {
       router.navigate('#/not-found');
     });
+    */
   }
 }
 

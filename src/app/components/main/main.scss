@@ -1,12 +1,13 @@
 .main-component {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
 
-  .heading-3 {
-    color: red;
-  }
+  height: 100%;
 
-  .section {
-    color: green;
+  .under-construction {
+    padding: 5rem 0 0;
   }
 }
