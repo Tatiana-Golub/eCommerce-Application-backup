@@ -44,7 +44,8 @@ class Router {
     if (handler) {
       handler();
     } else {
-      console.error(`Route not found: ${path}`);
+      router.navigate('#/not-found');
+      console.log(`Route not found: ${path}`);
     }
   }
 }

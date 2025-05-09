@@ -1,5 +1,5 @@
 import BaseComponent from '@common-components/base-component';
-import { createH3 } from '@common-components/base-component-factory';
+import { createH1, createH2 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import './404.scss';
 
@@ -8,7 +8,8 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
   /**
    * Inner components for the NotFoundComponent.
    */
-  private readonly h3: BaseComponent<HTMLHeadingElement>;
+  private readonly h1: BaseComponent<HTMLHeadingElement>;
+  private readonly h2: BaseComponent<HTMLHeadingElement>;
 
   /**
    * Constructor for the NotFoundComponent.
@@ -19,7 +20,8 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
   constructor(id: string = 'not-found-component', className: string = 'not-found-component') {
     super(Tags.DIV, id, className);
 
-    this.h3 = createH3(undefined, 'heading-3');
+    this.h1 = createH1(undefined, 'heading-1');
+    this.h2 = createH2(undefined, 'heading-2');
 
     this.init();
   }
@@ -28,31 +30,37 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
    * Renders the component.
    */
   protected renderComponent(): void {
-    this.renderHeading3();
+    this.renderHeading1();
+    this.renderHeading2();
   }
 
   /**
    * Adds event listeners to the component.
    */
   protected addEventListeners(): void {
-    this.addEventListenerHeading3();
+    this.addEventListenerHeading1();
   }
 
   /**
    * Appends the h3 element to the current component and sets its attributes to display
    * '404 - Page Not Found'.
    */
-  private renderHeading3(): void {
-    this.h3.appendTo(this.getElement());
-    this.h3.setText('404 - Page Not Found');
+  private renderHeading1(): void {
+    this.h1.appendTo(this.getElement());
+    this.h1.setText('Error 404');
+  }
+
+  private renderHeading2(): void {
+    this.h2.appendTo(this.getElement());
+    this.h2.setText('Page Not Found!');
   }
 
   /**
    * Adds a click event listener to the h3 element.
    */
-  private addEventListenerHeading3(): void {
-    this.h3.addEventListener('click', () => {
-      console.log('clicked');
+  private addEventListenerHeading1(): void {
+    this.h1.addEventListener('click', () => {
+      console.log('Error Clicked');
     });
   }
 }
