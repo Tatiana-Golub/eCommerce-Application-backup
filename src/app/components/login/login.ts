@@ -295,6 +295,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
   private createSubmitButton(): BaseComponent<HTMLButtonElement> {
     const submitButton = createButton(undefined, 'button');
     submitButton.setText('Sign In');
+    submitButton.addClass('submit-button');
 
     return submitButton;
   }
