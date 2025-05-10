@@ -1,6 +1,6 @@
 export const emailRules = {
   format: /^[^@]+@[^@]+\.[^@]+$/,
-  noWhitespace: /^\S+@\S+\.\S+$/,
+  noWhitespace: /^\S*\S$/,
   hasAt: /@/,
   hasDomain: /@.+\./,
 };
@@ -11,5 +11,5 @@ export const passwordRules = {
   lowerCase: /[a-z]/,
   digit: /\d/,
   specialChar: /[!@#$%^&*]/,
-  noWhitespace: /^\S.*\S$/,
+  noWhitespace: /^\S*\S$/,
 };
