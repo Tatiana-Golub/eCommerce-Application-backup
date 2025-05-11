@@ -1,0 +1,31 @@
+.nav-item {
+  cursor: pointer;
+
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+
+  padding: 0.8rem 1.3rem 0.8rem 1rem;
+  border-radius: 1rem;
+
+  color: var(--beige);
+  text-shadow: 0 0 0.5rem var(--cosmos);
+
+  background-color: transparent;
+
+  transition: all ease-in-out 0.4s;
+
+  &:hover {
+    background-color: var(--transparent-white-30);
+  }
+
+  &.active {
+    background-color: var(--transparent-white-30);
+  }
+
+  .nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    filter: drop-shadow(0 0 0.3rem var(--cosmos));
+  }
+}

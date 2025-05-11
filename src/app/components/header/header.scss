@@ -1,7 +1,35 @@
 .header-component {
-  display: flex;
+  position: relative; /* <== For Burger-menu */
 
-  .heading-3 {
-    color: red;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  padding: 1.2rem 0;
+
+  .logo-div {
+    cursor: pointer;
+
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+
+    margin: 0;
+    padding: 0.5rem 1.2rem;
+
+    transition: color ease-in-out 0.4s;
+
+    &:hover {
+      color: var(--white);
+    }
+
+    .logo-icon {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .heading-2 {
+      font-size: 1.2rem;
+    }
   }
 }
