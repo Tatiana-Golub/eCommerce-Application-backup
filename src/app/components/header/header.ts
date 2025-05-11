@@ -9,7 +9,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   private readonly h2: BaseComponent<HTMLHeadingElement>;
   private readonly logoDiv: BaseComponent<HTMLDivElement>;
   private readonly logoImg: BaseComponent<HTMLImageElement>;
-  private readonly navContainer: BaseComponent<HTMLDivElement>;
+  private readonly navContainer = Nav();
 
   constructor(id: string = 'header-component', className: string = 'header-component') {
     super(Tags.DIV, id, className);
@@ -17,8 +17,6 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.logoDiv = createDiv(undefined, 'logo-div');
     this.logoImg = createImg(undefined, 'logo-icon');
     this.h2 = createH2(undefined, 'heading-2');
-
-    this.navContainer = Nav();
 
     this.init();
   }

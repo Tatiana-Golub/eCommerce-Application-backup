@@ -17,14 +17,14 @@ class NavComponent extends BaseComponent<HTMLDivElement> {
 
   constructor(id: string = 'nav-component', className: string = 'nav-component') {
     super(Tags.DIV, id, className);
-    this.homeBtn = NavItem('home', 'button nav-item-active', 'home', 'Home');
+    this.homeBtn = NavItem('home', 'button nav-item', 'home', 'Home');
     this.storeBtn = NavItem('store', 'button nav-item', 'store', 'Store');
     this.aboutUsBtn = NavItem('about-us', 'button nav-item', 'about-us', 'About Us');
     this.cartBtn = NavItem('cart', 'button nav-item', 'cart', 'Cart');
     this.loginBtn = NavItem('login', 'button nav-item', 'profile', 'Login');
     this.registerBtn = NavItem('register', 'button nav-item', 'register', 'Register');
-    this.profileBtn = NavItem('profile', 'button nav-item hid', 'profile', 'Profile');
-    this.logoutBtn = NavItem('logout', 'button nav-item hid', 'logout', 'Logout');
+    this.profileBtn = NavItem('profile', 'button nav-item hidden', 'profile', 'Profile');
+    this.logoutBtn = NavItem('logout', 'button nav-item hidden', 'logout', 'Logout');
 
     this.init();
   }

@@ -56,6 +56,10 @@ class App {
       this.pageWrapper.openProfile();
     });
 
+    router.addRoute('*', () => {
+      this.pageWrapper.openNotFound();
+    });
+
     /* No need, made it just in case...
     *
     router.addRoute('#/logout', () => {
