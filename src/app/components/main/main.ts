@@ -7,13 +7,12 @@ import './main.scss';
 
 class MainComponent extends BaseComponent<HTMLDivElement> {
   private readonly h1: BaseComponent<HTMLHeadingElement>;
-  private readonly placeholder: BaseComponent<HTMLDivElement>;
+  private readonly placeholder = PlaceholderPage();
 
   constructor(id: string = 'main-component', className: string = 'main-component') {
     super(Tags.DIV, id, className);
 
     this.h1 = createH1(undefined, 'heading-1');
-    this.placeholder = PlaceholderPage();
 
     this.init();
   }

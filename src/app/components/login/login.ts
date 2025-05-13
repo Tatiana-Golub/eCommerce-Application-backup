@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import BaseComponent from '@common-components/base-component';
 import {
   createButton,
@@ -10,6 +9,8 @@ import {
 import { Tags } from '@common-components/tags';
 import './login.scss';
 import { InputType } from '../common/input-types';
+import { ApiClient } from '@/app/utils/build-client';
+import { SdkApi } from '@/app/utils/comerce-sdk-api';
 import { eyeClose, eyeOpen } from '@/app/utils/svg-constants';
 import { emailRules, passwordRules } from '@/app/utils/validation-constants';
 
@@ -25,7 +26,6 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
   private readonly emailDomain: BaseComponent<HTMLSpanElement>;
 
   private readonly passwordInputDiv: BaseComponent<HTMLDivElement>;
-  private isPasswordVisible: boolean = false;
   private readonly passwordInput: BaseComponent<HTMLInputElement>;
   private readonly passwordControl: BaseComponent<HTMLDivElement>;
   private readonly passwordTooltip: BaseComponent<HTMLDivElement>;
@@ -35,6 +35,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
   private readonly passwordDigit: BaseComponent<HTMLSpanElement>;
   private readonly passwordSpecial: BaseComponent<HTMLSpanElement>;
   private readonly passwordWhitespace: BaseComponent<HTMLSpanElement>;
+  private isPasswordVisible: boolean = false;
 
   private readonly submitButton: BaseComponent<HTMLButtonElement>;
 
@@ -76,34 +77,56 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   protected addEventListeners(): void {
     this.addEventListenerPasswordControl();
-    this.emailInput?.addEventListener('input', () => this.validateEmail());
-    this.passwordInput?.addEventListener('input', () => this.validatePassword());
-    this.submitButton?.addEventListener('click', () => this.onSubmit());
+    this.emailInput.addEventListener('input', () => this.validateEmail());
+    this.passwordInput.addEventListener('input', () => this.validatePassword());
+    this.submitButton.addEventListener('click', () => this.onSubmit());
   }
 
-  private onSubmit(): void {
-    console.log('Submit button clicked');
+  private async onSubmit(): Promise<void> {
+    console.log('!!!!!!!!!!!Anonymous session flow');
+    await SdkApi().withAnonymousSessionFlow().getProject();
+    console.log('!!!!!!!!!!!Anonymous session cache:', ApiClient().getTokenCache().get());
+
+    console.log('!!!!!!!!!!!Login session flow');
+    await SdkApi().loginUser('vK3Kb@example.com', '123456');
+    console.log('!!!!!!!!!!!Login session cache:', ApiClient().getTokenCache().get());
+
+    console.log('!!!!!!!!!!!Password session flow');
+    await SdkApi().withPasswordFlow('vK3Kb@example.com', '123456').getMe();
+    console.log('!!!!!!!!!!!Password session cache:', ApiClient().getTokenCache().get());
+
+    console.log('!!!!!!!!!!!Existing token session flow');
+    const savedToken = ApiClient().getTokenCache()?.get();
+    if (savedToken) {
+      await SdkApi().withExistingToken(savedToken.token).getMe();
+    }
+    console.log('!!!!!!!!!!!Login session cache:', ApiClient().getTokenCache().get());
+
+    console.log('!!!!!!!!!!!No token session flow');
+    await SdkApi().getMe();
+    console.log('!!!!!!!!!!!No token session cache:', ApiClient().getTokenCache().get());
   }
 
-  private validateEmail(): void {
-    const email = this.emailInput?.getElement().value || '';
+  private validateEmail(): boolean {
+    const email = this.emailInput.getElement().value || '';
 
     const isValidFormat = emailRules.format.test(email);
     const isValidWhitespace = emailRules.noWhitespace.test(email);
     const hasAt = emailRules.hasAt.test(email);
     const hasDomain = emailRules.hasDomain.test(email);
 
-    this.emailFormat.getElement().style.display = isValidFormat ? 'none' : 'block';
-    this.emailWhitespace.getElement().style.display = isValidWhitespace ? 'none' : 'block';
-    this.emailAt.getElement().style.display = hasAt ? 'none' : 'block';
-    this.emailDomain.getElement().style.display = hasDomain ? 'none' : 'block';
+    this.renderValidationErrorForRule(this.emailFormat, isValidFormat);
+    this.renderValidationErrorForRule(this.emailWhitespace, isValidWhitespace);
+    this.renderValidationErrorForRule(this.emailAt, hasAt);
+    this.renderValidationErrorForRule(this.emailDomain, hasDomain);
 
     const isValid = isValidFormat && isValidWhitespace && hasAt && hasDomain;
-    this.emailTooltip.getElement().hidden = isValid || email === '';
+    this.renderValidationErrorForRule(this.emailTooltip, isValid || email === '');
+    return isValid;
   }
 
-  private validatePassword(): void {
-    const password = this.passwordInput?.getElement().value || '';
+  private validatePassword(): boolean {
+    const password = this.passwordInput.getElement().value || '';
 
     const isValidLength = passwordRules.minLength.test(password);
     const isValidUpperCase = passwordRules.upperCase.test(password);
@@ -112,12 +135,12 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     const isValidSpecialChar = passwordRules.specialChar.test(password);
     const isValidWhitespace = passwordRules.noWhitespace.test(password);
 
-    this.passwordLength.getElement().style.display = isValidLength ? 'none' : 'block';
-    this.passwordUppercase.getElement().style.display = isValidUpperCase ? 'none' : 'block';
-    this.passwordLowercase.getElement().style.display = isValidLowerCase ? 'none' : 'block';
-    this.passwordDigit.getElement().style.display = isValidDigit ? 'none' : 'block';
-    this.passwordSpecial.getElement().style.display = isValidSpecialChar ? 'none' : 'block';
-    this.passwordWhitespace.getElement().style.display = isValidWhitespace ? 'none' : 'block';
+    this.renderValidationErrorForRule(this.passwordLength, isValidLength);
+    this.renderValidationErrorForRule(this.passwordUppercase, isValidUpperCase);
+    this.renderValidationErrorForRule(this.passwordLowercase, isValidLowerCase);
+    this.renderValidationErrorForRule(this.passwordDigit, isValidDigit);
+    this.renderValidationErrorForRule(this.passwordSpecial, isValidSpecialChar);
+    this.renderValidationErrorForRule(this.passwordWhitespace, isValidWhitespace);
 
     const isValid =
       isValidLength &&
@@ -126,7 +149,19 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
       isValidDigit &&
       isValidWhitespace &&
       isValidSpecialChar;
-    this.passwordTooltip.getElement().hidden = isValid || password === '';
+    this.renderValidationErrorForRule(this.passwordTooltip, isValid || password === '');
+    return isValid;
+  }
+
+  private renderValidationErrorForRule(
+    component: BaseComponent<HTMLSpanElement>,
+    isValidFlagflag: boolean,
+  ): void {
+    if (isValidFlagflag) {
+      component.addClass('hidden');
+    } else {
+      component.removeClass('hidden');
+    }
   }
 
   private addEventListenerPasswordControl(): void {
@@ -207,7 +242,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   private createEmailTooltip(): BaseComponent<HTMLDivElement> {
     const emailTooltip = createDiv(undefined, 'tooltip');
-    emailTooltip.getElement().hidden = true;
+    emailTooltip.addClass('hidden');
 
     return emailTooltip;
   }
@@ -271,7 +306,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   private createPasswordTooltip(): BaseComponent<HTMLDivElement> {
     const passwordTooltip = createDiv(undefined, 'tooltip');
-    passwordTooltip.getElement().hidden = true;
+    passwordTooltip.addClass('hidden');
 
     return passwordTooltip;
   }

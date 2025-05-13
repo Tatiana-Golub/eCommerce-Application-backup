@@ -10,7 +10,7 @@ export default defineConfig({
   build: {
     outDir: 'deploy',
     emptyOutDir: true,
-    sourcemap: true,
+    sourcemap: false,
   },
   test: {
     globals: true,
