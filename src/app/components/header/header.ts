@@ -42,22 +42,12 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   private addEventListenerLogoDiv(): void {
     this.logoDiv.addEventListener('click', () => {
       router.navigate('#/main');
-      console.log('LogoDiv clicked');
     });
   }
 
   private renderNav(): void {
     this.navContainer.appendTo(this.getElement());
   }
-
-  /*
-  private addEventListenerNav(): void {
-    this.navContainer.store.addEventListener('click', () => {
-      router.navigate('#/not-found');
-      console.log('Store clicked');
-    });
-  }
-  */
 }
 
 export const Header = (): HeaderComponent => new HeaderComponent();

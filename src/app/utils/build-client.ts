@@ -27,12 +27,6 @@ class ClientBuilderUtility {
     return ClientBuilderUtility.instance;
   }
 
-  public adminClient(): Client {
-    return this.clientCommonPart()
-      .withClientCredentialsFlow(this.prepareAuthMiddlewareOptions())
-      .build();
-  }
-
   public anonymousClient(): Client {
     return this.clientCommonPart()
       .withAnonymousSessionFlow(this.prepareAuthMiddlewareOptions())
@@ -72,7 +66,6 @@ class ClientBuilderUtility {
       },
       scopes: this.scopes,
       httpClient: fetch,
-      tokenCache: PersistentTokenCache,
     };
   }
 
@@ -100,67 +93,9 @@ class ClientBuilderUtility {
       },
       scopes: this.scopes,
       httpClient: fetch,
+      tokenCache: PersistentTokenCache,
     };
   }
 }
 
 export const ApiClient = (): ClientBuilderUtility => ClientBuilderUtility.getInstance();
-
-// const authHost = import.meta.env.VITE_CTP_AUTH_HOST;
-// const host = import.meta.env.VITE_CTP_HOST;
-// const projectKey = import.meta.env.VITE_CTP_PROJECT_KEY;
-// const scopes = [(import.meta.env.VITE_CTP_SCOPES)];
-// const clientId = import.meta.env.VITE_CTP_CLIENT_ID;
-// const clientSecret = import.meta.env.VITE_CTP_CLIENT_SECRET;
-
-// const authMiddlewareOptions: AuthMiddlewareOptions = {
-//   host: authHost,
-//   projectKey: projectKey,
-//   credentials: {
-//     clientId: clientId,
-//     clientSecret: clientSecret,
-//   },
-//   scopes: scopes,
-//   httpClient: fetch,
-// };
-
-// const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
-// host: authHost,
-// projectKey: projectKey,
-// credentials: {
-//   clientId: clientId,
-//   clientSecret: clientSecret,
-//   user: {
-//     username: username,
-//     password: password
-//   }
-// },
-// scopes: scopes,
-// httpClient: fetch,
-// }
-
-// const httpMiddlewareOptions: HttpMiddlewareOptions = {
-//   host: host,
-//   httpClient: fetch,
-// };
-
-// export const AdminClient = new ClientBuilder()
-//   .withProjectKey(projectKey)
-//   .withClientCredentialsFlow(authMiddlewareOptions)
-//   .withHttpMiddleware(httpMiddlewareOptions)
-//   .withLoggerMiddleware()
-//   .build();
-
-//   export const annonimousClient = new ClientBuilder()
-//   .withProjectKey(projectKey)
-//   .withAnonymousSessionFlow(authMiddlewareOptions)
-//   .withHttpMiddleware(httpMiddlewareOptions)
-//   .withLoggerMiddleware()
-//   .build();
-
-//   export const customerClient = new ClientBuilder()
-//   .withProjectKey(projectKey)
-//   .withPasswordFlow(passwordAuthMiddlewareOptions)
-//   .withHttpMiddleware(httpMiddlewareOptions)
-//   .withLoggerMiddleware()
-//   .build();

@@ -1,9 +1,10 @@
 import { router } from '@app/router';
 import BaseComponent from '@common-components/base-component';
-//import { createH3, createImg, createButton } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import { NavItem } from './nav-item/nav-item';
 import './nav.scss';
+import { SdkApi } from '@/app/utils/comerce-sdk-api';
+import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 
 class NavComponent extends BaseComponent<HTMLDivElement> {
   private readonly homeBtn: BaseComponent<HTMLButtonElement>;
@@ -23,8 +24,8 @@ class NavComponent extends BaseComponent<HTMLDivElement> {
     this.cartBtn = NavItem('cart', 'button nav-item', 'cart', 'Cart');
     this.loginBtn = NavItem('login', 'button nav-item', 'profile', 'Login');
     this.registerBtn = NavItem('register', 'button nav-item', 'register', 'Register');
-    this.profileBtn = NavItem('profile', 'button nav-item hidden', 'profile', 'Profile');
-    this.logoutBtn = NavItem('logout', 'button nav-item hidden', 'logout', 'Logout');
+    this.profileBtn = NavItem('profile', 'button nav-item', 'profile', 'Profile');
+    this.logoutBtn = NavItem('logout', 'button nav-item', 'logout', 'Logout');
 
     this.init();
   }
@@ -34,10 +35,7 @@ class NavComponent extends BaseComponent<HTMLDivElement> {
     this.storeBtn.appendTo(this.getElement());
     this.aboutUsBtn.appendTo(this.getElement());
     this.cartBtn.appendTo(this.getElement());
-    this.loginBtn.appendTo(this.getElement());
-    this.registerBtn.appendTo(this.getElement());
-    this.profileBtn.appendTo(this.getElement());
-    this.logoutBtn.appendTo(this.getElement());
+    this.renderLoginLogout(SdkApi().isLoggedIn());
   }
 
   protected addEventListeners(): void {
@@ -63,10 +61,35 @@ class NavComponent extends BaseComponent<HTMLDivElement> {
       router.navigate('#/profile');
     });
     this.logoutBtn.addEventListener('click', () => {
-      // logout();
-      // isLogined = false;
+      SdkApi().logoutUser();
+      this.renderLoginLogout(SdkApi().isLoggedIn());
       router.navigate('#/main');
     });
+
+    this.addLoginEventListener();
+  }
+
+  private addLoginEventListener(): void {
+    // Just example
+    // TODO: Remove
+    PublishSubscriber().subscribe('userLoggedIn', (payload) => {
+      console.log(payload);
+      this.renderLoginLogout(true);
+    });
+  }
+
+  private renderLoginLogout(isLoggedIn: boolean): void {
+    if (isLoggedIn) {
+      this.loginBtn.remove();
+      this.registerBtn.remove();
+      this.profileBtn.appendTo(this.getElement());
+      this.logoutBtn.appendTo(this.getElement());
+    } else {
+      this.profileBtn.remove();
+      this.logoutBtn.remove();
+      this.loginBtn.appendTo(this.getElement());
+      this.registerBtn.appendTo(this.getElement());
+    }
   }
 }
 

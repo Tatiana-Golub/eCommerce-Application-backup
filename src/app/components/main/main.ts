@@ -1,8 +1,7 @@
 import { PlaceholderPage } from '@app/components/under-construction/under-construction';
 import BaseComponent from '@common-components/base-component';
-import { createDiv, createH1 } from '@common-components/base-component-factory';
+import { createH1 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import { router } from '@/app/router';
 import './main.scss';
 
 class MainComponent extends BaseComponent<HTMLDivElement> {

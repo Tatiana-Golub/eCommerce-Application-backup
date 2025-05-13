@@ -3,20 +3,10 @@ import { createH1, createH2 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import './404.scss';
 
-// TODO: Clean up comments in this component
 class NotFoundComponent extends BaseComponent<HTMLDivElement> {
-  /**
-   * Inner components for the NotFoundComponent.
-   */
   private readonly h1: BaseComponent<HTMLHeadingElement>;
   private readonly h2: BaseComponent<HTMLHeadingElement>;
 
-  /**
-   * Constructor for the NotFoundComponent.
-   *
-   * @param id the id of the component
-   * @param className the class name of the component
-   */
   constructor(id: string = 'not-found-component', className: string = 'not-found-component') {
     super(Tags.DIV, id, className);
 
@@ -26,25 +16,15 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
     this.init();
   }
 
-  /**
-   * Renders the component.
-   */
   protected renderComponent(): void {
     this.renderHeading1();
     this.renderHeading2();
   }
 
-  /**
-   * Adds event listeners to the component.
-   */
   protected addEventListeners(): void {
     this.addEventListenerHeading1();
   }
 
-  /**
-   * Appends the h3 element to the current component and sets its attributes to display
-   * '404 - Page Not Found'.
-   */
   private renderHeading1(): void {
     this.h1.appendTo(this.getElement());
     this.h1.setText('Error 404');
@@ -55,9 +35,6 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
     this.h2.setText('Page Not Found!');
   }
 
-  /**
-   * Adds a click event listener to the h3 element.
-   */
   private addEventListenerHeading1(): void {
     this.h1.addEventListener('click', () => {
       console.log('Error Clicked');
@@ -65,7 +42,4 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
   }
 }
 
-/**
- * Creates a new instance of the NotFoundComponent.
- */
 export const NotFound = (): NotFoundComponent => new NotFoundComponent();
