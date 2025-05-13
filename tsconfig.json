@@ -3,7 +3,7 @@
     "outDir": "./deploy",
     "module": "ESNext",
     "target": "ESNext",
-    "sourceMap": true,
+    "sourceMap": false,
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -26,6 +26,6 @@
       "@common-components/*": ["./src/app/components/common/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "vite-env.d.ts"],
   "exclude": ["node_modules", "deploy"]
 }
