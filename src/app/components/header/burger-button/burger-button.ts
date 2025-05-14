@@ -21,9 +21,7 @@ class BurgerButton extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    this.addEventListener('click', () => {
-      //openBurgerMenu();
-    });
+    return;
   }
 }
 

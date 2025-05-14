@@ -1,5 +1,5 @@
 .header-component {
-  position: relative; /* <== For Burger-menu */
+  position: relative;
 
   display: flex;
   flex-wrap: wrap;
@@ -17,7 +17,7 @@
     align-items: center;
 
     margin: 0;
-    padding: 0.5rem 1.2rem;
+    padding: 0.55vw 1.33vw;
 
     transition: color ease-in-out 0.4s;
 

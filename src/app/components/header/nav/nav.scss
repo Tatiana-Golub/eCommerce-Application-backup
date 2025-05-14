@@ -12,9 +12,29 @@
   }
 
   @media screen and (width <= 610px) {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
-    display: none;
+    transform: translateX(100%);
+
+    flex-direction: column;
+    gap: 4.57vh;
+    align-items: center;
+    justify-content: center;
+
+    width: 80svw;
+    height: 100svh;
+
+    background-color: var(--blue-85);
+
+    transition: transform ease-in-out 0.4s;
+
+    .nav-item {
+      padding: 3vw 4.5vw 3vw 4vw;
+    }
+
+    &.side-menu {
+      transform: translateX(0);
+    }
   }
 }

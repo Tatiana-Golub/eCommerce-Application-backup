@@ -23,6 +23,11 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.init();
   }
 
+  public toggleBurgerMenu(): void {
+    this.navContainer.getElement().classList.toggle('side-menu');
+    this.burgerButton.getElement().classList.toggle('crossed');
+  }
+
   protected renderComponent(): void {
     this.renderLogoDiv();
     this.renderNav();
@@ -31,6 +36,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
 
   protected addEventListeners(): void {
     this.addEventListenerLogoDiv();
+    this.addEventListenerBurgerMenu();
   }
 
   private renderLogoDiv(): void {
@@ -42,13 +48,6 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.h2.setText('Fantasy Store');
   }
 
-  private addEventListenerLogoDiv(): void {
-    this.logoDiv.addEventListener('click', () => {
-      router.navigate('#/main');
-      console.log('LogoDiv clicked');
-    });
-  }
-
   private renderNav(): void {
     this.navContainer.appendTo(this.getElement());
   }
@@ -57,14 +56,17 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.burgerButton.appendTo(this.getElement());
   }
 
-  /*
-  private addEventListenerNav(): void {
-    this.navContainer.store.addEventListener('click', () => {
-      router.navigate('#/not-found');
-      console.log('Store clicked');
+  private addEventListenerLogoDiv(): void {
+    this.logoDiv.addEventListener('click', () => {
+      router.navigate('#/main');
     });
   }
-  */
+
+  private addEventListenerBurgerMenu(): void {
+    this.addEventListener('click', () => {
+      this.toggleBurgerMenu();
+    });
+  }
 }
 
 export const Header = (): HeaderComponent => new HeaderComponent();

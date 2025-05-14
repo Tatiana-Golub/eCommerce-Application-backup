@@ -86,10 +86,6 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   protected addEventListeners(): void {
     return;
   }
-
-  private renderHeaderComponent(): void {
-    this.header.appendTo(this.getElement());
-  }
 }
 
 export const PageWrapper = (): PageWrapperComponent => new PageWrapperComponent();

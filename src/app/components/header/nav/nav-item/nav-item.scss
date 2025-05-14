@@ -13,8 +13,9 @@
 
   background-color: transparent;
 
-  transition: color ease-in-out 0.4s;
-  transition: background-color ease-in-out 0.4s;
+  transition:
+    color ease-in-out 0.4s,
+    background-color ease-in-out 0.4s;
 
   &:hover {
     background-color: var(--transparent-white-30);
