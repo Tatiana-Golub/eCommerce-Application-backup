@@ -57,15 +57,8 @@ class App {
     });
 
     router.addRoute('*', () => {
-      this.pageWrapper.openNotFound();
+      router.navigate('#/not-found');
     });
-
-    /* No need, made it just in case...
-    *
-    router.addRoute('#/logout', () => {
-      this.pageWrapper.openLogout();
-    });
-    */
   }
 }
 

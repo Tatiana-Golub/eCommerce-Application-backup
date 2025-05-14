@@ -2,15 +2,16 @@ import BaseComponent from '@common-components/base-component';
 import { Tags } from '@common-components/tags';
 import { NotFound } from '@components/404/404';
 import { Header } from './components/header/header';
+import { Login } from './components/login/login';
 import { Main } from './components/main/main';
 import { PlaceholderPage } from './components/under-construction/under-construction';
 import './page.scss';
 
-// TODO: Clean up comments in this component
 export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   private readonly notFound = NotFound();
   private readonly main = Main();
   private readonly header = Header();
+  private readonly login = Login();
   private readonly placeholder = PlaceholderPage();
 
   constructor(id: string = 'page-wrapper-component', className: string = 'page-wrapper-component') {
@@ -19,64 +20,36 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
     this.init();
   }
 
-  /**
-   * On-demand open for routings in App.ts.
-   * Adds the notFound component to the page wrapper container.
-   */
   public openNotFound(): void {
-    this.header.appendTo(this.getElement());
-    this.main.remove();
-    this.placeholder.remove();
-    this.notFound.appendTo(this.getElement());
+    this.renderAllComponentsExcept(this.notFound);
   }
 
   public openMain(): void {
-    this.header.appendTo(this.getElement());
-    this.main.appendTo(this.getElement());
-    this.placeholder.remove();
-    this.notFound.remove();
+    this.renderAllComponentsExcept(this.main);
   }
 
   public openStore(): void {
-    this.header.appendTo(this.getElement());
-    this.placeholder.appendTo(this.getElement());
-    this.main.remove();
-    this.notFound.remove();
+    this.renderAllComponentsExcept(this.placeholder);
   }
 
   public openAboutUs(): void {
-    this.header.appendTo(this.getElement());
-    this.placeholder.appendTo(this.getElement());
-    this.main.remove();
-    this.notFound.remove();
+    this.renderAllComponentsExcept(this.placeholder);
   }
 
   public openCart(): void {
-    this.header.appendTo(this.getElement());
-    this.placeholder.appendTo(this.getElement());
-    this.main.remove();
-    this.notFound.remove();
+    this.renderAllComponentsExcept(this.placeholder);
   }
 
   public openLogin(): void {
-    this.header.appendTo(this.getElement());
-    this.placeholder.appendTo(this.getElement());
-    this.main.remove();
-    this.notFound.remove();
+    this.renderAllComponentsExcept(this.login);
   }
 
   public openRegister(): void {
-    this.header.appendTo(this.getElement());
-    this.placeholder.appendTo(this.getElement());
-    this.main.remove();
-    this.notFound.remove();
+    this.renderAllComponentsExcept(this.placeholder);
   }
 
   public openProfile(): void {
-    this.header.appendTo(this.getElement());
-    this.placeholder.appendTo(this.getElement());
-    this.main.remove();
-    this.notFound.remove();
+    this.renderAllComponentsExcept(this.placeholder);
   }
 
   protected renderComponent(): void {
@@ -85,6 +58,16 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
 
   protected addEventListeners(): void {
     return;
+  }
+  
+  private renderAllComponentsExcept(component: BaseComponent<HTMLDivElement>): void {
+    this.header.appendTo(this.getElement());
+    this.main.remove();
+    this.notFound.remove();
+    this.login.remove();
+    this.placeholder.remove();
+    component.appendTo(this.getElement());
+    // append footer
   }
 }
 
