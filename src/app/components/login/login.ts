@@ -8,22 +8,24 @@ import {
 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import './login.scss';
+import { emailValidatingInput } from '../common/email-validating-input';
 import { InputType } from '../common/input-types';
 import { ApiClient } from '@/app/utils/build-client';
 import { SdkApi } from '@/app/utils/comerce-sdk-api';
 import { eyeClose, eyeOpen } from '@/app/utils/svg-constants';
-import { emailRules, passwordRules } from '@/app/utils/validation-constants';
+import { passwordRules } from '@/app/utils/validation-constants';
 
 class LoginComponent extends BaseComponent<HTMLDivElement> {
   private readonly form: BaseComponent<HTMLFormElement>;
 
-  private readonly emailInputDiv: BaseComponent<HTMLDivElement>;
-  private readonly emailInput: BaseComponent<HTMLInputElement>;
-  private readonly emailTooltip: BaseComponent<HTMLDivElement>;
-  private readonly emailFormat: BaseComponent<HTMLSpanElement>;
-  private readonly emailWhitespace: BaseComponent<HTMLSpanElement>;
-  private readonly emailAt: BaseComponent<HTMLSpanElement>;
-  private readonly emailDomain: BaseComponent<HTMLSpanElement>;
+  private readonly emailInputComponent = emailValidatingInput();
+  // private readonly emailInputDiv: BaseComponent<HTMLDivElement>;
+  // private readonly emailInput: BaseComponent<HTMLInputElement>;
+  // private readonly emailTooltip: BaseComponent<HTMLDivElement>;
+  // private readonly emailFormat: BaseComponent<HTMLSpanElement>;
+  // private readonly emailWhitespace: BaseComponent<HTMLSpanElement>;
+  // private readonly emailAt: BaseComponent<HTMLSpanElement>;
+  // private readonly emailDomain: BaseComponent<HTMLSpanElement>;
 
   private readonly passwordInputDiv: BaseComponent<HTMLDivElement>;
   private readonly passwordInput: BaseComponent<HTMLInputElement>;
@@ -44,13 +46,13 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
     this.form = createForm(undefined, 'login-form');
 
-    this.emailInputDiv = this.createEmailInputDiv();
-    this.emailInput = this.createEmailInput();
-    this.emailTooltip = this.createEmailTooltip();
-    this.emailFormat = this.createEmailFormat();
-    this.emailWhitespace = this.createEmailWhitespace();
-    this.emailAt = this.createEmailAt();
-    this.emailDomain = this.createEmailDomain();
+    // this.emailInputDiv = this.createEmailInputDiv();
+    // this.emailInput = this.createEmailInput();
+    // this.emailTooltip = this.createEmailTooltip();
+    // this.emailFormat = this.createEmailFormat();
+    // this.emailWhitespace = this.createEmailWhitespace();
+    // this.emailAt = this.createEmailAt();
+    // this.emailDomain = this.createEmailDomain();
 
     this.passwordInputDiv = this.createPasswordInputDiv();
     this.passwordInput = this.createPasswordInput();
@@ -70,14 +72,15 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   protected renderComponent(): void {
     this.renderForm();
-    this.renderEmailInputDiv();
+    // this.renderEmailInputDiv();
+    this.renderEmailInputComponent();
     this.renderPasswordInputDiv();
     this.renderSubmitButton();
   }
 
   protected addEventListeners(): void {
     this.addEventListenerPasswordControl();
-    this.emailInput.addEventListener('input', () => this.validateEmail());
+    // this.emailInput.addEventListener('input', () => this.validateEmail());
     this.passwordInput.addEventListener('input', () => this.validatePassword());
     this.submitButton.addEventListener('click', () => this.onSubmit());
   }
@@ -107,23 +110,23 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     console.log('!!!!!!!!!!!No token session cache:', ApiClient().getTokenCache().get());
   }
 
-  private validateEmail(): boolean {
-    const email = this.emailInput.getElement().value || '';
+  // private validateEmail(): boolean {
+  //   const email = this.emailInput.getElement().value || '';
 
-    const isValidFormat = emailRules.format.test(email);
-    const isValidWhitespace = emailRules.noWhitespace.test(email);
-    const hasAt = emailRules.hasAt.test(email);
-    const hasDomain = emailRules.hasDomain.test(email);
+  //   const isValidFormat = emailRules.format.test(email);
+  //   const isValidWhitespace = emailRules.noWhitespace.test(email);
+  //   const hasAt = emailRules.hasAt.test(email);
+  //   const hasDomain = emailRules.hasDomain.test(email);
 
-    this.renderValidationErrorForRule(this.emailFormat, isValidFormat);
-    this.renderValidationErrorForRule(this.emailWhitespace, isValidWhitespace);
-    this.renderValidationErrorForRule(this.emailAt, hasAt);
-    this.renderValidationErrorForRule(this.emailDomain, hasDomain);
+  //   this.renderValidationErrorForRule(this.emailFormat, isValidFormat);
+  //   this.renderValidationErrorForRule(this.emailWhitespace, isValidWhitespace);
+  //   this.renderValidationErrorForRule(this.emailAt, hasAt);
+  //   this.renderValidationErrorForRule(this.emailDomain, hasDomain);
 
-    const isValid = isValidFormat && isValidWhitespace && hasAt && hasDomain;
-    this.renderValidationErrorForRule(this.emailTooltip, isValid || email === '');
-    return isValid;
-  }
+  //   const isValid = isValidFormat && isValidWhitespace && hasAt && hasDomain;
+  //   this.renderValidationErrorForRule(this.emailTooltip, isValid || email === '');
+  //   return isValid;
+  // }
 
   private validatePassword(): boolean {
     const password = this.passwordInput.getElement().value || '';
@@ -198,63 +201,67 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     this.passwordWhitespace.appendTo(this.passwordTooltip.getElement());
   }
 
-  private renderEmailInputDiv(): void {
-    this.emailInputDiv.appendTo(this.form.getElement());
-    this.emailInput.appendTo(this.emailInputDiv.getElement());
-    this.emailTooltip.appendTo(this.emailInputDiv.getElement());
-    this.emailFormat.appendTo(this.emailTooltip.getElement());
-    this.emailWhitespace.appendTo(this.emailTooltip.getElement());
-    this.emailAt.appendTo(this.emailTooltip.getElement());
-    this.emailDomain.appendTo(this.emailTooltip.getElement());
+  private renderEmailInputComponent(): void {
+    this.emailInputComponent.appendTo(this.form.getElement());
   }
 
-  private createEmailInputDiv(): BaseComponent<HTMLDivElement> {
-    return createDiv(undefined, 'email-input');
-  }
+  // private renderEmailInputDiv(): void {
+  //   this.emailInputDiv.appendTo(this.form.getElement());
+  //   this.emailInput.appendTo(this.emailInputDiv.getElement());
+  //   this.emailTooltip.appendTo(this.emailInputDiv.getElement());
+  //   this.emailFormat.appendTo(this.emailTooltip.getElement());
+  //   this.emailWhitespace.appendTo(this.emailTooltip.getElement());
+  //   this.emailAt.appendTo(this.emailTooltip.getElement());
+  //   this.emailDomain.appendTo(this.emailTooltip.getElement());
+  // }
 
-  private createEmailDomain(): BaseComponent<HTMLSpanElement> {
-    const emailDomain = createSpan(undefined, 'error-message');
-    emailDomain.setText('Email must include a domain (e.g., example.com)');
+  // private createEmailInputDiv(): BaseComponent<HTMLDivElement> {
+  //   return createDiv(undefined, 'email-input');
+  // }
 
-    return emailDomain;
-  }
+  // private createEmailDomain(): BaseComponent<HTMLSpanElement> {
+  //   const emailDomain = createSpan(undefined, 'error-message');
+  //   emailDomain.setText('Email must include a domain (e.g., example.com)');
 
-  private createEmailAt(): BaseComponent<HTMLSpanElement> {
-    const emailAt = createSpan(undefined, 'error-message');
-    emailAt.setText('Email must contain an "@" symbol');
+  //   return emailDomain;
+  // }
 
-    return emailAt;
-  }
+  // private createEmailAt(): BaseComponent<HTMLSpanElement> {
+  //   const emailAt = createSpan(undefined, 'error-message');
+  //   emailAt.setText('Email must contain an "@" symbol');
 
-  private createEmailWhitespace(): BaseComponent<HTMLSpanElement> {
-    const emailWhitespace = createSpan(undefined, 'error-message');
-    emailWhitespace.setText('Email must not contain leading or trailing whitespace');
+  //   return emailAt;
+  // }
 
-    return emailWhitespace;
-  }
+  // private createEmailWhitespace(): BaseComponent<HTMLSpanElement> {
+  //   const emailWhitespace = createSpan(undefined, 'error-message');
+  //   emailWhitespace.setText('Email must not contain leading or trailing whitespace');
 
-  private createEmailFormat(): BaseComponent<HTMLSpanElement> {
-    const emailFormat = createSpan(undefined, 'error-message');
-    emailFormat.setText('Email must be properly formatted (e.g., user@example.com)');
+  //   return emailWhitespace;
+  // }
 
-    return emailFormat;
-  }
+  // private createEmailFormat(): BaseComponent<HTMLSpanElement> {
+  //   const emailFormat = createSpan(undefined, 'error-message');
+  //   emailFormat.setText('Email must be properly formatted (e.g., user@example.com)');
 
-  private createEmailTooltip(): BaseComponent<HTMLDivElement> {
-    const emailTooltip = createDiv(undefined, 'tooltip');
-    emailTooltip.addClass('hidden');
+  //   return emailFormat;
+  // }
 
-    return emailTooltip;
-  }
+  // private createEmailTooltip(): BaseComponent<HTMLDivElement> {
+  //   const emailTooltip = createDiv(undefined, 'tooltip');
+  //   emailTooltip.addClass('hidden');
 
-  private createEmailInput(): BaseComponent<HTMLInputElement> {
-    const emailInput = createInput(undefined, 'email');
-    const emailInputElement = emailInput.getElement();
-    emailInputElement.placeholder = 'Enter your e-mail';
-    emailInputElement.type = InputType.TEXT;
+  //   return emailTooltip;
+  // }
 
-    return emailInput;
-  }
+  // private createEmailInput(): BaseComponent<HTMLInputElement> {
+  //   const emailInput = createInput(undefined, 'email');
+  //   const emailInputElement = emailInput.getElement();
+  //   emailInputElement.placeholder = 'Enter your e-mail';
+  //   emailInputElement.type = InputType.TEXT;
+
+  //   return emailInput;
+  // }
 
   private createPasswordInputDiv(): BaseComponent<HTMLDivElement> {
     return createDiv(undefined, 'password-input');
