@@ -1,0 +1,26 @@
+.burger-button {
+  /*
+  position: absolute;
+  top: 2rem;
+  right: 7%;
+  */
+
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+
+  .burger-line {
+    width: 1.25rem;
+    height: 0.25rem;
+    border-radius: 2rem;
+    background-color: var(--beige);
+  }
+
+  @media screen and (width <= 610px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+}

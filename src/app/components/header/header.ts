@@ -2,6 +2,7 @@ import { router } from '@app/router';
 import BaseComponent from '@common-components/base-component';
 import { createDiv, createH2, createImg } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
+import { Burger } from './burger-button/burger-button';
 import { Nav } from './nav/nav';
 import './header.scss';
 
@@ -10,6 +11,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   private readonly logoDiv: BaseComponent<HTMLDivElement>;
   private readonly logoImg: BaseComponent<HTMLImageElement>;
   private readonly navContainer = Nav();
+  private readonly burgerButton = Burger();
 
   constructor(id: string = 'header-component', className: string = 'header-component') {
     super(Tags.DIV, id, className);
@@ -24,6 +26,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   protected renderComponent(): void {
     this.renderLogoDiv();
     this.renderNav();
+    this.renderBurger();
   }
 
   protected addEventListeners(): void {
@@ -48,6 +51,10 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
 
   private renderNav(): void {
     this.navContainer.appendTo(this.getElement());
+  }
+
+  private renderBurger(): void {
+    this.burgerButton.appendTo(this.getElement());
   }
 
   /*

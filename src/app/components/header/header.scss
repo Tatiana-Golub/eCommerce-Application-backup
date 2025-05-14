@@ -2,9 +2,11 @@
   position: relative; /* <== For Burger-menu */
 
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
 
+  width: 100%;
   padding: 1.2rem 0;
 
   .logo-div {
@@ -31,5 +33,9 @@
     .heading-2 {
       font-size: 1.2rem;
     }
+  }
+
+  @media screen and (width <= 610px) {
+    flex-wrap: nowrap;
   }
 }
