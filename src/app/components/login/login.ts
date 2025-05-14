@@ -8,10 +8,12 @@ import {
 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import './login.scss';
-import { InputType } from '../common/input-types';
-import { ApiClient } from '@/app/utils/build-client';
+import { InputType } from '../common/input/input-types';
+import { router } from '@/app/router';
 import { SdkApi } from '@/app/utils/comerce-sdk-api';
+import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import { eyeClose, eyeOpen } from '@/app/utils/svg-constants';
+import { UserCache } from '@/app/utils/token-cache';
 import { emailRules, passwordRules } from '@/app/utils/validation-constants';
 
 class LoginComponent extends BaseComponent<HTMLDivElement> {
@@ -77,34 +79,39 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   protected addEventListeners(): void {
     this.addEventListenerPasswordControl();
-    this.emailInput.addEventListener('input', () => this.validateEmail());
-    this.passwordInput.addEventListener('input', () => this.validatePassword());
+    this.emailInput.addEventListener('input', () => this.updateSubmitButton());
+    this.passwordInput.addEventListener('input', () => this.updateSubmitButton());
     this.submitButton.addEventListener('click', () => this.onSubmit());
   }
 
-  private async onSubmit(): Promise<void> {
-    console.log('!!!!!!!!!!!Anonymous session flow');
-    await SdkApi().withAnonymousSessionFlow().getProject();
-    console.log('!!!!!!!!!!!Anonymous session cache:', ApiClient().getTokenCache().get());
+  private updateSubmitButton(): void {
+    const validateEmailResults = this.validateEmail();
+    const validatePasswordResults = this.validatePassword();
 
-    console.log('!!!!!!!!!!!Login session flow');
-    await SdkApi().loginUser('vK3Kb@example.com', '123456');
-    console.log('!!!!!!!!!!!Login session cache:', ApiClient().getTokenCache().get());
-
-    console.log('!!!!!!!!!!!Password session flow');
-    await SdkApi().withPasswordFlow('vK3Kb@example.com', '123456').getMe();
-    console.log('!!!!!!!!!!!Password session cache:', ApiClient().getTokenCache().get());
-
-    console.log('!!!!!!!!!!!Existing token session flow');
-    const savedToken = ApiClient().getTokenCache()?.get();
-    if (savedToken) {
-      await SdkApi().withExistingToken(savedToken.token).getMe();
+    if (validateEmailResults && validatePasswordResults) {
+      this.submitButton.removeAttribute('disabled');
+    } else {
+      this.submitButton.setAttribute('disabled', 'true');
     }
-    console.log('!!!!!!!!!!!Login session cache:', ApiClient().getTokenCache().get());
+  }
 
-    console.log('!!!!!!!!!!!No token session flow');
-    await SdkApi().getMe();
-    console.log('!!!!!!!!!!!No token session cache:', ApiClient().getTokenCache().get());
+  private async onSubmit(): Promise<void> {
+    const email = this.emailInput.getElement().value;
+    const password = this.passwordInput.getElement().value;
+
+    await SdkApi().loginUser(email, password);
+    await SdkApi()
+      .withPasswordFlow(email, password)
+      .getMe()
+      .then((response) => {
+        UserCache.set(response.body);
+      });
+
+    // Just example
+    // TODO: Remove
+    PublishSubscriber().publish('userLoggedIn', { userId: email });
+
+    router.navigate('#/main');
   }
 
   private validateEmail(): boolean {
@@ -331,7 +338,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     const submitButton = createButton(undefined, 'button');
     submitButton.setText('Sign In');
     submitButton.addClass('submit-button');
-
+    submitButton.setAttribute('disabled', 'true');
     return submitButton;
   }
 }

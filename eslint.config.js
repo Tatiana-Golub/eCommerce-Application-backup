@@ -79,6 +79,7 @@ export default tseslintConfig.config([
       '**/eslint.config.js',
       '**/vite.config.ts',
       '**/base-component.ts',
+      '**/coverage/**',
     ],
   },
 ]);

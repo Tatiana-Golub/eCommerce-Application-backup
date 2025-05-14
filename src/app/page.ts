@@ -6,7 +6,6 @@ import { Login } from './components/login/login';
 import { Main } from './components/main/main';
 import { PlaceholderPage } from './components/under-construction/under-construction';
 import './page.scss';
-import { SdkApi } from './utils/comerce-sdk-api';
 
 export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   private readonly notFound = NotFound();
@@ -68,7 +67,6 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
     this.login.remove();
     this.placeholder.remove();
     component.appendTo(this.getElement());
-    // console.log(SdkApi().getProject());
     // append footer
   }
 }
