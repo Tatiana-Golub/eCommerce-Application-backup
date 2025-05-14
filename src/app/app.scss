@@ -36,11 +36,13 @@
 
   .heading-1 {
     font-size: 3rem;
+    text-align: center;
     letter-spacing: 0.2rem;
   }
 
   .heading-2 {
     font-size: 2rem;
+    text-align: center;
     letter-spacing: 0.15rem;
   }
 
@@ -56,7 +58,6 @@
   .button {
     font-family: Genshin, serif;
     appearance: none;
-    transition: all ease-in-out 0.4s;
   }
 
   .hidden {

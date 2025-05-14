@@ -59,7 +59,7 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   protected addEventListeners(): void {
     return;
   }
-
+  
   private renderAllComponentsExcept(component: BaseComponent<HTMLDivElement>): void {
     this.header.appendTo(this.getElement());
     this.main.remove();
