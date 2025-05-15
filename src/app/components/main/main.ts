@@ -1,8 +1,7 @@
 import { PlaceholderPage } from '@app/components/under-construction/under-construction';
 import BaseComponent from '@common-components/base-component';
-import { createDiv, createH1 } from '@common-components/base-component-factory';
+import { createH1 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import { router } from '@/app/router';
 import './main.scss';
 
 class MainComponent extends BaseComponent<HTMLDivElement> {
@@ -23,7 +22,7 @@ class MainComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    this.addEventListenerHeading1();
+    return;
   }
 
   private renderHeading1(): void {
@@ -33,14 +32,6 @@ class MainComponent extends BaseComponent<HTMLDivElement> {
 
   private renderPlaceholder(): void {
     this.placeholder.appendTo(this.getElement());
-  }
-
-  private addEventListenerHeading1(): void {
-    /*
-    this.h3.addEventListener('click', () => {
-      router.navigate('#/not-found');
-    });
-    */
   }
 }
 

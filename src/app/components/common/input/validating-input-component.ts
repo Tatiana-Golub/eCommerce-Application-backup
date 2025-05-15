@@ -11,15 +11,18 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   protected input: BaseComponent<HTMLInputElement>;
   private tooltip: BaseComponent<HTMLDivElement>;
   private validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
+  private onInputChangedCallback: (() => void) | null;
 
   constructor(
     id: string = 'validating-input-component',
     className: string = 'validating-input-component',
+    onInputChangedCalback: (() => void) | null,
   ) {
     super(Tags.DIV, id, className);
 
     this.input = this.createInput();
     this.tooltip = this.createTooltip();
+    this.onInputChangedCallback = onInputChangedCalback;
     this.createErrorMessages();
   }
 
@@ -44,7 +47,10 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   }
 
   protected addEventListeners(): void {
-    this.input.addEventListener('input', () => this.validate());
+    this.input.addEventListener('input', () => {
+      this.validate();
+      this.onInputChangedCallback?.();
+    });
   }
 
   protected validate(): boolean {

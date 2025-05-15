@@ -2,6 +2,7 @@ import { router } from '@app/router';
 import BaseComponent from '@common-components/base-component';
 import { createDiv, createH2, createImg } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
+import { Burger } from './burger-button/burger-button';
 import { Nav } from './nav/nav';
 import './header.scss';
 
@@ -10,6 +11,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   private readonly logoDiv: BaseComponent<HTMLDivElement>;
   private readonly logoImg: BaseComponent<HTMLImageElement>;
   private readonly navContainer = Nav();
+  private readonly burgerButton = Burger();
 
   constructor(id: string = 'header-component', className: string = 'header-component') {
     super(Tags.DIV, id, className);
@@ -21,13 +23,20 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.init();
   }
 
+  public toggleBurgerMenu(): void {
+    this.navContainer.getElement().classList.toggle('side-menu');
+    this.burgerButton.getElement().classList.toggle('crossed');
+  }
+
   protected renderComponent(): void {
     this.renderLogoDiv();
     this.renderNav();
+    this.renderBurger();
   }
 
   protected addEventListeners(): void {
     this.addEventListenerLogoDiv();
+    this.addEventListenerBurgerMenu();
   }
 
   private renderLogoDiv(): void {
@@ -39,25 +48,25 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.h2.setText('Fantasy Store');
   }
 
-  private addEventListenerLogoDiv(): void {
-    this.logoDiv.addEventListener('click', () => {
-      router.navigate('#/main');
-      console.log('LogoDiv clicked');
-    });
-  }
-
   private renderNav(): void {
     this.navContainer.appendTo(this.getElement());
   }
 
-  /*
-  private addEventListenerNav(): void {
-    this.navContainer.store.addEventListener('click', () => {
-      router.navigate('#/not-found');
-      console.log('Store clicked');
+  private renderBurger(): void {
+    this.burgerButton.appendTo(this.getElement());
+  }
+
+  private addEventListenerLogoDiv(): void {
+    this.logoDiv.addEventListener('click', () => {
+      router.navigate('#/main');
     });
   }
-  */
+
+  private addEventListenerBurgerMenu(): void {
+    this.addEventListener('click', () => {
+      this.toggleBurgerMenu();
+    });
+  }
 }
 
 export const Header = (): HeaderComponent => new HeaderComponent();

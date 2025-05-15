@@ -10,4 +10,41 @@
   .hidden {
     display: none;
   }
+
+  @media screen and (width <= 610px) {
+    position: fixed;
+    top: 0;
+    right: -80%;
+    transform: translateX(0);
+
+    flex-direction: column;
+    gap: 4.57vh;
+    align-items: center;
+    justify-content: center;
+
+    width: 80svw;
+    height: 100svh;
+
+    background-color: var(--blue-85);
+
+    transition: transform ease-in-out 0.4s;
+
+    .nav-item {
+      gap: 0.5rem;
+      padding: 3vw 4.5vw 3vw 4vw;
+
+      .heading-3 {
+        font-size: 1.5rem;
+      }
+
+      .nav-icon {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    &.side-menu {
+      transform: translateX(-100%);
+    }
+  }
 }

@@ -2,8 +2,12 @@ import { BaseValidatingInputComponent } from './validating-input-component';
 import { emailRules } from '@/app/utils/validation-constants';
 
 class EmailValidatingInput extends BaseValidatingInputComponent {
-  constructor(id: string = 'email-input', className: string = 'email-input') {
-    super(id, className);
+  constructor(
+    id: string = 'email-input',
+    className: string = 'email-input',
+    onInputChangedCallback: (() => void) | null,
+  ) {
+    super(id, className, onInputChangedCallback);
 
     this.init();
   }
@@ -18,4 +22,7 @@ class EmailValidatingInput extends BaseValidatingInputComponent {
   }
 }
 
-export const emailValidatingInput = (): EmailValidatingInput => new EmailValidatingInput();
+export const emailValidatingInput = (
+  onInputChangedCallback: (() => void) | null = null,
+): EmailValidatingInput =>
+  new EmailValidatingInput('email-input', 'email-input', onInputChangedCallback);

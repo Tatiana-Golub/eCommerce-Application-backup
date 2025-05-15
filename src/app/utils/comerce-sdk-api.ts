@@ -4,10 +4,15 @@ import {
 } from '@commercetools/platform-sdk';
 import { type ClientResponse } from '@commercetools/ts-client';
 import { ApiClient } from './build-client';
+import { clearTokens, UserCache } from './token-cache';
 
 class CommerceSdkApi {
   private static instance: CommerceSdkApi;
   private apiRoot: ByProjectKeyRequestBuilder;
+
+  private readonly projectKeyObject = {
+    projectKey: import.meta.env.VITE_CTP_PROJECT_KEY,
+  };
 
   constructor() {
     this.apiRoot = this.withAnonymousSessionFlow().apiRoot;
@@ -16,6 +21,7 @@ class CommerceSdkApi {
   public static getInstance(): CommerceSdkApi {
     if (!CommerceSdkApi.instance) {
       CommerceSdkApi.instance = new CommerceSdkApi();
+      CommerceSdkApi.instance.initializeSession();
     }
     return CommerceSdkApi.instance;
   }
@@ -29,27 +35,27 @@ class CommerceSdkApi {
       .customers()
       .post({
         body: {
-          email: 'vK3Kb@example.com',
-          password: '123456',
+          email: 'test123@test.com',
+          password: 'Test123!',
+          firstName: 'Test',
+          lastName: 'User',
         },
       })
       .execute();
   }
 
-  public loginUser(email: string, password: string): Promise<ClientResponse> {
+  public async loginUser(email: string, password: string): Promise<ClientResponse> {
     return this.apiRoot
       .login()
       .post({
-        body: {
-          email,
-          password,
-        },
+        body: { email, password },
       })
       .execute();
   }
 
-  public logout(): void {
-    localStorage.removeItem('commercetools_token');
+  public logoutUser(): void {
+    clearTokens();
+    UserCache.clearUser();
     this.withAnonymousSessionFlow();
   }
 
@@ -58,34 +64,41 @@ class CommerceSdkApi {
   }
 
   public withAnonymousSessionFlow(): CommerceSdkApi {
-    this.apiRoot = createApiBuilderFromCtpClient(ApiClient().anonymousClient()).withProjectKey({
-      projectKey: 'ecommerce-application-404team',
-    });
+    this.apiRoot = createApiBuilderFromCtpClient(ApiClient().anonymousClient()).withProjectKey(
+      this.projectKeyObject,
+    );
     return this;
   }
 
   public withPasswordFlow(login: string, password: string): CommerceSdkApi {
     this.apiRoot = createApiBuilderFromCtpClient(
       ApiClient().clientWithPassword(login, password),
-    ).withProjectKey({
-      projectKey: 'ecommerce-application-404team',
-    });
+    ).withProjectKey(this.projectKeyObject);
     return this;
   }
 
-  public withAdminFlow(): CommerceSdkApi {
-    this.apiRoot = createApiBuilderFromCtpClient(ApiClient().adminClient()).withProjectKey({
-      projectKey: 'ecommerce-application-404team',
-    });
-    return this;
-  }
-
-  public withExistingToken(token: string): CommerceSdkApi {
+  public withExistingToken(): CommerceSdkApi {
+    const token = ApiClient().getTokenCache().get().token;
     this.apiRoot = createApiBuilderFromCtpClient(
       ApiClient().getTokenCacheClient(token),
-    ).withProjectKey({ projectKey: 'ecommerce-application-404team' });
+    ).withProjectKey(this.projectKeyObject);
 
     return this;
+  }
+
+  public isLoggedIn(): boolean {
+    const token = ApiClient().getTokenCache().get();
+    const now = Math.floor(Date.now() / 1000);
+
+    return token && token.expirationTime > now;
+  }
+
+  private initializeSession(): void {
+    if (this.isLoggedIn()) {
+      this.withExistingToken();
+    } else {
+      this.logoutUser();
+    }
   }
 }
 

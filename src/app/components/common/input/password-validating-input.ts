@@ -9,8 +9,12 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
   private readonly passwordControl: BaseComponent<HTMLDivElement>;
   private isPasswordVisible: boolean = false;
 
-  constructor(id: string = 'password-input', className: string = 'password-input') {
-    super(id, className);
+  constructor(
+    id: string = 'password-input',
+    className: string = 'password-input',
+    onInputChangedCallback: (() => void) | null,
+  ) {
+    super(id, className, onInputChangedCallback);
 
     this.passwordControl = this.createPasswordControl();
     this.init();
@@ -53,4 +57,7 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
   }
 }
 
-export const passwordValidatingInput = (): PasswordValidatingInput => new PasswordValidatingInput();
+export const passwordValidatingInput = (
+  onInputChangedCallback: (() => void) | null = null,
+): PasswordValidatingInput =>
+  new PasswordValidatingInput('password-input', 'password-input', onInputChangedCallback);
