@@ -1,14 +1,14 @@
-import BaseComponent from './base-component';
-import { createDiv, createInput, createSpan } from './base-component-factory';
+import BaseComponent from '../base-component';
+import { createDiv, createInput, createSpan } from '../base-component-factory';
+import { Tags } from '../tags';
 import { InputType } from './input-types';
-import { Tags } from './tags';
 
 const Classes = {
   HIDDEN: 'hidden',
 };
 
 export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDivElement> {
-  private input: BaseComponent<HTMLInputElement>;
+  protected input: BaseComponent<HTMLInputElement>;
   private tooltip: BaseComponent<HTMLDivElement>;
   private validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
 
@@ -38,6 +38,7 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
 
   protected renderComponent(): void {
     this.input.appendTo(this.getElement());
+    this.afterRenderInput();
     this.tooltip.appendTo(this.getElement());
     this.renderErrorMessages();
   }
@@ -59,6 +60,8 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     this.renderValidationErrorForRule(this.tooltip, isValid || inputValue === '');
     return isValid;
   }
+
+  protected afterRenderInput(): void {}
 
   private createInput(): BaseComponent<HTMLInputElement> {
     const emailInput = createInput(undefined, 'email');
