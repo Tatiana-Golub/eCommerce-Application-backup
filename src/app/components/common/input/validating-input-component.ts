@@ -8,13 +8,13 @@ const Classes = {
 };
 
 export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDivElement> {
-  protected input: BaseComponent<HTMLInputElement>;
-  private tooltip: BaseComponent<HTMLDivElement>;
-  private validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
-  private onInputChangedCallback: (() => void) | null;
+  protected readonly input: BaseComponent<HTMLInputElement>;
+  private readonly tooltip: BaseComponent<HTMLDivElement>;
+  private readonly validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
+  private readonly onInputChangedCallback: (() => void) | null;
 
   constructor(
-    id: string = 'validating-input-component',
+    id: string = '',
     className: string = 'validating-input-component',
     onInputChangedCalback: (() => void) | null,
   ) {

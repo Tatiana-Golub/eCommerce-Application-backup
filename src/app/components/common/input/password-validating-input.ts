@@ -18,6 +18,10 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
 
     this.passwordControl = this.createPasswordControl();
     this.init();
+  }
+
+  protected addEventListeners(): void {
+    super.addEventListeners();
     this.addEventListenerPasswordControl();
   }
 
