@@ -6,4 +6,5 @@ export enum InputType {
   SERACH = 'search',
   PASSWORD = 'password',
   EMAIL = 'email',
+  DATE = 'date',
 }

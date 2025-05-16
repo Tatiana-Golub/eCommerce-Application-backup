@@ -13,3 +13,7 @@ export const passwordRules = {
   specialChar: /[!@#$%^&*]/,
   noWhitespace: /^\S*\S$/,
 };
+
+export const nameRules = {
+  onlyLetters: /^[A-Za-z]+$/,
+};

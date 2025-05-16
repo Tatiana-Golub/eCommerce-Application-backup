@@ -6,7 +6,7 @@ import { BaseValidatingInputComponent } from './validating-input-component';
 import { eyeClose, eyeOpen } from '@/app/utils/svg-constants';
 import { passwordRules } from '@/app/utils/validation-constants';
 
-class PasswordValidatingInput extends BaseValidatingInputComponent {
+export class PasswordValidatingInput extends BaseValidatingInputComponent {
   private readonly passwordControl: BaseComponent<HTMLDivElement>;
   private isPasswordVisible: boolean = false;
 

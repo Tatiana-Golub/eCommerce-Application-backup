@@ -4,7 +4,7 @@ import type { LabelParameters } from './validating-input-component';
 import { BaseValidatingInputComponent } from './validating-input-component';
 import { emailRules } from '@/app/utils/validation-constants';
 
-class EmailValidatingInput extends BaseValidatingInputComponent {
+export class EmailValidatingInput extends BaseValidatingInputComponent {
   constructor(
     id: string = 'email-input',
     className: string = 'email-input',
