@@ -69,20 +69,25 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
 
   protected afterRenderInput(): void {}
 
-  private createInput(): BaseComponent<HTMLInputElement> {
-    const emailInput = createInput(undefined, 'email');
-    const emailInputElement = emailInput.getElement();
-    emailInputElement.placeholder = 'Enter your e-mail';
-    emailInputElement.type = InputType.TEXT;
+  protected createInput(
+    id: string = '',
+    className: string = '',
+    type: InputType = InputType.TEXT,
+    placeholder: string = '',
+  ): BaseComponent<HTMLInputElement> {
+    const input = createInput(id, className);
+    const inputElement = input.getElement();
+    inputElement.placeholder = placeholder;
+    inputElement.type = type;
 
-    return emailInput;
+    return input;
   }
 
   private createTooltip(): BaseComponent<HTMLDivElement> {
-    const emailTooltip = createDiv(undefined, 'tooltip');
-    emailTooltip.addClass(Classes.HIDDEN);
+    const tooltip = createDiv(undefined, 'tooltip');
+    tooltip.addClass(Classes.HIDDEN);
 
-    return emailTooltip;
+    return tooltip;
   }
 
   private createErrorMessages(): void {

@@ -1,3 +1,5 @@
+import type BaseComponent from '../base-component';
+import { InputType } from './input-types';
 import { BaseValidatingInputComponent } from './validating-input-component';
 import { emailRules } from '@/app/utils/validation-constants';
 
@@ -19,6 +21,10 @@ class EmailValidatingInput extends BaseValidatingInputComponent {
       [emailRules.hasAt, 'Email must contain an "@" symbol'],
       [emailRules.hasDomain, 'Email must include a domain (e.g., example.com)'],
     ]);
+  }
+
+  protected createInput(): BaseComponent<HTMLInputElement> {
+    return super.createInput(undefined, 'email', InputType.TEXT, 'Enter your e-mail');
   }
 }
 

@@ -39,6 +39,10 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
     ]);
   }
 
+  protected createInput(): BaseComponent<HTMLInputElement> {
+    return super.createInput(undefined, 'password', InputType.PASSWORD, 'Enter your password');
+  }
+
   protected afterRenderInput(): void {
     this.passwordControl.appendTo(this.getElement());
   }
