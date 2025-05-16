@@ -1,5 +1,5 @@
 import BaseComponent from '../base-component';
-import { createDiv, createInput, createSpan } from '../base-component-factory';
+import { createDiv, createInput, createLabel, createSpan } from '../base-component-factory';
 import { Tags } from '../tags';
 import { InputType } from './input-types';
 
@@ -7,8 +7,16 @@ const Classes = {
   HIDDEN: 'hidden',
 };
 
+export type LabelParameters = {
+  id: string;
+  className: string;
+  text: string;
+};
+
 export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDivElement> {
   protected readonly input: BaseComponent<HTMLInputElement>;
+  private readonly labelParams?: LabelParameters;
+  private readonly label?: BaseComponent<HTMLLabelElement>;
   private readonly tooltip: BaseComponent<HTMLDivElement>;
   private readonly validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
   private readonly onInputChangedCallback: (() => void) | null;
@@ -17,9 +25,12 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     id: string = '',
     className: string = 'validating-input-component',
     onInputChangedCalback: (() => void) | null,
+    labelParameters: LabelParameters | undefined,
   ) {
     super(Tags.DIV, id, className);
 
+    this.labelParams = labelParameters;
+    this.label = this.createLabel();
     this.input = this.createInput();
     this.tooltip = this.createTooltip();
     this.onInputChangedCallback = onInputChangedCalback;
@@ -40,6 +51,7 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   }
 
   protected renderComponent(): void {
+    this.label?.appendTo(this.getElement());
     this.input.appendTo(this.getElement());
     this.afterRenderInput();
     this.tooltip.appendTo(this.getElement());
@@ -81,6 +93,15 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     inputElement.type = type;
 
     return input;
+  }
+
+  protected createLabel(): BaseComponent<HTMLLabelElement> | undefined {
+    if (!this.labelParams) return undefined;
+
+    const label = createLabel(this.labelParams.id, this.labelParams.className);
+    label.setText(this.labelParams.text);
+
+    return label;
   }
 
   private createTooltip(): BaseComponent<HTMLDivElement> {

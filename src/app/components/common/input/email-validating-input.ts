@@ -1,5 +1,6 @@
 import type BaseComponent from '../base-component';
 import { InputType } from './input-types';
+import type { LabelParameters } from './validating-input-component';
 import { BaseValidatingInputComponent } from './validating-input-component';
 import { emailRules } from '@/app/utils/validation-constants';
 
@@ -8,8 +9,9 @@ class EmailValidatingInput extends BaseValidatingInputComponent {
     id: string = 'email-input',
     className: string = 'email-input',
     onInputChangedCallback: (() => void) | null,
+    labelParameters: LabelParameters | undefined,
   ) {
-    super(id, className, onInputChangedCallback);
+    super(id, className, onInputChangedCallback, labelParameters);
 
     this.init();
   }
@@ -30,5 +32,6 @@ class EmailValidatingInput extends BaseValidatingInputComponent {
 
 export const emailValidatingInput = (
   onInputChangedCallback: (() => void) | null = null,
+  labelParameters: LabelParameters | undefined = undefined,
 ): EmailValidatingInput =>
-  new EmailValidatingInput('email-input', 'email-input', onInputChangedCallback);
+  new EmailValidatingInput('email-input', 'email-input', onInputChangedCallback, labelParameters);
