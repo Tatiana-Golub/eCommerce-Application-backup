@@ -2,12 +2,12 @@ import type BaseComponent from '../base-component';
 import { InputType } from './input-types';
 import type { LabelParameters } from './validating-input-component';
 import { BaseValidatingInputComponent } from './validating-input-component';
-import { nameRules } from '@/app/utils/validation-constants';
+import { addressRules } from '@/app/utils/validation-constants';
 
-export class FirstNameValidatingInput extends BaseValidatingInputComponent {
+export class StreetValidatingInput extends BaseValidatingInputComponent {
   constructor(
-    id: string = 'first-name-input',
-    className: string = 'first-name-input',
+    id: string = 'street-input',
+    className: string = 'street-input',
     onInputChangedCallback: (() => void) | null,
     labelParameters: LabelParameters | undefined,
   ) {
@@ -18,25 +18,22 @@ export class FirstNameValidatingInput extends BaseValidatingInputComponent {
 
   protected getValidationRulePairs(): Map<RegExp, string> {
     return new Map<RegExp, string>([
-      [
-        nameRules.onlyLetters,
-        'Must contain at least one character and no special characters or numbers',
-      ],
+      [addressRules.street, 'Must contain only Latin letters and numbers'],
     ]);
   }
 
   protected createInput(): BaseComponent<HTMLInputElement> {
-    return super.createInput(undefined, 'first-name', InputType.TEXT, 'Enter your first name');
+    return super.createInput(undefined, 'street', InputType.TEXT, 'Street');
   }
 }
 
-export const firstNameValidatingInput = (
+export const streetValidatingInput = (
   onInputChangedCallback: (() => void) | null = null,
   labelParameters: LabelParameters | undefined = undefined,
-): FirstNameValidatingInput =>
-  new FirstNameValidatingInput(
-    'first-name-input',
-    'first-name-input',
+): StreetValidatingInput =>
+  new StreetValidatingInput(
+    'street-input',
+    'street-input',
     onInputChangedCallback,
     labelParameters,
   );

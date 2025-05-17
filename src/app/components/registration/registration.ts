@@ -1,3 +1,5 @@
+import type { AddressComponent } from '../common/address-component/address-component';
+import { addressComponent } from '../common/address-component/address-component';
 import BaseComponent from '../common/base-component';
 import { createButton, createForm } from '../common/base-component-factory';
 import { dateValidatingInput } from '../common/input/date-validating-input';
@@ -21,6 +23,7 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   private readonly firstNameInput: FirstNameValidatingInput;
   private readonly lastNameInput: LastNameValidatingInput;
   private readonly dateInput: DateValidatingInput;
+  private readonly shippingAddress: AddressComponent;
   private readonly signUp: BaseComponent<HTMLButtonElement>;
 
   constructor(id: string = 'registration-component', className: string = 'registration-component') {
@@ -32,6 +35,7 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     this.firstNameInput = this.createFirstNameInput();
     this.lastNameInput = this.createLastNameInput();
     this.dateInput = this.createDateInput();
+    this.shippingAddress = this.createShippingAddress();
     this.signUp = this.createSignUpButton();
 
     this.init();
@@ -44,6 +48,7 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     this.firstNameInput.appendTo(this.form.getElement());
     this.lastNameInput.appendTo(this.form.getElement());
     this.dateInput.appendTo(this.form.getElement());
+    this.shippingAddress.appendTo(this.form.getElement());
     this.renderSignUpButton();
   }
 
@@ -113,6 +118,16 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
       className: '',
       text: 'Date of birth *',
     });
+  }
+
+  private createShippingAddress(): AddressComponent {
+    return addressComponent(
+      undefined,
+      'shipping-address-component',
+      'Shipping Address',
+      'Use as default shipping address',
+      this.updateSignUpButton.bind(this),
+    );
   }
 
   private createSignUpButton(): BaseComponent<HTMLButtonElement> {

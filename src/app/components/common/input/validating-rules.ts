@@ -1,3 +1,5 @@
+import { addressRules } from '@/app/utils/validation-constants';
+
 export type ValidatingRule = {
   test(value: string): boolean;
 };
@@ -46,5 +48,11 @@ export class IsOlderThanValidatingRule implements ValidatingRule {
     referenceDate.setFullYear(birthDate.getFullYear() + this.age);
 
     return today > referenceDate;
+  }
+}
+
+export class IsUSAAddressCodeValidatingRule implements ValidatingRule {
+  public test(value: string): boolean {
+    return addressRules.zip5.test(value) || addressRules.zip9.test(value);
   }
 }

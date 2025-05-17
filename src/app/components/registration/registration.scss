@@ -24,7 +24,10 @@
     .password-input,
     .first-name-input,
     .last-name-input,
-    .date-input {
+    .date-input,
+    .postal-code-input,
+    .street-input,
+    .city-input {
       position: relative;
       width: 100%;
       max-width: 350px;
@@ -34,7 +37,10 @@
       .password,
       .first-name,
       .last-name,
-      .date {
+      .date,
+      .postal-code,
+      .street,
+      .city {
         width: 100%;
         height: 1rem;
         margin-top: 5px;

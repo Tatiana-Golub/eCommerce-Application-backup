@@ -25,7 +25,7 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   constructor(
     id: string = '',
     className: string = 'validating-input-component',
-    onInputChangedCalback: (() => void) | null,
+    onInputChangedCallback: (() => void) | null,
     labelParameters: LabelParameters | undefined,
   ) {
     super(Tags.DIV, id, className);
@@ -34,7 +34,7 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     this.label = this.createLabel();
     this.input = this.createInput();
     this.tooltip = this.createTooltip();
-    this.onInputChangedCallback = onInputChangedCalback;
+    this.onInputChangedCallback = onInputChangedCallback;
     this.createErrorMessages();
   }
 
