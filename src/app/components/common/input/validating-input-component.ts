@@ -1,28 +1,40 @@
 import BaseComponent from '../base-component';
-import { createDiv, createInput, createSpan } from '../base-component-factory';
+import { createDiv, createInput, createLabel, createSpan } from '../base-component-factory';
 import { Tags } from '../tags';
 import { InputType } from './input-types';
+import type { ValidatingRule } from './validating-rules';
 
 const Classes = {
   HIDDEN: 'hidden',
 };
 
+export type LabelParameters = {
+  id: string;
+  className: string;
+  text: string;
+};
+
 export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDivElement> {
   protected readonly input: BaseComponent<HTMLInputElement>;
+  private readonly labelParams?: LabelParameters;
+  private readonly label?: BaseComponent<HTMLLabelElement>;
   private readonly tooltip: BaseComponent<HTMLDivElement>;
-  private readonly validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
+  private readonly validationPair: Map<ValidatingRule, BaseComponent<HTMLSpanElement>> = new Map();
   private readonly onInputChangedCallback: (() => void) | null;
 
   constructor(
     id: string = '',
     className: string = 'validating-input-component',
-    onInputChangedCalback: (() => void) | null,
+    onInputChangedCallback: (() => void) | null,
+    labelParameters: LabelParameters | undefined,
   ) {
     super(Tags.DIV, id, className);
 
+    this.labelParams = labelParameters;
+    this.label = this.createLabel();
     this.input = this.createInput();
     this.tooltip = this.createTooltip();
-    this.onInputChangedCallback = onInputChangedCalback;
+    this.onInputChangedCallback = onInputChangedCallback;
     this.createErrorMessages();
   }
 
@@ -32,14 +44,15 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
 
   public isValid(): boolean {
     const inputValue = this.getInputValue();
-    for (const regExp of this.validationPair.keys()) {
-      if (!regExp.test(inputValue)) return false;
+    for (const rule of this.validationPair.keys()) {
+      if (!rule.test(inputValue)) return false;
     }
 
     return true;
   }
 
   protected renderComponent(): void {
+    this.label?.appendTo(this.getElement());
     this.input.appendTo(this.getElement());
     this.afterRenderInput();
     this.tooltip.appendTo(this.getElement());
@@ -57,32 +70,53 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     const inputValue = this.getInputValue();
     let isValid = true;
 
-    for (const [regExp, span] of this.validationPair) {
-      const isRuleValid = regExp.test(inputValue);
+    for (const [rule, span] of this.validationPair) {
+      const isRuleValid = rule.test(inputValue);
       if (!isRuleValid) isValid = false;
       this.renderValidationErrorForRule(span, isRuleValid);
     }
 
-    this.renderValidationErrorForRule(this.tooltip, isValid || inputValue === '');
+    this.renderValidationErrorForRule(
+      this.tooltip,
+      isValid || (inputValue === '' && !this.showTooltipWhenValueIsEmpty()),
+    );
     return isValid;
+  }
+
+  protected showTooltipWhenValueIsEmpty(): boolean {
+    return false;
   }
 
   protected afterRenderInput(): void {}
 
-  private createInput(): BaseComponent<HTMLInputElement> {
-    const emailInput = createInput(undefined, 'email');
-    const emailInputElement = emailInput.getElement();
-    emailInputElement.placeholder = 'Enter your e-mail';
-    emailInputElement.type = InputType.TEXT;
+  protected createInput(
+    id: string = '',
+    className: string = '',
+    type: InputType = InputType.TEXT,
+    placeholder: string = '',
+  ): BaseComponent<HTMLInputElement> {
+    const input = createInput(id, className);
+    const inputElement = input.getElement();
+    inputElement.placeholder = placeholder;
+    inputElement.type = type;
 
-    return emailInput;
+    return input;
+  }
+
+  protected createLabel(): BaseComponent<HTMLLabelElement> | undefined {
+    if (!this.labelParams) return undefined;
+
+    const label = createLabel(this.labelParams.id, this.labelParams.className);
+    label.setText(this.labelParams.text);
+
+    return label;
   }
 
   private createTooltip(): BaseComponent<HTMLDivElement> {
-    const emailTooltip = createDiv(undefined, 'tooltip');
-    emailTooltip.addClass(Classes.HIDDEN);
+    const tooltip = createDiv(undefined, 'tooltip');
+    tooltip.addClass(Classes.HIDDEN);
 
-    return emailTooltip;
+    return tooltip;
   }
 
   private createErrorMessages(): void {
@@ -111,5 +145,5 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     }
   }
 
-  protected abstract getValidationRulePairs(): Map<RegExp, string>;
+  protected abstract getValidationRulePairs(): Map<ValidatingRule, string>;
 }

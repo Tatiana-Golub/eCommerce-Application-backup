@@ -4,6 +4,7 @@ import { NotFound } from '@components/404/404';
 import { Header } from './components/header/header';
 import { Login } from './components/login/login';
 import { Main } from './components/main/main';
+import { Registration } from './components/registration/registration';
 import { PlaceholderPage } from './components/under-construction/under-construction';
 import './page.scss';
 
@@ -12,6 +13,7 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   private readonly main = Main();
   private readonly header = Header();
   private readonly login = Login();
+  private readonly registration = Registration();
   private readonly placeholder = PlaceholderPage();
 
   constructor(id: string = 'page-wrapper-component', className: string = 'page-wrapper-component') {
@@ -44,8 +46,8 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
     this.renderAllComponentsExcept(this.login);
   }
 
-  public openRegister(): void {
-    this.renderAllComponentsExcept(this.placeholder);
+  public openRegistration(): void {
+    this.renderAllComponentsExcept(this.registration);
   }
 
   public openProfile(): void {
