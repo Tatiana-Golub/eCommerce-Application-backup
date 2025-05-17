@@ -27,7 +27,13 @@ export const clearTokens = (): void => {
 };
 
 export const UserCache = {
-  get: (): Customer => JSON.parse(localStorage.getItem(USER) || '{}'),
+  get: (): Customer | undefined => {
+    try {
+      return JSON.parse(localStorage.getItem(USER) || '');
+    } catch {
+      return undefined;
+    }
+  },
   set: (customer: Customer): void => {
     localStorage.setItem(USER, JSON.stringify(customer));
   },

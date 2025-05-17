@@ -29,8 +29,10 @@ class Router {
     this.flag = false;
   }
 
-  public handleInitialRoute(): void {
-    const currentHash = globalThis.location.hash ? globalThis.location.hash.replace('#', '') : '#/';
+  public handleInitialRoute(initialRoute: string = '#/'): void {
+    const currentHash = globalThis.location.hash
+      ? globalThis.location.hash.replace('#', '')
+      : initialRoute;
     console.log(`initial hash: ${globalThis.location.hash}`);
     this.navigate(currentHash);
   }

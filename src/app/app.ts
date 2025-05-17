@@ -3,6 +3,7 @@ import { router } from '@app/router';
 import type BaseComponent from '@common-components/base-component';
 import { createDiv } from '@common-components/base-component-factory';
 import './app.scss';
+import { SdkApi } from './utils/api/comerce-sdk-api';
 
 class App {
   private readonly pageWrapper = PageWrapper();
@@ -16,7 +17,7 @@ class App {
   public start(): void {
     this.pageWrapper.appendTo(this.root.getElement());
     this.setupRoutes();
-    router.handleInitialRoute();
+    router.handleInitialRoute(SdkApi().isLoggedIn() ? '#/main' : '#/');
   }
 
   public setupRoutes(): void {

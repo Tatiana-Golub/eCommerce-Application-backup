@@ -4,12 +4,15 @@ import { Tags } from '@common-components/tags';
 import './login.scss';
 import { emailValidatingInput } from '../common/input/email-validating-input';
 import { passwordValidatingInput } from '../common/input/password-validating-input';
+import { ApiErrorPopup } from '@components/api-error-popup/api-error-popup';
 import { router } from '@/app/router';
-import { SdkApi } from '@/app/utils/comerce-sdk-api';
+import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
+import { UserCache } from '@/app/utils/api/token-cache';
 import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import { UserCache } from '@/app/utils/token-cache';
 
 class LoginComponent extends BaseComponent<HTMLDivElement> {
+  private ApiErrorPopup = ApiErrorPopup();
   private readonly form: BaseComponent<HTMLFormElement>;
 
   private readonly emailInputComponent = emailValidatingInput(this.updateSubmitButton.bind(this));
@@ -35,7 +38,10 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    this.submitButton.addEventListener('click', () => this.onSubmit());
+    this.submitButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.onSubmit();
+    });
   }
 
   private updateSubmitButton(): void {
@@ -49,6 +55,10 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     }
   }
 
+  private renderErrorMessage(): void {
+    this.ApiErrorPopup.appendTo(this.getElement());
+  }
+
   private async onSubmit(): Promise<void> {
     const email = this.emailInputComponent.getInputValue();
     const password = this.passwordInputComponent.getInputValue();
@@ -59,12 +69,12 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
       .getMe()
       .then((response) => {
         UserCache.set(response.body);
+      })
+      .catch((error) => {
+        this.ApiErrorPopup.setErrorMessage(error.message);
+        this.renderErrorMessage();
       });
-
-    // Just example
-    // TODO: Remove
     PublishSubscriber().publish('userLoggedIn', { userId: email });
-
     router.navigate('#/main');
   }
 

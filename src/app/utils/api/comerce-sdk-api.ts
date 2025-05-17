@@ -1,6 +1,7 @@
 import {
   type ByProjectKeyRequestBuilder,
   createApiBuilderFromCtpClient,
+  Customer,
 } from '@commercetools/platform-sdk';
 import { type ClientResponse } from '@commercetools/ts-client';
 import { ApiClient } from './build-client';
@@ -89,8 +90,9 @@ class CommerceSdkApi {
   public isLoggedIn(): boolean {
     const token = ApiClient().getTokenCache().get();
     const now = Math.floor(Date.now() / 1000);
+    const user = UserCache.get();
 
-    return token && token.expirationTime > now;
+    return token && token.expirationTime > now && user !== undefined;
   }
 
   private initializeSession(): void {
