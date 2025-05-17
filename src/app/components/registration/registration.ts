@@ -2,6 +2,8 @@ import type { AddressComponent } from '../common/address-component/address-compo
 import { addressComponent } from '../common/address-component/address-component';
 import BaseComponent from '../common/base-component';
 import { createButton, createForm } from '../common/base-component-factory';
+import type { Checkbox } from '../common/checkbox-component';
+import { checkbox } from '../common/checkbox-component';
 import { dateValidatingInput } from '../common/input/date-validating-input';
 import type { DateValidatingInput } from '../common/input/date-validating-input';
 import type { EmailValidatingInput } from '../common/input/email-validating-input';
@@ -24,6 +26,8 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   private readonly lastNameInput: LastNameValidatingInput;
   private readonly dateInput: DateValidatingInput;
   private readonly shippingAddress: AddressComponent;
+  private readonly useAsBillingCheckbox: Checkbox;
+  private readonly billingAddress: AddressComponent;
   private readonly signUp: BaseComponent<HTMLButtonElement>;
 
   constructor(id: string = 'registration-component', className: string = 'registration-component') {
@@ -36,6 +40,8 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     this.lastNameInput = this.createLastNameInput();
     this.dateInput = this.createDateInput();
     this.shippingAddress = this.createShippingAddress();
+    this.useAsBillingCheckbox = this.createUseAsBillingCheckbox();
+    this.billingAddress = this.createBillingAddress();
     this.signUp = this.createSignUpButton();
 
     this.init();
@@ -49,6 +55,8 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     this.lastNameInput.appendTo(this.form.getElement());
     this.dateInput.appendTo(this.form.getElement());
     this.shippingAddress.appendTo(this.form.getElement());
+    this.useAsBillingCheckbox.appendTo(this.shippingAddress.getElement());
+    this.billingAddress.appendTo(this.form.getElement());
     this.renderSignUpButton();
   }
 
@@ -57,6 +65,8 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   }
 
   private updateSignUpButton(): void {
+    // validate button state here
+
     // const validateEmailResults = this.emailInputComponent.isValid();
     // const validatePasswordResults = this.passwordInputComponent.isValid();
 
@@ -128,6 +138,20 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
       'Use as default shipping address',
       this.updateSignUpButton.bind(this),
     );
+  }
+
+  private createBillingAddress(): AddressComponent {
+    return addressComponent(
+      undefined,
+      'billing-address-component',
+      'Billing Address',
+      'Use as default billing address',
+      this.updateSignUpButton.bind(this),
+    );
+  }
+
+  private createUseAsBillingCheckbox(): Checkbox {
+    return checkbox(undefined, 'address-checkbox', null, 'Use the same address for billing');
   }
 
   private createSignUpButton(): BaseComponent<HTMLButtonElement> {

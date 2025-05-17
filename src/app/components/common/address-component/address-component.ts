@@ -1,5 +1,5 @@
 import BaseComponent from '../base-component';
-import { createH3, createLabel } from '../base-component-factory';
+import { createDiv, createH3, createLabel } from '../base-component-factory';
 import { checkbox, type Checkbox } from '../checkbox-component';
 import type { CityValidatingInput } from '../input/city-validating-input';
 import { cityValidatingInput } from '../input/city-validating-input';
@@ -20,6 +20,7 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
   private readonly streetInput: StreetValidatingInput;
   private readonly cityInput: CityValidatingInput;
   private readonly postalCodeInput: PostalCodeValidatingInput;
+  private readonly countryDiv: BaseComponent<HTMLDivElement>;
   private readonly countryLabel: BaseComponent<HTMLLabelElement>;
   private readonly countrySelect: CountrySelect;
   private readonly checkBox: Checkbox;
@@ -39,6 +40,7 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.streetInput = this.createStreetInput();
     this.cityInput = this.createCityInput();
     this.postalCodeInput = this.createPostalCodeInput();
+    this.countryDiv = this.createCountryDiv();
     this.countryLabel = this.createCountryLabel();
     this.countrySelect = this.createCountrySelect();
     this.checkBox = this.createCheckBox(checkboxText);
@@ -53,16 +55,13 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.streetInput.appendTo(this.getElement());
     this.cityInput.appendTo(this.getElement());
     this.postalCodeInput.appendTo(this.getElement());
-    this.countryLabel.appendTo(this.getElement());
-    this.countrySelect.appendTo(this.getElement());
+    this.countryDiv.appendTo(this.getElement());
+    this.countryLabel.appendTo(this.countryDiv.getElement());
+    this.countrySelect.appendTo(this.countryDiv.getElement());
     this.checkBox.appendTo(this.getElement());
   }
 
-  protected addEventListeners(): void {
-    // this.checkboxInput.addEventListener('change', () => {
-    //   this.onInputChangedCallback?.();
-    // });
-  }
+  protected addEventListeners(): void {}
 
   private createHeader(text: string): BaseComponent<HTMLHeadingElement> {
     const header = createH3();
@@ -93,6 +92,10 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
       className: '',
       text: 'Postal code *',
     });
+  }
+
+  private createCountryDiv(): BaseComponent<HTMLDivElement> {
+    return createDiv(undefined, 'country-input');
   }
 
   private createCountryLabel(): BaseComponent<HTMLLabelElement> {
