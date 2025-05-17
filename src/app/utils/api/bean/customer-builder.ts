@@ -6,7 +6,7 @@ import type {
   StoreKeyReference,
 } from '@commercetools/platform-sdk';
 
-class CustomerBuilder {
+class CustomerBuilderUtility {
   private customer: Partial<Customer> = {
     addresses: [],
     stores: [],
@@ -82,3 +82,5 @@ class CustomerBuilder {
     return this.customer as Customer;
   }
 }
+
+export const CustomerBuilder = (): CustomerBuilderUtility => new CustomerBuilderUtility();

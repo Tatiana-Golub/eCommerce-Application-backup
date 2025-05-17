@@ -2,14 +2,13 @@ import BaseComponent from '@common-components/base-component';
 import { createButton, createForm } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import './login.scss';
+import { ApiErrorPopup } from '@components/api-error-popup/api-error-popup';
 import { emailValidatingInput } from '../common/input/email-validating-input';
 import { passwordValidatingInput } from '../common/input/password-validating-input';
-import { ApiErrorPopup } from '@components/api-error-popup/api-error-popup';
 import { router } from '@/app/router';
 import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
 import { UserCache } from '@/app/utils/api/token-cache';
 import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
-import { UserCache } from '@/app/utils/token-cache';
 
 class LoginComponent extends BaseComponent<HTMLDivElement> {
   private ApiErrorPopup = ApiErrorPopup();
@@ -55,27 +54,29 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     }
   }
 
-  private renderErrorMessage(): void {
+  private renderErrorMessage(erroMessage: string): void {
     this.ApiErrorPopup.appendTo(this.getElement());
+    this.ApiErrorPopup.setErrorMessage(erroMessage);
+    this.ApiErrorPopup.show();
   }
 
   private async onSubmit(): Promise<void> {
     const email = this.emailInputComponent.getInputValue();
     const password = this.passwordInputComponent.getInputValue();
 
-    await SdkApi().loginUser(email, password);
-    await SdkApi()
-      .withPasswordFlow(email, password)
-      .getMe()
+    SdkApi()
+      .loginUser(email, password)
+      .then(() => {
+        return SdkApi().withPasswordFlow(email, password).getMe();
+      })
       .then((response) => {
         UserCache.set(response.body);
+        PublishSubscriber().publish('userLoggedIn', { userId: email });
+        router.navigate('#/main');
       })
       .catch((error) => {
-        this.ApiErrorPopup.setErrorMessage(error.message);
-        this.renderErrorMessage();
+        this.renderErrorMessage(error.body.message);
       });
-    PublishSubscriber().publish('userLoggedIn', { userId: email });
-    router.navigate('#/main');
   }
 
   private renderForm(): void {

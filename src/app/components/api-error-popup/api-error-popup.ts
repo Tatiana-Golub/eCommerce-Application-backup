@@ -1,16 +1,18 @@
 import BaseComponent from '@common-components/base-component';
 import {
   createButton,
+  createDiv,
   createH1,
   createH2,
+  createP,
   createSpan,
 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import './api-error-popup.scss';
 
-class ApiErrorPopupComponent extends BaseComponent<HTMLDivElement> {
-  private readonly h2: BaseComponent<HTMLHeadingElement>;
-  private readonly span: BaseComponent<HTMLSpanElement>;
+class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
+  private readonly container: BaseComponent<HTMLDivElement>;
+  private readonly message: BaseComponent<HTMLParagraphElement>;
   private readonly closeButton: BaseComponent<HTMLButtonElement>;
   private erroMessage: string;
 
@@ -19,11 +21,11 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDivElement> {
     className: string = 'api-error-popup-component',
     erroMessage: string = 'data not found',
   ) {
-    super(Tags.DIV, id, className);
+    super(Tags.DIALOG, id, className);
 
     this.erroMessage = erroMessage;
-    this.h2 = createH2(undefined, 'heading-2');
-    this.span = createSpan(undefined, 'error-message');
+    this.container = createDiv('', 'container');
+    this.message = createP(undefined, 'message');
     this.closeButton = createButton(undefined, 'close-button');
 
     this.init();
@@ -31,36 +33,63 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDivElement> {
 
   public setErrorMessage(erroMessage: string): void {
     this.erroMessage = erroMessage;
+    this.message.setText(this.erroMessage);
+  }
+
+  public show(): void {
+    this.getElement().showModal();
   }
 
   protected renderComponent(): void {
-    this.renderHeading2();
-    this.renderSpan();
+    this.renderContainer();
+    this.renderMessage();
     this.renderCloseButton();
   }
 
   protected addEventListeners(): void {
     this.addEventListenerCloseButton();
+    this.addEventListenerCloseOnBackdrop();
+    this.addEventListenerCloseOnEscape();
   }
 
-  private renderHeading2(): void {
-    this.h2.appendTo(this.getElement());
-    this.h2.setText('Api Error');
+  private close(): void {
+    this.getElement().close();
+    this.remove();
   }
 
-  private renderSpan(): void {
-    this.span.appendTo(this.getElement());
-    this.span.setText(this.erroMessage);
+  private renderContainer(): void {
+    this.container.appendTo(this.getElement());
+  }
+
+  private renderMessage(): void {
+    this.message.appendTo(this.container.getElement());
+    this.setErrorMessage(this.erroMessage);
   }
 
   private renderCloseButton(): void {
-    this.closeButton.appendTo(this.getElement());
+    this.closeButton.appendTo(this.container.getElement());
     this.closeButton.setText('Close');
   }
 
   private addEventListenerCloseButton(): void {
     this.closeButton.addEventListener('click', () => {
-      this.remove();
+      this.close();
+    });
+  }
+
+  private addEventListenerCloseOnBackdrop(): void {
+    this.getElement().addEventListener('click', (event) => {
+      if (event.target === this.getElement()) {
+        this.close();
+      }
+    });
+  }
+
+  private addEventListenerCloseOnEscape(): void {
+    this.getElement().addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        this.close();
+      }
     });
   }
 }

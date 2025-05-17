@@ -1,9 +1,10 @@
 import {
   type ByProjectKeyRequestBuilder,
   createApiBuilderFromCtpClient,
-  Customer,
+  type Customer,
 } from '@commercetools/platform-sdk';
 import { type ClientResponse } from '@commercetools/ts-client';
+import { CustomerBuilder } from './bean/customer-builder';
 import { ApiClient } from './build-client';
 import { clearTokens, UserCache } from './token-cache';
 
@@ -31,7 +32,7 @@ class CommerceSdkApi {
     return this.apiRoot.get().execute();
   }
 
-  public createCustomer(): Promise<ClientResponse> {
+  public createCustomer(customer: Customer = CustomerBuilder().build()): Promise<ClientResponse> {
     return this.apiRoot
       .customers()
       .post({

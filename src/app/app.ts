@@ -17,12 +17,12 @@ class App {
   public start(): void {
     this.pageWrapper.appendTo(this.root.getElement());
     this.setupRoutes();
-    router.handleInitialRoute(SdkApi().isLoggedIn() ? '#/main' : '#/');
+    router.handleInitialRoute();
   }
 
   public setupRoutes(): void {
     router.addRoute('#/', () => {
-      this.pageWrapper.openMain();
+      router.navigate('#/main');
     });
 
     router.addRoute('#/main', () => {
@@ -46,7 +46,11 @@ class App {
     });
 
     router.addRoute('#/login', () => {
-      this.pageWrapper.openLogin();
+      if (SdkApi().isLoggedIn()) {
+        router.navigate('#/main');
+      } else {
+        this.pageWrapper.openLogin();
+      }
     });
 
     router.addRoute('#/register', () => {
