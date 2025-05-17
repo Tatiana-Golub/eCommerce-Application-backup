@@ -2,6 +2,7 @@ import BaseComponent from '../base-component';
 import { createDiv, createInput, createLabel, createSpan } from '../base-component-factory';
 import { Tags } from '../tags';
 import { InputType } from './input-types';
+import type { ValidatingRule } from './validating-rules';
 
 const Classes = {
   HIDDEN: 'hidden',
@@ -18,7 +19,7 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   private readonly labelParams?: LabelParameters;
   private readonly label?: BaseComponent<HTMLLabelElement>;
   private readonly tooltip: BaseComponent<HTMLDivElement>;
-  private readonly validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
+  private readonly validationPair: Map<ValidatingRule, BaseComponent<HTMLSpanElement>> = new Map();
   private readonly onInputChangedCallback: (() => void) | null;
 
   constructor(
@@ -43,8 +44,8 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
 
   public isValid(): boolean {
     const inputValue = this.getInputValue();
-    for (const regExp of this.validationPair.keys()) {
-      if (!regExp.test(inputValue)) return false;
+    for (const rule of this.validationPair.keys()) {
+      if (!rule.test(inputValue)) return false;
     }
 
     return true;
@@ -69,14 +70,21 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     const inputValue = this.getInputValue();
     let isValid = true;
 
-    for (const [regExp, span] of this.validationPair) {
-      const isRuleValid = regExp.test(inputValue);
+    for (const [rule, span] of this.validationPair) {
+      const isRuleValid = rule.test(inputValue);
       if (!isRuleValid) isValid = false;
       this.renderValidationErrorForRule(span, isRuleValid);
     }
 
-    this.renderValidationErrorForRule(this.tooltip, isValid || inputValue === '');
+    this.renderValidationErrorForRule(
+      this.tooltip,
+      isValid || (inputValue === '' && !this.showTooltipWhenValueIsEmpty()),
+    );
     return isValid;
+  }
+
+  protected showTooltipWhenValueIsEmpty(): boolean {
+    return false;
   }
 
   protected afterRenderInput(): void {}
@@ -137,5 +145,5 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
     }
   }
 
-  protected abstract getValidationRulePairs(): Map<RegExp, string>;
+  protected abstract getValidationRulePairs(): Map<ValidatingRule, string>;
 }

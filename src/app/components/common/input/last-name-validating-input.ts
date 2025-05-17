@@ -34,4 +34,9 @@ export const lastNameValidatingInput = (
   onInputChangedCallback: (() => void) | null = null,
   labelParameters: LabelParameters | undefined = undefined,
 ): LastNameValidatingInput =>
-  new LastNameValidatingInput('last-name', 'last-name', onInputChangedCallback, labelParameters);
+  new LastNameValidatingInput(
+    'last-name',
+    'last-name-input',
+    onInputChangedCallback,
+    labelParameters,
+  );

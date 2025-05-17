@@ -2,6 +2,13 @@ import type BaseComponent from '../base-component';
 import { InputType } from './input-types';
 import type { LabelParameters } from './validating-input-component';
 import { BaseValidatingInputComponent } from './validating-input-component';
+import {
+  IsEarlyThanNowValidatingRule,
+  IsEmptyDateValidatingRule,
+  IsLateThan1900YearValidatingRule,
+  IsOlderThanValidatingRule,
+  type ValidatingRule,
+} from './validating-rules';
 
 export class DateValidatingInput extends BaseValidatingInputComponent {
   constructor(
@@ -15,13 +22,25 @@ export class DateValidatingInput extends BaseValidatingInputComponent {
     this.init();
   }
 
-  protected getValidationRulePairs(): Map<RegExp, string> {
-    return new Map<RegExp, string>();
-    // A valid date input ensuring the user is above a certain age (e.g., 13 years old or older)
+  protected getValidationRulePairs(): Map<ValidatingRule, string> {
+    const ageRestriction = 14;
+    return new Map<ValidatingRule, string>([
+      [new IsLateThan1900YearValidatingRule(), 'Date cannot be earlier than 1900'],
+      [new IsEarlyThanNowValidatingRule(), 'Date cannot be in the future'],
+      [new IsEmptyDateValidatingRule(), 'Please enter your date of birth'],
+      [
+        new IsOlderThanValidatingRule(ageRestriction),
+        `You should be at least ${ageRestriction} years old`,
+      ],
+    ]);
   }
 
   protected createInput(): BaseComponent<HTMLInputElement> {
     return super.createInput(undefined, 'date', InputType.DATE, '');
+  }
+
+  protected showTooltipWhenValueIsEmpty(): boolean {
+    return true;
   }
 }
 
