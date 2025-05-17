@@ -3,6 +3,7 @@ import { router } from '@app/router';
 import type BaseComponent from '@common-components/base-component';
 import { createDiv } from '@common-components/base-component-factory';
 import './app.scss';
+import { SdkApi } from './utils/api/comerce-sdk-api';
 
 class App {
   private readonly pageWrapper = PageWrapper();
@@ -21,7 +22,7 @@ class App {
 
   public setupRoutes(): void {
     router.addRoute('#/', () => {
-      this.pageWrapper.openMain();
+      router.navigate('#/main');
     });
 
     router.addRoute('#/main', () => {
@@ -45,7 +46,11 @@ class App {
     });
 
     router.addRoute('#/login', () => {
-      this.pageWrapper.openLogin();
+      if (SdkApi().isLoggedIn()) {
+        router.navigate('#/main');
+      } else {
+        this.pageWrapper.openLogin();
+      }
     });
 
     router.addRoute('#/register', () => {

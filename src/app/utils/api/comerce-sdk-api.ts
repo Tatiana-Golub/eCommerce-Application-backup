@@ -1,8 +1,10 @@
 import {
   type ByProjectKeyRequestBuilder,
   createApiBuilderFromCtpClient,
+  type Customer,
 } from '@commercetools/platform-sdk';
 import { type ClientResponse } from '@commercetools/ts-client';
+import { CustomerBuilder } from './bean/customer-builder';
 import { ApiClient } from './build-client';
 import { clearTokens, UserCache } from './token-cache';
 
@@ -30,7 +32,7 @@ class CommerceSdkApi {
     return this.apiRoot.get().execute();
   }
 
-  public createCustomer(): Promise<ClientResponse> {
+  public createCustomer(customer: Customer = CustomerBuilder().build()): Promise<ClientResponse> {
     return this.apiRoot
       .customers()
       .post({
@@ -89,8 +91,9 @@ class CommerceSdkApi {
   public isLoggedIn(): boolean {
     const token = ApiClient().getTokenCache().get();
     const now = Math.floor(Date.now() / 1000);
+    const user = UserCache.get();
 
-    return token && token.expirationTime > now;
+    return token && token.expirationTime > now && user !== undefined;
   }
 
   private initializeSession(): void {
