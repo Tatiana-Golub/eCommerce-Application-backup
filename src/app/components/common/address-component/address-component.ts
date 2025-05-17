@@ -1,14 +1,8 @@
 import BaseComponent from '../base-component';
-import {
-  createDiv,
-  createH3,
-  createInput,
-  createLabel,
-  createSpan,
-} from '../base-component-factory';
+import { createH3, createLabel } from '../base-component-factory';
+import { checkbox, type Checkbox } from '../checkbox-component';
 import type { CityValidatingInput } from '../input/city-validating-input';
 import { cityValidatingInput } from '../input/city-validating-input';
-import { InputType } from '../input/input-types';
 import type { PostalCodeValidatingInput } from '../input/postal-code-validating-input';
 import { postalCodeValidatingInput } from '../input/postal-code-validating-input';
 import type { StreetValidatingInput } from '../input/street-validating-input';
@@ -28,8 +22,7 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
   private readonly postalCodeInput: PostalCodeValidatingInput;
   private readonly countryLabel: BaseComponent<HTMLLabelElement>;
   private readonly countrySelect: CountrySelect;
-  private readonly checkBox: BaseComponent<HTMLDivElement>;
-  private readonly checkboxInput: BaseComponent<HTMLInputElement>;
+  private readonly checkBox: Checkbox;
 
   private readonly onInputChangedCallback: (() => void) | null;
 
@@ -48,7 +41,6 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.postalCodeInput = this.createPostalCodeInput();
     this.countryLabel = this.createCountryLabel();
     this.countrySelect = this.createCountrySelect();
-    this.checkboxInput = this.createCheckboxInput();
     this.checkBox = this.createCheckBox(checkboxText);
 
     this.onInputChangedCallback = onInputChangedCallback;
@@ -67,9 +59,9 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    this.checkboxInput.addEventListener('change', () => {
-      this.onInputChangedCallback?.();
-    });
+    // this.checkboxInput.addEventListener('change', () => {
+    //   this.onInputChangedCallback?.();
+    // });
   }
 
   private createHeader(text: string): BaseComponent<HTMLHeadingElement> {
@@ -114,21 +106,8 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     return new CountrySelect(this.coutriesPairs, this.onInputChangedCallback);
   }
 
-  private createCheckboxInput(): BaseComponent<HTMLInputElement> {
-    const input = createInput(undefined, 'address-checkbox-input');
-    input.getElement().type = InputType.CHECKBOX;
-
-    return input;
-  }
-
-  private createCheckBox(checkboxText: string): BaseComponent<HTMLDivElement> {
-    const div = createDiv(undefined, 'address-checkbox');
-    this.checkboxInput.appendTo(div.getElement());
-    const span = createSpan(undefined, 'address-checkbox-text');
-    span.appendTo(div.getElement());
-    span.setText(checkboxText);
-
-    return div;
+  private createCheckBox(checkboxText: string): Checkbox {
+    return checkbox(undefined, 'address-checkbox', null, checkboxText);
   }
 }
 
