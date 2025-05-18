@@ -24,6 +24,11 @@ class CustomerBuilderUtility {
     return this;
   }
 
+  public withPassword(password: string): this {
+    this.customer = { ...this.customer, password };
+    return this;
+  }
+
   public withVersion(version: number): this {
     this.customer = { ...this.customer, version };
     return this;
@@ -46,6 +51,11 @@ class CustomerBuilderUtility {
 
   public withAddress(address: Address): this {
     this.customer.addresses?.push(address);
+    return this;
+  }
+
+  public withDateOfBirth(date: string): this {
+    this.customer = { ...this.customer, dateOfBirth: date };
     return this;
   }
 

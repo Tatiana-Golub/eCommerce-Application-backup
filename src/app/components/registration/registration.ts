@@ -15,6 +15,8 @@ import { lastNameValidatingInput } from '../common/input/last-name-validating-in
 import type { PasswordValidatingInput } from '../common/input/password-validating-input';
 import { passwordValidatingInput } from '../common/input/password-validating-input';
 import { Tags } from '../common/tags';
+import { CustomerBuilder } from '@/app/utils/api/bean/customer-builder';
+import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
 import './registration.scss';
 
 class RegistrationComponent extends BaseComponent<HTMLDivElement> {
@@ -61,17 +63,26 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    this.signUp.addEventListener('click', () => this.onSignUp());
+    this.signUp.addEventListener('click', (event) => {
+      event.preventDefault();
+      this.onSignUp();
+    });
   }
 
   private updateSignUpButton(): void {
-    // validate button state here
+    const validateEmailResults = this.emailInput.isValid();
+    const validatePasswordResults = this.passwordInput.isValid();
+    const validateFirstNameResults = this.firstNameInput.isValid();
+    const validateLastNameResults = this.lastNameInput.isValid();
+    const validateDateResults = this.dateInput.isValid();
 
-    // const validateEmailResults = this.emailInputComponent.isValid();
-    // const validatePasswordResults = this.passwordInputComponent.isValid();
-
-    // if (validateEmailResults && validatePasswordResults) {
-    if (false) {
+    const isValid =
+      validateEmailResults &&
+      validatePasswordResults &&
+      validateFirstNameResults &&
+      validateLastNameResults &&
+      validateDateResults;
+    if (isValid) {
       this.signUp.removeAttribute('disabled');
     } else {
       this.signUp.setAttribute('disabled', 'true');
@@ -79,7 +90,35 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   }
 
   private async onSignUp(): Promise<void> {
-    console.log('on SignUp click');
+    const uuid = crypto.randomUUID();
+    const email = this.emailInput.getInputValue();
+    const password = this.passwordInput.getInputValue();
+    const firstName = this.firstNameInput.getInputValue();
+    const lastName = this.lastNameInput.getInputValue();
+    const date = this.dateInput.getInputValue();
+
+    const customer = CustomerBuilder()
+      .withId(uuid)
+      .withEmail(email)
+      .withPassword(password)
+      .withFirstName(firstName)
+      .withLastName(lastName)
+      .withDateOfBirth(date)
+      .build();
+
+    console.log(customer);
+
+    await SdkApi()
+      .createCustomer(customer)
+      .then(() => {
+        console.log('Customer created');
+      })
+      .then(() => {
+        return SdkApi().withPasswordFlow(email, password).getMe();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   private renderForm(): void {

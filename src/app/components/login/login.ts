@@ -1,7 +1,6 @@
 import BaseComponent from '@common-components/base-component';
 import { createButton, createForm, createH2 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import './login.scss';
 import { ApiErrorPopup } from '@components/api-error-popup/api-error-popup';
 import { emailValidatingInput } from '../common/input/email-validating-input';
 import { passwordValidatingInput } from '../common/input/password-validating-input';
@@ -9,6 +8,7 @@ import { router } from '@/app/router';
 import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
 import { UserCache } from '@/app/utils/api/token-cache';
 import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
+import './login.scss';
 
 class LoginComponent extends BaseComponent<HTMLDivElement> {
   private ApiErrorPopup = ApiErrorPopup();
@@ -67,7 +67,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     const email = this.emailInputComponent.getInputValue();
     const password = this.passwordInputComponent.getInputValue();
 
-    SdkApi()
+    await SdkApi()
       .loginUser(email, password)
       .then(() => {
         return SdkApi().withPasswordFlow(email, password).getMe();

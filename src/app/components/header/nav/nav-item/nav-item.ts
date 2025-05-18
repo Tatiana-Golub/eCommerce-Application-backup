@@ -30,11 +30,6 @@ class NavItemComponent extends BaseComponent<HTMLButtonElement> {
   }
 
   protected addEventListeners(): void {
-    /*
-    this.addEventListener('click', () => {
-      router.navigate(`#/${this.navRoute}`);
-    });
-    */
     return;
   }
 

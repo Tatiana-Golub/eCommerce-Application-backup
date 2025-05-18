@@ -65,6 +65,7 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   private renderAllComponentsExcept(component: BaseComponent<HTMLDivElement>): void {
     this.header.appendTo(this.getElement());
     this.main.remove();
+    this.registration.remove();
     this.notFound.remove();
     this.login.remove();
     this.registration.remove();

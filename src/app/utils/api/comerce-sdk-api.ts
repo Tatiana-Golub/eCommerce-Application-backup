@@ -37,10 +37,11 @@ class CommerceSdkApi {
       .customers()
       .post({
         body: {
-          email: 'test123@test.com',
-          password: 'Test123!',
-          firstName: 'Test',
-          lastName: 'User',
+          email: customer.email,
+          password: customer.password,
+          firstName: customer.firstName,
+          lastName: customer.lastName,
+          dateOfBirth: customer.dateOfBirth,
         },
       })
       .execute();
