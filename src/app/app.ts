@@ -53,8 +53,8 @@ class App {
       }
     });
 
-    router.addRoute('#/register', () => {
-      this.pageWrapper.openRegister();
+    router.addRoute('#/registration', () => {
+      this.pageWrapper.openRegistration();
     });
 
     router.addRoute('#/profile', () => {

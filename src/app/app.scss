@@ -6,6 +6,10 @@
   src: url('/assets/fonts/Genshin-Font.ttf');
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .app {
   display: flex;
   flex-direction: column;

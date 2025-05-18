@@ -1,11 +1,12 @@
 import type BaseComponent from '../base-component';
 import { createDiv } from '../base-component-factory';
 import { InputType } from './input-types';
+import type { LabelParameters } from './validating-input-component';
 import { BaseValidatingInputComponent } from './validating-input-component';
 import { eyeClose, eyeOpen } from '@/app/utils/svg-constants';
 import { passwordRules } from '@/app/utils/validation-constants';
 
-class PasswordValidatingInput extends BaseValidatingInputComponent {
+export class PasswordValidatingInput extends BaseValidatingInputComponent {
   private readonly passwordControl: BaseComponent<HTMLDivElement>;
   private isPasswordVisible: boolean = false;
 
@@ -15,8 +16,9 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
     type: string,
     placeholder: string,
     onInputChangedCallback: (() => void) | null,
+    labelParameters: LabelParameters | undefined,
   ) {
-    super(id, className, type, placeholder, onInputChangedCallback);
+super(id, className, onInputChangedCallback, labelParameters);
 
     this.passwordControl = this.createPasswordControl();
     this.init();
@@ -39,6 +41,10 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
       ],
       [passwordRules.noWhitespace, 'Password must not contain leading or trailing whitespace'],
     ]);
+  }
+
+  protected createInput(): BaseComponent<HTMLInputElement> {
+    return super.createInput(undefined, 'password', InputType.PASSWORD, 'Enter your password');
   }
 
   protected afterRenderInput(): void {
@@ -65,11 +71,11 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
 
 export const passwordValidatingInput = (
   onInputChangedCallback: (() => void) | null = null,
+  labelParameters: LabelParameters | undefined = undefined,
 ): PasswordValidatingInput =>
   new PasswordValidatingInput(
     'password-input',
     'password-input',
-    'password',
-    'Enter your password',
     onInputChangedCallback,
+    labelParameters,
   );
