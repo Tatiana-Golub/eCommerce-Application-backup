@@ -84,6 +84,20 @@ class CustomerBuilderUtility {
     return this;
   }
 
+  public withDefaultShippingAddressId(id: string | undefined): this {
+    if (id) {
+      this.customer = { ...this.customer, defaultShippingAddressId: id };
+    }
+    return this;
+  }
+
+  public withDefaultBillingAddressId(id: string | undefined): this {
+    if (id) {
+      this.customer = { ...this.customer, defaultBillingAddressId: id };
+    }
+    return this;
+  }
+
   public build(): Customer {
     if (!this.customer.id || !this.customer.email) {
       throw new Error('Required fields "id" and "email" must be provided');

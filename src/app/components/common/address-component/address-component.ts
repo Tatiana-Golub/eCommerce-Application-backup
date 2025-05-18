@@ -1,3 +1,4 @@
+import type { BaseAddress } from '@commercetools/platform-sdk';
 import BaseComponent from '../base-component';
 import { createDiv, createH3, createLabel } from '../base-component-factory';
 import { checkbox, type Checkbox } from '../checkbox-component';
@@ -10,10 +11,11 @@ import { streetValidatingInput } from '../input/street-validating-input';
 import { Tags } from '../tags';
 import type { CountrySelectOptionPair } from './country-select-component';
 import { CountrySelect } from './country-select-component';
+import { AddressBuilder } from '@/app/utils/api/bean/address-builder';
 
 export class AddressComponent extends BaseComponent<HTMLDivElement> {
   private readonly coutriesPairs: Array<CountrySelectOptionPair> = [
-    { value: 'USA', text: 'United States' },
+    { value: 'US', text: 'United States' },
   ];
 
   private readonly header: BaseComponent<HTMLHeadingElement>;
@@ -48,6 +50,33 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.onInputChangedCallback = onInputChangedCallback;
 
     this.init();
+  }
+
+  public isChecked(): boolean {
+    return this.checkBox.isChecked();
+  }
+
+  public hasValidValues(): boolean {
+    return (
+      this.streetInput.getInputValue() !== '' &&
+      this.streetInput.isValid() &&
+      this.cityInput.getInputValue() !== '' &&
+      this.cityInput.isValid() &&
+      this.postalCodeInput.getInputValue() !== '' &&
+      this.postalCodeInput.isValid() &&
+      this.countrySelect.getValue() !== ''
+    );
+  }
+
+  public getAddress(): BaseAddress {
+    const address = AddressBuilder()
+      .withKey(crypto.randomUUID())
+      .withStreetName(this.streetInput.getInputValue())
+      .withCity(this.cityInput.getInputValue())
+      .withPostalCode(this.postalCodeInput.getInputValue())
+      .withCountry(this.countrySelect.getValue())
+      .build();
+    return address;
   }
 
   protected renderComponent(): void {

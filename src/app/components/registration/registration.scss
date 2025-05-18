@@ -1,16 +1,17 @@
 .registration-component {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  width: 100vw;
-  height: 100vh;
   padding: 1rem;
 
-  .registration-form {
-    scrollbar-width: none;
+  .heading-2 {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+  }
 
-    overflow-y: auto;
+  .registration-form {
     display: flex;
     flex-direction: column;
     gap: 3rem;
@@ -19,7 +20,6 @@
 
     width: 100%;
     max-width: 400px;
-    max-height: 70vh;
     padding: 1rem 1rem 1.5rem;
     border: none;
     border-radius: 1rem;
@@ -27,13 +27,25 @@
     background: linear-gradient(transparent, transparent 30%, var(--blue-40) 70%);
     box-shadow: 0 0 1rem 0 var(--white);
 
+    .address-checkbox {
+      width: 100%;
+
+      .address-checkbox-text {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
     .shipping-address-component,
     .billing-address-component {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
 
-      /* Styles for Select and Option were here */
+      &.hidden {
+        display: none;
+      }
 
       .country-select-component {
         cursor: pointer;

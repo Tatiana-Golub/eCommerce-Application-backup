@@ -1,8 +1,9 @@
+import type { Customer } from '@commercetools/platform-sdk';
 import { ApiPopup } from '@components/api-popup/api-popup';
 import type { AddressComponent } from '../common/address-component/address-component';
 import { addressComponent } from '../common/address-component/address-component';
 import BaseComponent from '../common/base-component';
-import { createButton, createForm } from '../common/base-component-factory';
+import { createButton, createForm, createH2 } from '../common/base-component-factory';
 import type { Checkbox } from '../common/checkbox-component';
 import { checkbox } from '../common/checkbox-component';
 import { dateValidatingInput } from '../common/input/date-validating-input';
@@ -25,6 +26,7 @@ import './registration.scss';
 
 class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   private ApiPopup = ApiPopup();
+  private readonly h2: BaseComponent<HTMLHeadingElement>;
   private readonly form: BaseComponent<HTMLFormElement>;
 
   private readonly emailInput: EmailValidatingInput;
@@ -39,6 +41,8 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
 
   constructor(id: string = 'registration-component', className: string = 'registration-component') {
     super(Tags.DIV, id, className);
+
+    this.h2 = createH2(undefined, 'heading-2');
 
     this.form = createForm(undefined, 'registration-form');
     this.emailInput = this.createEmailInput();
@@ -55,6 +59,7 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected renderComponent(): void {
+    this.renderH2();
     this.renderForm();
     this.emailInput.appendTo(this.form.getElement());
     this.passwordInput.appendTo(this.form.getElement());
@@ -68,9 +73,24 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
+    this.addSingUpListener();
+    this.addUseSameAddressListener();
+  }
+
+  private addSingUpListener(): void {
     this.signUp.addEventListener('click', (event) => {
       event.preventDefault();
       this.onSignUp();
+    });
+  }
+
+  private addUseSameAddressListener(): void {
+    this.useAsBillingCheckbox.addEventListener('change', () => {
+      if (this.useAsBillingCheckbox.isChecked()) {
+        this.billingAddress.addClass('hidden');
+      } else {
+        this.billingAddress.removeClass('hidden');
+      }
     });
   }
 
@@ -80,18 +100,31 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     const validateFirstNameResults = this.firstNameInput.isValid();
     const validateLastNameResults = this.lastNameInput.isValid();
     const validateDateResults = this.dateInput.isValid();
+    const validateAddressResults = this.shippingAddress.hasValidValues();
+    let validateBillingAddressResults = true;
+    if (!this.useAsBillingCheckbox.isChecked()) {
+      validateBillingAddressResults = this.billingAddress.hasValidValues();
+    }
 
     const isValid =
       validateEmailResults &&
       validatePasswordResults &&
       validateFirstNameResults &&
       validateLastNameResults &&
-      validateDateResults;
+      validateDateResults &&
+      validateAddressResults &&
+      validateBillingAddressResults;
+
     if (isValid) {
       this.signUp.removeAttribute('disabled');
     } else {
       this.signUp.setAttribute('disabled', 'true');
     }
+  }
+
+  private renderH2(): void {
+    this.h2.setText('Registration');
+    this.h2.appendTo(this.getElement());
   }
 
   private renderPopupMessage(erroMessage: string, callback?: () => void): void {
@@ -101,13 +134,23 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     this.ApiPopup.show();
   }
 
-  private async onSignUp(): Promise<void> {
+  private customerBuild(): Customer {
     const uuid = crypto.randomUUID();
     const email = this.emailInput.getInputValue();
     const password = this.passwordInput.getInputValue();
     const firstName = this.firstNameInput.getInputValue();
     const lastName = this.lastNameInput.getInputValue();
     const date = this.dateInput.getInputValue();
+    const shippingAddress = this.shippingAddress.getAddress();
+    let billingAddress;
+    let addresses;
+    if (this.useAsBillingCheckbox.isChecked()) {
+      billingAddress = shippingAddress;
+      addresses = [shippingAddress];
+    } else {
+      billingAddress = this.billingAddress.getAddress();
+      addresses = [shippingAddress, billingAddress];
+    }
 
     const customer = CustomerBuilder()
       .withId(uuid)
@@ -116,26 +159,35 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
       .withFirstName(firstName)
       .withLastName(lastName)
       .withDateOfBirth(date)
+      .withAddresses(addresses)
+      .withDefaultShippingAddressId(
+        this.shippingAddress.isChecked() ? shippingAddress.key : undefined,
+      )
+      .withDefaultBillingAddressId(this.billingAddress.isChecked() ? billingAddress.key : undefined)
       .build();
+    return customer;
+  }
 
-    console.log(customer);
+  private async onSignUp(): Promise<void> {
+    const customer = this.customerBuild();
+    const password = this.passwordInput.getInputValue();
 
     await SdkApi()
       .createCustomer(customer)
       .then(() => {
         this.renderPopupMessage(
-          `Customer with email: ${email} and firstName: ${firstName} created`,
+          `Customer with email: ${customer.email} and firstName: ${customer.firstName} created`,
           () => {
             router.navigate('#/main');
           },
         );
       })
       .then(() => {
-        return SdkApi().withPasswordFlow(email, password).getMe();
+        return SdkApi().withPasswordFlow(customer.email, password).getMe();
       })
       .then((response) => {
         UserCache.set(response.body);
-        PublishSubscriber().publish('userLoggedIn', { userId: email });
+        PublishSubscriber().publish('userLoggedIn', { userId: customer.email });
       })
       .catch((error) => {
         this.renderPopupMessage(error.body.message, () => void 0);

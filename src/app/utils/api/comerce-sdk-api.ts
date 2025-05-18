@@ -4,9 +4,9 @@ import {
   type Customer,
 } from '@commercetools/platform-sdk';
 import { type ClientResponse } from '@commercetools/ts-client';
-import { CustomerBuilder } from './bean/customer-builder';
-import { ApiClient } from './build-client';
-import { clearTokens, UserCache } from './token-cache';
+import { CustomerBuilder } from '@utils/api/bean/customer-builder';
+import { ApiClient } from '@utils/api/build-client';
+import { clearTokens, UserCache } from '@utils/api/token-cache';
 
 class CommerceSdkApi {
   private static instance: CommerceSdkApi;
@@ -42,6 +42,9 @@ class CommerceSdkApi {
           firstName: customer.firstName,
           lastName: customer.lastName,
           dateOfBirth: customer.dateOfBirth,
+          addresses: customer.addresses,
+          defaultShippingAddress: customer.defaultShippingAddressId ? 0 : undefined,
+          defaultBillingAddress: customer.defaultBillingAddressId ? 1 : undefined,
         },
       })
       .execute();
