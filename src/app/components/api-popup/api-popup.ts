@@ -1,20 +1,14 @@
 import BaseComponent from '@common-components/base-component';
-import {
-  createButton,
-  createDiv,
-  createH1,
-  createH2,
-  createP,
-  createSpan,
-} from '@common-components/base-component-factory';
+import { createButton, createDiv, createP } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import './api-error-popup.scss';
+import './api-popup.scss';
 
-class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
+class ApiPopupComponent extends BaseComponent<HTMLDialogElement> {
   private readonly container: BaseComponent<HTMLDivElement>;
   private readonly message: BaseComponent<HTMLParagraphElement>;
   private readonly closeButton: BaseComponent<HTMLButtonElement>;
   private erroMessage: string;
+  private onCloseCallback?: () => void;
 
   constructor(
     id: string = 'api-error-popup-component',
@@ -40,6 +34,10 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
     this.getElement().showModal();
   }
 
+  public onClose(callback: () => void): void {
+    this.onCloseCallback = callback;
+  }
+
   protected renderComponent(): void {
     this.renderContainer();
     this.renderMessage();
@@ -55,6 +53,9 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
   private close(): void {
     this.getElement().close();
     this.remove();
+    if (this.onCloseCallback) {
+      this.onCloseCallback();
+    }
   }
 
   private renderContainer(): void {
@@ -94,5 +95,5 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
   }
 }
 
-export const ApiErrorPopup = (erroMessage: string = 'data not found'): ApiErrorPopupComponent =>
-  new ApiErrorPopupComponent(undefined, undefined, erroMessage);
+export const ApiPopup = (erroMessage: string = 'data not found'): ApiPopupComponent =>
+  new ApiPopupComponent(undefined, undefined, erroMessage);

@@ -1,3 +1,4 @@
+import { ApiPopup } from '@components/api-popup/api-popup';
 import type { AddressComponent } from '../common/address-component/address-component';
 import { addressComponent } from '../common/address-component/address-component';
 import BaseComponent from '../common/base-component';
@@ -15,11 +16,15 @@ import { lastNameValidatingInput } from '../common/input/last-name-validating-in
 import type { PasswordValidatingInput } from '../common/input/password-validating-input';
 import { passwordValidatingInput } from '../common/input/password-validating-input';
 import { Tags } from '../common/tags';
+import { router } from '@/app/router';
 import { CustomerBuilder } from '@/app/utils/api/bean/customer-builder';
 import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
+import { UserCache } from '@/app/utils/api/token-cache';
+import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import './registration.scss';
 
 class RegistrationComponent extends BaseComponent<HTMLDivElement> {
+  private ApiPopup = ApiPopup();
   private readonly form: BaseComponent<HTMLFormElement>;
 
   private readonly emailInput: EmailValidatingInput;
@@ -89,6 +94,13 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     }
   }
 
+  private renderPopupMessage(erroMessage: string, callback?: () => void): void {
+    this.ApiPopup.appendTo(this.getElement());
+    this.ApiPopup.setErrorMessage(erroMessage);
+    if (callback) this.ApiPopup.onClose(callback);
+    this.ApiPopup.show();
+  }
+
   private async onSignUp(): Promise<void> {
     const uuid = crypto.randomUUID();
     const email = this.emailInput.getInputValue();
@@ -111,13 +123,22 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     await SdkApi()
       .createCustomer(customer)
       .then(() => {
-        console.log('Customer created');
+        this.renderPopupMessage(
+          `Customer with email: ${email} and firstName: ${firstName} created`,
+          () => {
+            router.navigate('#/main');
+          },
+        );
       })
       .then(() => {
         return SdkApi().withPasswordFlow(email, password).getMe();
       })
+      .then((response) => {
+        UserCache.set(response.body);
+        PublishSubscriber().publish('userLoggedIn', { userId: email });
+      })
       .catch((error) => {
-        console.log(error);
+        this.renderPopupMessage(error.body.message, () => void 0);
       });
   }
 

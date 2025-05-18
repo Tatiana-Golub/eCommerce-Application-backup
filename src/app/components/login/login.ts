@@ -1,9 +1,9 @@
 import BaseComponent from '@common-components/base-component';
 import { createButton, createForm, createH2 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import { ApiErrorPopup } from '@components/api-error-popup/api-error-popup';
 import { emailValidatingInput } from '../common/input/email-validating-input';
 import { passwordValidatingInput } from '../common/input/password-validating-input';
+import { ApiPopup } from '@/app/components/api-popup/api-popup';
 import { router } from '@/app/router';
 import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
 import { UserCache } from '@/app/utils/api/token-cache';
@@ -11,7 +11,7 @@ import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import './login.scss';
 
 class LoginComponent extends BaseComponent<HTMLDivElement> {
-  private ApiErrorPopup = ApiErrorPopup();
+  private ApiPopup = ApiPopup();
   private readonly form: BaseComponent<HTMLFormElement>;
   private readonly h2: BaseComponent<HTMLHeadingElement>;
 
@@ -57,10 +57,10 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
     }
   }
 
-  private renderErrorMessage(erroMessage: string): void {
-    this.ApiErrorPopup.appendTo(this.getElement());
-    this.ApiErrorPopup.setErrorMessage(erroMessage);
-    this.ApiErrorPopup.show();
+  private renderPopupMessage(erroMessage: string): void {
+    this.ApiPopup.appendTo(this.getElement());
+    this.ApiPopup.setErrorMessage(erroMessage);
+    this.ApiPopup.show();
   }
 
   private async onSubmit(): Promise<void> {
@@ -78,7 +78,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
         router.navigate('#/main');
       })
       .catch((error) => {
-        this.renderErrorMessage(error.body.message);
+        this.renderPopupMessage(error.body.message);
       });
   }
 
