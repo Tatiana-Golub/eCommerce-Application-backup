@@ -12,15 +12,22 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   private readonly tooltip: BaseComponent<HTMLDivElement>;
   private readonly validationPair: Map<RegExp, BaseComponent<HTMLSpanElement>> = new Map();
   private readonly onInputChangedCallback: (() => void) | null;
+  private readonly type: string;
+  private readonly placeholder: string;
 
   constructor(
     id: string = '',
     className: string = 'validating-input-component',
+    type: string,
+    placeholder: string,
     onInputChangedCalback: (() => void) | null,
   ) {
     super(Tags.DIV, id, className);
 
-    this.input = this.createInput();
+    this.type = type;
+    this.placeholder = placeholder;
+
+    this.input = this.createInput(this.type, this.placeholder);
     this.tooltip = this.createTooltip();
     this.onInputChangedCallback = onInputChangedCalback;
     this.createErrorMessages();
@@ -69,10 +76,10 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
 
   protected afterRenderInput(): void {}
 
-  private createInput(): BaseComponent<HTMLInputElement> {
-    const emailInput = createInput(undefined, 'email');
+  private createInput(type: string, placeholder: string): BaseComponent<HTMLInputElement> {
+    const emailInput = createInput(undefined, type); // 'email'
     const emailInputElement = emailInput.getElement();
-    emailInputElement.placeholder = 'Enter your e-mail';
+    emailInputElement.placeholder = placeholder; // 'Enter your e-mail'
     emailInputElement.type = InputType.TEXT;
 
     return emailInput;

@@ -1,5 +1,5 @@
 import BaseComponent from '@common-components/base-component';
-import { createButton, createForm } from '@common-components/base-component-factory';
+import { createButton, createForm, createH2 } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
 import './login.scss';
 import { ApiErrorPopup } from '@components/api-error-popup/api-error-popup';
@@ -13,6 +13,7 @@ import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 class LoginComponent extends BaseComponent<HTMLDivElement> {
   private ApiErrorPopup = ApiErrorPopup();
   private readonly form: BaseComponent<HTMLFormElement>;
+  private readonly h2: BaseComponent<HTMLHeadingElement>;
 
   private readonly emailInputComponent = emailValidatingInput(this.updateSubmitButton.bind(this));
   private readonly passwordInputComponent = passwordValidatingInput(
@@ -23,6 +24,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
   constructor(id: string = 'login-component', className: string = 'login-component') {
     super(Tags.DIV, id, className);
 
+    this.h2 = createH2(undefined, 'heading-2');
     this.form = createForm(undefined, 'login-form');
     this.submitButton = this.createSubmitButton();
 
@@ -31,6 +33,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   protected renderComponent(): void {
     this.renderForm();
+    this.renderH2();
     this.renderEmailInputComponent();
     this.renderPasswordInputComponent();
     this.renderSubmitButton();
@@ -81,6 +84,11 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   private renderForm(): void {
     this.form.appendTo(this.getElement());
+  }
+
+  private renderH2(): void {
+    this.h2.setText('Login');
+    this.h2.appendTo(this.form.getElement());
   }
 
   private renderSubmitButton(): void {

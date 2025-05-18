@@ -5,9 +5,11 @@ class EmailValidatingInput extends BaseValidatingInputComponent {
   constructor(
     id: string = 'email-input',
     className: string = 'email-input',
+    type: string,
+    placeholder: string,
     onInputChangedCallback: (() => void) | null,
   ) {
-    super(id, className, onInputChangedCallback);
+    super(id, className, type, placeholder, onInputChangedCallback);
 
     this.init();
   }
@@ -25,4 +27,10 @@ class EmailValidatingInput extends BaseValidatingInputComponent {
 export const emailValidatingInput = (
   onInputChangedCallback: (() => void) | null = null,
 ): EmailValidatingInput =>
-  new EmailValidatingInput('email-input', 'email-input', onInputChangedCallback);
+  new EmailValidatingInput(
+    'email-input',
+    'email-input',
+    'email',
+    'Enter your e-mail',
+    onInputChangedCallback,
+  );

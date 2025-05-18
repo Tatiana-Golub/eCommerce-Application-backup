@@ -12,9 +12,11 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
   constructor(
     id: string = 'password-input',
     className: string = 'password-input',
+    type: string,
+    placeholder: string,
     onInputChangedCallback: (() => void) | null,
   ) {
-    super(id, className, onInputChangedCallback);
+    super(id, className, type, placeholder, onInputChangedCallback);
 
     this.passwordControl = this.createPasswordControl();
     this.init();
@@ -64,4 +66,10 @@ class PasswordValidatingInput extends BaseValidatingInputComponent {
 export const passwordValidatingInput = (
   onInputChangedCallback: (() => void) | null = null,
 ): PasswordValidatingInput =>
-  new PasswordValidatingInput('password-input', 'password-input', onInputChangedCallback);
+  new PasswordValidatingInput(
+    'password-input',
+    'password-input',
+    'password',
+    'Enter your password',
+    onInputChangedCallback,
+  );
