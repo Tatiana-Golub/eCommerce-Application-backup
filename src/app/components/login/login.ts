@@ -32,8 +32,8 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected renderComponent(): void {
-    this.renderForm();
     this.renderH2();
+    this.renderForm();
     this.renderEmailInputComponent();
     this.renderPasswordInputComponent();
     this.renderSubmitButton();
@@ -88,7 +88,7 @@ class LoginComponent extends BaseComponent<HTMLDivElement> {
 
   private renderH2(): void {
     this.h2.setText('Login');
-    this.h2.appendTo(this.form.getElement());
+    this.h2.appendTo(this.getElement());
   }
 
   private renderSubmitButton(): void {
