@@ -6,7 +6,7 @@
 
   &::backdrop {
     backdrop-filter: blur(0.7rem);
-    transition-duration: var(--transition-duration);
+    transition-duration: var(--medium-speed);
     transition-property: backdrop-filter;
   }
 

@@ -33,26 +33,30 @@
 
     @media screen and (width <= 610px) {
       gap: 0.5rem;
-      padding: 3vw 4.5vw 3vw 4vw;
+      padding: 2vh 4.5vw 2vh 4vw;
     }
   }
 
   @media screen and (width <= 610px) {
+    scrollbar-width: none;
+
     position: fixed;
-    z-index: 5;
+    z-index: 20;
     top: 0;
-    right: -80%;
+    right: -100%;
     transform: translateX(0);
 
+    overflow-y: auto;
     flex-direction: column;
     gap: 4.57vh;
     align-items: center;
     justify-content: center;
 
-    width: 80svw;
+    width: 100svw;
     height: 100svh;
 
-    background-color: var(--blue-85);
+    background-color: var(--blue-70);
+    backdrop-filter: blur(0.7rem);
 
     transition: transform ease-in-out 0.4s;
   }
