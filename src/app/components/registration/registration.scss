@@ -23,9 +23,12 @@ body {
       width: 100%;
       max-width: 400px;
       max-height: 70vh;
-      padding: 3rem;
-      border: 1px solid black;
-      border-radius: 10px;
+      padding: 1rem 1rem 1.5rem;
+      border: none;
+      border-radius: 1rem;
+
+      background: linear-gradient(transparent, transparent 30%, var(--blue-40) 70%);
+      box-shadow: 0 0 1rem 0 var(--white);
 
       .shipping-address-component,
       .billing-address-component {
@@ -33,15 +36,27 @@ body {
         flex-direction: column;
         gap: 1.5rem;
 
-        .country-select-component {
-          width: 100%;
-          margin-top: 5px;
-          padding: 10px;
-          border: 1px solid #999;
-          border-radius: 5px;
+        /* Styles for Select and Option were here */
 
-          font-size: 16px;
-          line-height: normal;
+        .country-select-component {
+          cursor: pointer;
+
+          width: 100%;
+          height: 2rem;
+          margin-top: 0.3rem;
+          padding: 0;
+          border: none;
+          border-radius: 1rem;
+
+          font-family: Genshin, serif;
+          font-size: 1rem;
+          line-height: 2.5rem;
+          color: var(--cosmos);
+          text-indent: 0.7rem;
+          text-shadow: none;
+
+          background: var(--beige);
+          box-shadow: 0 0 0.7rem 0 var(--white);
         }
       }
 
@@ -67,15 +82,20 @@ body {
         .street,
         .city {
           width: 100%;
-          height: 1rem;
-          margin-top: 5px;
-          padding: 15px 0;
-          border: 1px solid #999;
-          border-radius: 5px;
+          height: 2rem;
+          margin-top: 0.3rem;
+          padding: 0;
+          border: none;
+          border-radius: 1rem;
 
-          font-size: 16px;
-          line-height: 40px;
-          text-indent: 10px;
+          font-family: Genshin, serif;
+          font-size: 1rem;
+          line-height: 2.5rem;
+          color: var(--cosmos);
+          text-indent: 0.7rem;
+
+          background: var(--beige);
+          box-shadow: 0 0 0.7rem 0 var(--white);
 
           &.password {
             padding-right: 35px;
@@ -83,39 +103,47 @@ body {
         }
 
         .password-control {
+          cursor: pointer;
+
           position: absolute;
-          top: 30px;
-          right: 6px;
+          top: 1.9rem;
+          right: 0;
 
           display: inline-block;
 
-          width: 20px;
-          height: 20px;
+          width: 2rem;
+          height: 1.5rem;
+          padding: 0 0.5rem 0 0.3rem;
+          border-radius: 0 1rem 1rem 0;
+
+          background-color: var(--beige);
         }
 
         .tooltip {
           position: absolute;
           z-index: 10;
           top: 110%;
+          right: 0;
           left: 0;
 
           display: flex;
           flex-direction: column;
 
-          padding: 6px 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+          padding: 0.2rem;
+          border: none;
+          border-radius: 0.3rem;
 
-          font-size: 8.5px;
+          font-size: 0.5rem;
+          text-shadow: none;
           white-space: wrap;
 
-          background-color: #fefefe;
-          box-shadow: 0 0 6px rgb(0 0 0 / 20%);
+          background-color: var(--beige);
+          box-shadow: 0 0 0.3rem var(--white);
 
           transition: opacity 0.2s ease;
 
           .error-message {
-            color: var(--red);
+            color: var(--dark-red);
           }
 
           &.hidden {
@@ -125,10 +153,35 @@ body {
       }
 
       .submit-button {
-        margin-top: 35px;
+        cursor: pointer;
+
+        margin-top: -1rem;
+        padding: 1rem;
+        border: none;
+        border-radius: 1rem;
+
         font-size: 1rem;
         color: var(--beige);
-        background-color: transparent;
+        text-shadow: 0 0 0.5rem var(--cosmos);
+
+        background-color: var(--transparent-white-15);
+        box-shadow: 0 0 0.7rem 0 var(--white);
+
+        transition:
+          color ease-in-out 0.4s,
+          background-color ease-in-out 0.4s,
+          box-shadow ease-in-out 0.4s;
+
+        &:hover {
+          background-color: var(--transparent-white-30);
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+          color: var(--transparent-white-50);
+          background: var(--transparent-white-15);
+          box-shadow: 0 0 0.2rem 0 var(--white);
+        }
       }
     }
   }
