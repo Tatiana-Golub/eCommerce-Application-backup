@@ -67,6 +67,7 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
     this.main.remove();
     this.notFound.remove();
     this.login.remove();
+    this.registration.remove();
     this.placeholder.remove();
     component.appendTo(this.getElement());
     // append footer
