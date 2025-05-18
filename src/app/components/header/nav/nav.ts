@@ -55,7 +55,7 @@ class NavComponent extends BaseComponent<HTMLDivElement> {
       router.navigate('#/login');
     });
     this.registerBtn.addEventListener('click', () => {
-      router.navigate('#/register');
+      router.navigate('#/registration');
     });
     this.profileBtn.addEventListener('click', () => {
       router.navigate('#/profile');
