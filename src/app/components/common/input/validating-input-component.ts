@@ -21,8 +21,6 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   private readonly tooltip: BaseComponent<HTMLDivElement>;
   private readonly validationPair: Map<ValidatingRule, BaseComponent<HTMLSpanElement>> = new Map();
   private readonly onInputChangedCallback: (() => void) | null;
-  private readonly type: string;
-  private readonly placeholder: string;
 
   constructor(
     id: string = '',

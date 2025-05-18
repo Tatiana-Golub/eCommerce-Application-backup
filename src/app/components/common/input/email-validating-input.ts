@@ -8,8 +8,6 @@ export class EmailValidatingInput extends BaseValidatingInputComponent {
   constructor(
     id: string = 'email-input',
     className: string = 'email-input',
-    type: string,
-    placeholder: string,
     onInputChangedCallback: (() => void) | null,
     labelParameters: LabelParameters | undefined,
   ) {

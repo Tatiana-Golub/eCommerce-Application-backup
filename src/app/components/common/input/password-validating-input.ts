@@ -13,12 +13,10 @@ export class PasswordValidatingInput extends BaseValidatingInputComponent {
   constructor(
     id: string = 'password-input',
     className: string = 'password-input',
-    type: string,
-    placeholder: string,
     onInputChangedCallback: (() => void) | null,
     labelParameters: LabelParameters | undefined,
   ) {
-super(id, className, onInputChangedCallback, labelParameters);
+    super(id, className, onInputChangedCallback, labelParameters);
 
     this.passwordControl = this.createPasswordControl();
     this.init();
