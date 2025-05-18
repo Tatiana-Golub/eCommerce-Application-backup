@@ -42,7 +42,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   private renderLogoDiv(): void {
     this.logoDiv.appendTo(this.getElement());
     this.logoImg.appendTo(this.logoDiv.getElement());
-    this.logoImg.setAttribute('src', '/assets/favicon/favicon.ico');
+    this.logoImg.setAttribute('src', './assets/favicon/favicon.ico');
     this.logoImg.setAttribute('alt', 'Logo');
     this.h2.appendTo(this.logoDiv.getElement());
     this.h2.setText('Fantasy Store');
