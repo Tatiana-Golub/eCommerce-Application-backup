@@ -1,6 +1,7 @@
 import BaseComponent from '@common-components/base-component';
 import { createSpan } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
+import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import './burger-button.scss';
 
 class BurgerButton extends BaseComponent<HTMLDivElement> {
@@ -21,7 +22,9 @@ class BurgerButton extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    return;
+    this.addEventListener('click', () => {
+      PublishSubscriber().publish('toggleBurger', {});
+    });
   }
 }
 
