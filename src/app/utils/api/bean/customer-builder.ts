@@ -24,6 +24,11 @@ class CustomerBuilderUtility {
     return this;
   }
 
+  public withPassword(password: string): this {
+    this.customer = { ...this.customer, password };
+    return this;
+  }
+
   public withVersion(version: number): this {
     this.customer = { ...this.customer, version };
     return this;
@@ -49,6 +54,11 @@ class CustomerBuilderUtility {
     return this;
   }
 
+  public withDateOfBirth(date: string): this {
+    this.customer = { ...this.customer, dateOfBirth: date };
+    return this;
+  }
+
   public withAddresses(addresses: Address[]): this {
     this.customer = { ...this.customer, addresses };
     return this;
@@ -71,6 +81,20 @@ class CustomerBuilderUtility {
 
   public withCustomFields(custom: CustomFields): this {
     this.customer = { ...this.customer, custom };
+    return this;
+  }
+
+  public withDefaultShippingAddressId(id: string | undefined): this {
+    if (id) {
+      this.customer = { ...this.customer, defaultShippingAddressId: id };
+    }
+    return this;
+  }
+
+  public withDefaultBillingAddressId(id: string | undefined): this {
+    if (id) {
+      this.customer = { ...this.customer, defaultBillingAddressId: id };
+    }
     return this;
   }
 

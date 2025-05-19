@@ -12,7 +12,6 @@ export class StreetValidatingInput extends BaseValidatingInputComponent {
     labelParameters: LabelParameters | undefined,
   ) {
     super(id, className, onInputChangedCallback, labelParameters);
-
     this.init();
   }
 

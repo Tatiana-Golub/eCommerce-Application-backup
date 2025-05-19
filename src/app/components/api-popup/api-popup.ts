@@ -1,29 +1,23 @@
 import BaseComponent from '@common-components/base-component';
-import {
-  createButton,
-  createDiv,
-  createH1,
-  createH2,
-  createP,
-  createSpan,
-} from '@common-components/base-component-factory';
+import { createButton, createDiv, createP } from '@common-components/base-component-factory';
 import { Tags } from '@common-components/tags';
-import './api-error-popup.scss';
+import './api-popup.scss';
 
-class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
+class ApiPopupComponent extends BaseComponent<HTMLDialogElement> {
   private readonly container: BaseComponent<HTMLDivElement>;
   private readonly message: BaseComponent<HTMLParagraphElement>;
   private readonly closeButton: BaseComponent<HTMLButtonElement>;
-  private erroMessage: string;
+  private messageText: string;
+  private onCloseCallback?: () => void;
 
   constructor(
     id: string = 'api-error-popup-component',
     className: string = 'api-error-popup-component',
-    erroMessage: string = 'data not found',
+    messageText: string = 'data not found',
   ) {
     super(Tags.DIALOG, id, className);
 
-    this.erroMessage = erroMessage;
+    this.messageText = messageText;
     this.container = createDiv('', 'container');
     this.message = createP(undefined, 'message');
     this.closeButton = createButton(undefined, 'close-button');
@@ -31,13 +25,17 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
     this.init();
   }
 
-  public setErrorMessage(erroMessage: string): void {
-    this.erroMessage = erroMessage;
-    this.message.setText(this.erroMessage);
+  public setErrorMessage(messageText: string): void {
+    this.messageText = messageText;
+    this.message.setText(this.messageText);
   }
 
   public show(): void {
     this.getElement().showModal();
+  }
+
+  public onClose(callback: () => void): void {
+    this.onCloseCallback = callback;
   }
 
   protected renderComponent(): void {
@@ -55,6 +53,9 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
   private close(): void {
     this.getElement().close();
     this.remove();
+    if (this.onCloseCallback) {
+      this.onCloseCallback();
+    }
   }
 
   private renderContainer(): void {
@@ -63,7 +64,7 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
 
   private renderMessage(): void {
     this.message.appendTo(this.container.getElement());
-    this.setErrorMessage(this.erroMessage);
+    this.setErrorMessage(this.messageText);
   }
 
   private renderCloseButton(): void {
@@ -94,5 +95,5 @@ class ApiErrorPopupComponent extends BaseComponent<HTMLDialogElement> {
   }
 }
 
-export const ApiErrorPopup = (erroMessage: string = 'data not found'): ApiErrorPopupComponent =>
-  new ApiErrorPopupComponent(undefined, undefined, erroMessage);
+export const ApiPopup = (erroMessage: string = 'data not found'): ApiPopupComponent =>
+  new ApiPopupComponent(undefined, undefined, erroMessage);

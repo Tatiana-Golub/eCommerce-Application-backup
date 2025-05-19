@@ -15,7 +15,7 @@ export type LabelParameters = {
 };
 
 export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDivElement> {
-  protected readonly input: BaseComponent<HTMLInputElement>;
+  public readonly input: BaseComponent<HTMLInputElement>;
   private readonly labelParams?: LabelParameters;
   private readonly label?: BaseComponent<HTMLLabelElement>;
   private readonly tooltip: BaseComponent<HTMLDivElement>;

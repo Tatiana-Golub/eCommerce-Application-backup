@@ -2,8 +2,8 @@ import { PageWrapper } from '@app/page';
 import { router } from '@app/router';
 import type BaseComponent from '@common-components/base-component';
 import { createDiv } from '@common-components/base-component-factory';
-import './app.scss';
 import { SdkApi } from './utils/api/comerce-sdk-api';
+import './app.scss';
 
 class App {
   private readonly pageWrapper = PageWrapper();
@@ -54,7 +54,11 @@ class App {
     });
 
     router.addRoute('#/registration', () => {
-      this.pageWrapper.openRegistration();
+      if (SdkApi().isLoggedIn()) {
+        router.navigate('#/main');
+      } else {
+        this.pageWrapper.openRegistration();
+      }
     });
 
     router.addRoute('#/profile', () => {

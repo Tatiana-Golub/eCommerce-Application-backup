@@ -30,17 +30,12 @@ class NavItemComponent extends BaseComponent<HTMLButtonElement> {
   }
 
   protected addEventListeners(): void {
-    /*
-    this.addEventListener('click', () => {
-      router.navigate(`#/${this.navRoute}`);
-    });
-    */
     return;
   }
 
   private renderNavItemImg(): void {
     this.navItemImg.appendTo(this.getElement());
-    this.navItemImg.setAttribute('src', `/assets/icons/${this.sourceForImg}.png`);
+    this.navItemImg.setAttribute('src', `./assets/icons/${this.sourceForImg}.png`);
     // const altText = this.id.charAt(0).toUpperCase() + this.id.slice(1);
     this.navItemImg.setAttribute('alt', this.navItemText);
   }

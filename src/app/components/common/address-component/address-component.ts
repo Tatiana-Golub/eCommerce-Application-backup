@@ -1,3 +1,4 @@
+import type { BaseAddress } from '@commercetools/platform-sdk';
 import BaseComponent from '../base-component';
 import { createDiv, createH3, createLabel } from '../base-component-factory';
 import { checkbox, type Checkbox } from '../checkbox-component';
@@ -10,10 +11,12 @@ import { streetValidatingInput } from '../input/street-validating-input';
 import { Tags } from '../tags';
 import type { CountrySelectOptionPair } from './country-select-component';
 import { CountrySelect } from './country-select-component';
+import { AddressBuilder } from '@/app/utils/api/bean/address-builder';
 
 export class AddressComponent extends BaseComponent<HTMLDivElement> {
+  private enabled: boolean = true;
   private readonly coutriesPairs: Array<CountrySelectOptionPair> = [
-    { value: 'USA', text: 'United States' },
+    { value: 'US', text: 'United States' },
   ];
 
   private readonly header: BaseComponent<HTMLHeadingElement>;
@@ -35,6 +38,7 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     onInputChangedCallback: (() => void) | null = null,
   ) {
     super(Tags.DIV, id, className);
+    this.onInputChangedCallback = onInputChangedCallback;
 
     this.header = this.createHeader(headerText);
     this.streetInput = this.createStreetInput();
@@ -45,9 +49,42 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.countrySelect = this.createCountrySelect();
     this.checkBox = this.createCheckBox(checkboxText);
 
-    this.onInputChangedCallback = onInputChangedCallback;
-
     this.init();
+  }
+
+  public setEnabled(flag: boolean): void {
+    this.enabled = flag;
+  }
+
+  public isEnabled(): boolean {
+    return this.enabled;
+  }
+
+  public isChecked(): boolean {
+    return this.checkBox.isChecked();
+  }
+
+  public hasValidValues(): boolean {
+    return (
+      this.streetInput.getInputValue() !== '' &&
+      this.streetInput.isValid() &&
+      this.cityInput.getInputValue() !== '' &&
+      this.cityInput.isValid() &&
+      this.postalCodeInput.getInputValue() !== '' &&
+      this.postalCodeInput.isValid() &&
+      this.countrySelect.getValue() !== ''
+    );
+  }
+
+  public getAddress(): BaseAddress {
+    const address = AddressBuilder()
+      .withKey(crypto.randomUUID())
+      .withStreetName(this.streetInput.getInputValue())
+      .withCity(this.cityInput.getInputValue())
+      .withPostalCode(this.postalCodeInput.getInputValue())
+      .withCountry(this.countrySelect.getValue())
+      .build();
+    return address;
   }
 
   protected renderComponent(): void {
@@ -61,7 +98,42 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.checkBox.appendTo(this.getElement());
   }
 
-  protected addEventListeners(): void {}
+  protected addEventListeners(): void {
+    // this.addStreetInputEventListener();
+    // this.addCityInputEventListener();
+    // this.addPostalCodeInputEventListener();
+    // this.addCountrySelectEventListener();
+  }
+
+  // private callCallback(): void {
+  //   if (this.hasValidValues()) {
+  //     this.onInputChangedCallback?.();
+  //   }
+  // }
+
+  // private addStreetInputEventListener(): void {
+  //   this.streetInput.input.addEventListener('input', () => {
+  //     this.callCallback();
+  //   });
+  // }
+
+  // private addCityInputEventListener(): void {
+  //   this.cityInput.input.addEventListener('input', () => {
+  //     this.callCallback();
+  //   });
+  // }
+
+  // private addPostalCodeInputEventListener(): void {
+  //   this.postalCodeInput.input.addEventListener('input', () => {
+  //     this.callCallback();
+  //   });
+  // }
+
+  // private addCountrySelectEventListener(): void {
+  //   this.countrySelect.addEventListener('select', () => {
+  //     this.callCallback();
+  //   });
+  // }
 
   private createHeader(text: string): BaseComponent<HTMLHeadingElement> {
     const header = createH3();
