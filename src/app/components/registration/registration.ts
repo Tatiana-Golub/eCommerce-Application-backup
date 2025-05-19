@@ -19,7 +19,7 @@ import { passwordValidatingInput } from '../common/input/password-validating-inp
 import { Tags } from '../common/tags';
 import { router } from '@/app/router';
 import { CustomerBuilder } from '@/app/utils/api/bean/customer-builder';
-import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
+import { SdkApi } from '@/app/utils/api/commerce-sdk-api';
 import { UserCache } from '@/app/utils/api/token-cache';
 import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import './registration.scss';

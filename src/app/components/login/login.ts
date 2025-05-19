@@ -5,7 +5,7 @@ import { emailValidatingInput } from '../common/input/email-validating-input';
 import { passwordValidatingInput } from '../common/input/password-validating-input';
 import { ApiPopup } from '@/app/components/api-popup/api-popup';
 import { router } from '@/app/router';
-import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
+import { SdkApi } from '@/app/utils/api/commerce-sdk-api';
 import { UserCache } from '@/app/utils/api/token-cache';
 import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import './login.scss';

@@ -99,46 +99,12 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    // this.addStreetInputEventListener();
-    // this.addCityInputEventListener();
-    // this.addPostalCodeInputEventListener();
-    // this.addCountrySelectEventListener();
+    return;
   }
-
-  // private callCallback(): void {
-  //   if (this.hasValidValues()) {
-  //     this.onInputChangedCallback?.();
-  //   }
-  // }
-
-  // private addStreetInputEventListener(): void {
-  //   this.streetInput.input.addEventListener('input', () => {
-  //     this.callCallback();
-  //   });
-  // }
-
-  // private addCityInputEventListener(): void {
-  //   this.cityInput.input.addEventListener('input', () => {
-  //     this.callCallback();
-  //   });
-  // }
-
-  // private addPostalCodeInputEventListener(): void {
-  //   this.postalCodeInput.input.addEventListener('input', () => {
-  //     this.callCallback();
-  //   });
-  // }
-
-  // private addCountrySelectEventListener(): void {
-  //   this.countrySelect.addEventListener('select', () => {
-  //     this.callCallback();
-  //   });
-  // }
 
   private createHeader(text: string): BaseComponent<HTMLHeadingElement> {
     const header = createH3();
     header.setText(text);
-
     return header;
   }
 

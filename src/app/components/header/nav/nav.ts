@@ -3,7 +3,7 @@ import BaseComponent from '@common-components/base-component';
 import { Tags } from '@common-components/tags';
 import { NavItem } from './nav-item/nav-item';
 import './nav.scss';
-import { SdkApi } from '@/app/utils/api/comerce-sdk-api';
+import { SdkApi } from '@/app/utils/api/commerce-sdk-api';
 import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 
 class NavComponent extends BaseComponent<HTMLDivElement> {
@@ -71,7 +71,6 @@ class NavComponent extends BaseComponent<HTMLDivElement> {
 
   private addLoginEventListener(): void {
     PublishSubscriber().subscribe('userLoggedIn', (payload) => {
-      console.log(payload);
       this.renderLoginLogout(true);
     });
   }

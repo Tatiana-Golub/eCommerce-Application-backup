@@ -2,7 +2,7 @@ import { PageWrapper } from '@app/page';
 import { router } from '@app/router';
 import type BaseComponent from '@common-components/base-component';
 import { createDiv } from '@common-components/base-component-factory';
-import { SdkApi } from './utils/api/comerce-sdk-api';
+import { SdkApi } from './utils/api/commerce-sdk-api';
 import './app.scss';
 
 class App {
