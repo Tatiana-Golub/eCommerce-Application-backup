@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: Genshin;
-  src: url('/assets/fonts/Genshin-Font.ttf');
+  src: url('/assets/fonts/Genshin-Impact-Font.ttf');
 }
 
 * {
@@ -28,8 +28,9 @@
   text-shadow: 0 0 0.5rem var(--cosmos);
 
   background-color: var(--blue);
-  background-image: url('/assets/backgrounds/cosmos.png');
+  background-image: url('/assets/backgrounds/cosmos-min.png');
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-position: center;
   background-size: cover;
 
