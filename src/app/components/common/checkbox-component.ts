@@ -46,7 +46,7 @@ export class Checkbox extends BaseComponent<HTMLDivElement> {
     return input;
   }
 
-  private createLabel(text: string): BaseComponent<HTMLSpanElement> {
+  private createLabel(text: string): BaseComponent<HTMLLabelElement> {
     const label = createLabel(undefined, 'address-checkbox-text');
     label.setText(text);
     return label;
