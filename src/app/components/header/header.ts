@@ -29,6 +29,11 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.burgerButton.getElement().classList.toggle('crossed');
   }
 
+  public hideBurgerMenu(): void {
+    this.navContainer.removeClass('side-menu');
+    this.burgerButton.removeClass('crossed');
+  }
+
   protected renderComponent(): void {
     this.renderLogoDiv();
     this.renderNav();
@@ -66,6 +71,9 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   private addEventListenerBurgerMenu(): void {
     PublishSubscriber().subscribe('toggleBurger', () => {
       this.toggleBurgerMenu();
+    });
+    PublishSubscriber().subscribe('hideBurger', () => {
+      this.hideBurgerMenu();
     });
   }
 }
