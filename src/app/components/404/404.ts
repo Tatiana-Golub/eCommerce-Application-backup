@@ -35,11 +35,7 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
     this.h2.setText('Page Not Found!');
   }
 
-  private addEventListenerHeading1(): void {
-    this.h1.addEventListener('click', () => {
-      console.log('Error Clicked');
-    });
-  }
+  private addEventListenerHeading1(): void {}
 }
 
 export const NotFound = (): NotFoundComponent => new NotFoundComponent();
