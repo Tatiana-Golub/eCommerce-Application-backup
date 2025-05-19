@@ -87,10 +87,13 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
   private addUseSameAddressListener(): void {
     this.useAsBillingCheckbox.addEventListener('change', () => {
       if (this.useAsBillingCheckbox.isChecked()) {
+        this.billingAddress.setEnabled(false);
         this.billingAddress.addClass('hidden');
       } else {
+        this.billingAddress.setEnabled(true);
         this.billingAddress.removeClass('hidden');
       }
+      this.updateSignUpButton();
     });
   }
 
@@ -100,10 +103,18 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     const validateFirstNameResults = this.firstNameInput.isValid();
     const validateLastNameResults = this.lastNameInput.isValid();
     const validateDateResults = this.dateInput.isValid();
-    const validateAddressResults = this.shippingAddress.hasValidValues();
-    let validateBillingAddressResults = true;
-    if (!this.useAsBillingCheckbox.isChecked()) {
-      validateBillingAddressResults = this.billingAddress.hasValidValues();
+    const validateAddressResults = this.shippingAddress.isEnabled()
+      ? this.shippingAddress.hasValidValues()
+      : true;
+
+    let validateBillingAddressResults;
+    if (this.useAsBillingCheckbox.isChecked()) {
+      validateBillingAddressResults = true;
+    } else {
+      validateBillingAddressResults = true;
+      validateBillingAddressResults = this.billingAddress.isEnabled()
+        ? this.billingAddress.hasValidValues()
+        : true;
     }
 
     const isValid =
@@ -127,9 +138,9 @@ class RegistrationComponent extends BaseComponent<HTMLDivElement> {
     this.h2.appendTo(this.getElement());
   }
 
-  private renderPopupMessage(erroMessage: string, callback?: () => void): void {
+  private renderPopupMessage(message: string, callback?: () => void): void {
     this.ApiPopup.appendTo(this.getElement());
-    this.ApiPopup.setErrorMessage(erroMessage);
+    this.ApiPopup.setErrorMessage(message);
     if (callback) this.ApiPopup.onClose(callback);
     this.ApiPopup.show();
   }

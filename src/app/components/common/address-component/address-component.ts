@@ -14,6 +14,7 @@ import { CountrySelect } from './country-select-component';
 import { AddressBuilder } from '@/app/utils/api/bean/address-builder';
 
 export class AddressComponent extends BaseComponent<HTMLDivElement> {
+  private enabled: boolean = true;
   private readonly coutriesPairs: Array<CountrySelectOptionPair> = [
     { value: 'US', text: 'United States' },
   ];
@@ -37,6 +38,7 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     onInputChangedCallback: (() => void) | null = null,
   ) {
     super(Tags.DIV, id, className);
+    this.onInputChangedCallback = onInputChangedCallback;
 
     this.header = this.createHeader(headerText);
     this.streetInput = this.createStreetInput();
@@ -47,9 +49,15 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.countrySelect = this.createCountrySelect();
     this.checkBox = this.createCheckBox(checkboxText);
 
-    this.onInputChangedCallback = onInputChangedCallback;
-
     this.init();
+  }
+
+  public setEnabled(flag: boolean): void {
+    this.enabled = flag;
+  }
+
+  public isEnabled(): boolean {
+    return this.enabled;
   }
 
   public isChecked(): boolean {
@@ -90,7 +98,42 @@ export class AddressComponent extends BaseComponent<HTMLDivElement> {
     this.checkBox.appendTo(this.getElement());
   }
 
-  protected addEventListeners(): void {}
+  protected addEventListeners(): void {
+    // this.addStreetInputEventListener();
+    // this.addCityInputEventListener();
+    // this.addPostalCodeInputEventListener();
+    // this.addCountrySelectEventListener();
+  }
+
+  // private callCallback(): void {
+  //   if (this.hasValidValues()) {
+  //     this.onInputChangedCallback?.();
+  //   }
+  // }
+
+  // private addStreetInputEventListener(): void {
+  //   this.streetInput.input.addEventListener('input', () => {
+  //     this.callCallback();
+  //   });
+  // }
+
+  // private addCityInputEventListener(): void {
+  //   this.cityInput.input.addEventListener('input', () => {
+  //     this.callCallback();
+  //   });
+  // }
+
+  // private addPostalCodeInputEventListener(): void {
+  //   this.postalCodeInput.input.addEventListener('input', () => {
+  //     this.callCallback();
+  //   });
+  // }
+
+  // private addCountrySelectEventListener(): void {
+  //   this.countrySelect.addEventListener('select', () => {
+  //     this.callCallback();
+  //   });
+  // }
 
   private createHeader(text: string): BaseComponent<HTMLHeadingElement> {
     const header = createH3();

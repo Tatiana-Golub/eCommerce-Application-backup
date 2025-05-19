@@ -44,7 +44,11 @@ class CommerceSdkApi {
           dateOfBirth: customer.dateOfBirth,
           addresses: customer.addresses,
           defaultShippingAddress: customer.defaultShippingAddressId ? 0 : undefined,
-          defaultBillingAddress: customer.defaultBillingAddressId ? 1 : undefined,
+          defaultBillingAddress: customer.defaultBillingAddressId
+            ? customer.addresses.length > 1
+              ? 1
+              : 0
+            : undefined,
         },
       })
       .execute();
