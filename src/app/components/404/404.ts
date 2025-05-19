@@ -22,7 +22,7 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    this.addEventListenerHeading1();
+    return;
   }
 
   private renderHeading1(): void {
@@ -34,8 +34,6 @@ class NotFoundComponent extends BaseComponent<HTMLDivElement> {
     this.h2.appendTo(this.getElement());
     this.h2.setText('Page Not Found!');
   }
-
-  private addEventListenerHeading1(): void {}
 }
 
 export const NotFound = (): NotFoundComponent => new NotFoundComponent();
