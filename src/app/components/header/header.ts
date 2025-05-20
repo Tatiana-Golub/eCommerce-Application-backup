@@ -43,6 +43,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   protected addEventListeners(): void {
     this.addEventListenerLogoDiv();
     this.addEventListenerBurgerMenu();
+    this.addEventListenerNav();
   }
 
   private renderLogoDiv(): void {
@@ -74,6 +75,12 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     });
     PublishSubscriber().subscribe('hideBurger', () => {
       this.hideBurgerMenu();
+    });
+  }
+
+  private addEventListenerNav(): void {
+    this.navContainer.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
     });
   }
 }
