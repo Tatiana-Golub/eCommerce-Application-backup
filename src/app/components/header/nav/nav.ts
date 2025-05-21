@@ -40,29 +40,37 @@ class NavComponent extends BaseComponent<HTMLDivElement> {
 
   protected addEventListeners(): void {
     this.homeBtn.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/main');
     });
     this.storeBtn.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/store');
     });
     this.aboutUsBtn.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/about-us');
     });
     this.cartBtn.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/cart');
     });
     this.loginBtn.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/login');
     });
     this.registerBtn.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/registration');
     });
     this.profileBtn.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/profile');
     });
     this.logoutBtn.addEventListener('click', () => {
       SdkApi().logoutUser();
       this.renderLoginLogout(SdkApi().isLoggedIn());
+      PublishSubscriber().publish('hideBurger', {});
       router.navigate('#/main');
     });
 

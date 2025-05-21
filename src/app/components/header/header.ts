@@ -4,6 +4,7 @@ import { createDiv, createH2, createImg } from '@common-components/base-componen
 import { Tags } from '@common-components/tags';
 import { Burger } from './burger-button/burger-button';
 import { Nav } from './nav/nav';
+import { PublishSubscriber } from '@/app/utils/event-bus/event-bus';
 import './header.scss';
 
 class HeaderComponent extends BaseComponent<HTMLDivElement> {
@@ -28,6 +29,11 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
     this.burgerButton.getElement().classList.toggle('crossed');
   }
 
+  public hideBurgerMenu(): void {
+    this.navContainer.removeClass('side-menu');
+    this.burgerButton.removeClass('crossed');
+  }
+
   protected renderComponent(): void {
     this.renderLogoDiv();
     this.renderNav();
@@ -37,6 +43,7 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   protected addEventListeners(): void {
     this.addEventListenerLogoDiv();
     this.addEventListenerBurgerMenu();
+    this.addEventListenerNav();
   }
 
   private renderLogoDiv(): void {
@@ -63,8 +70,17 @@ class HeaderComponent extends BaseComponent<HTMLDivElement> {
   }
 
   private addEventListenerBurgerMenu(): void {
-    this.addEventListener('click', () => {
+    PublishSubscriber().subscribe('toggleBurger', () => {
       this.toggleBurgerMenu();
+    });
+    PublishSubscriber().subscribe('hideBurger', () => {
+      this.hideBurgerMenu();
+    });
+  }
+
+  private addEventListenerNav(): void {
+    this.navContainer.addEventListener('click', () => {
+      PublishSubscriber().publish('hideBurger', {});
     });
   }
 }

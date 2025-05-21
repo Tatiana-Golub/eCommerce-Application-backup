@@ -4,7 +4,7 @@
   justify-content: flex-end;
 
   &.side-menu {
-    @media screen and (width <= 610px) {
+    @media screen and (width <= 630px) {
       transform: translateX(-100%);
     }
   }
@@ -19,25 +19,25 @@
 
   .nav-item {
     .heading-3 {
-      @media screen and (width <= 610px) {
+      @media screen and (width <= 630px) {
         font-size: 1.5rem;
       }
     }
 
     .nav-icon {
-      @media screen and (width <= 610px) {
+      @media screen and (width <= 630px) {
         width: 2rem;
         height: 2rem;
       }
     }
 
-    @media screen and (width <= 610px) {
+    @media screen and (width <= 630px) {
       gap: 0.5rem;
       padding: 2vh 4.5vw 2vh 4vw;
     }
   }
 
-  @media screen and (width <= 610px) {
+  @media screen and (width <= 630px) {
     scrollbar-width: none;
 
     position: fixed;
