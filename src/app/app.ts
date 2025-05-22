@@ -66,7 +66,7 @@ class App {
     });
 
     router.addRoute('*', () => {
-      router.navigate('#/not-found');
+      this.pageWrapper.openNotFound();
     });
   }
 }
