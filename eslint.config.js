@@ -49,7 +49,8 @@ export default tseslintConfig.config([
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       'unicorn/prefer-string-replace-all': 'warn',
-      'unicorn/no-null': 'off',
+      'unicorn/no-nested-ternary': 'warn',
+      'unicorn/no-null': 'warn',
       indent: ['error', 2, { SwitchCase: 1 }],
       quotes: ['error', 'single'],
       semi: ['error', 'always'],
@@ -79,6 +80,7 @@ export default tseslintConfig.config([
       '**/eslint.config.js',
       '**/vite.config.ts',
       '**/base-component.ts',
+      '**/coverage/**',
     ],
   },
 ]);

@@ -1,15 +1,17 @@
 :root {
-  --transition-duration: 0.25s;
-  --color-lime: #0f0;
-  --color-primary-50: #e6f4f4;
-  --color-primary-100: #cce8e8;
-  --color-primary-200: #99d1d1;
-  --color-primary-300: #66baba;
-  --color-primary-400: #33a3a3;
-  --color-primary-500: #008c8c;
-  --color-primary-600: #007070;
-  --color-primary-700: #005454;
-  --color-primary-800: #003838;
-  --color-primary-900: #001c1c;
-  --color-primary-1000: #f00;
+  --beige: rgb(255 238 204 / 100%); /* #FFEECC */
+  --white: rgb(255 255 255 / 100%);
+  --blue: rgb(10 20 90 / 100%);
+  --blue-40: rgb(10 20 90 / 40%);
+  --blue-70: rgb(10 20 90 / 70%);
+  --blue-85: rgb(10 20 90 / 85%);
+  --cosmos: rgb(20 0 50 / 100%);
+  --cosmos-70: rgb(20 0 50 / 70%);
+  --cosmos-85: rgb(20 0 50 / 85%);
+  --transparent-white-15: rgb(230 240 240 / 15%);
+  --transparent-white-30: rgb(230 240 240 / 30%);
+  --transparent-white-50: rgb(230 240 240 / 50%);
+  --red: rgb(255 0 0 / 100%);
+  --dark-red: rgb(200 22 22);
+  --medium-speed: 0.4s;
 }

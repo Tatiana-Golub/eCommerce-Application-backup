@@ -73,6 +73,20 @@ export default abstract class BaseComponent<T extends HTMLElement> {
     });
   }
 
+  public addClass(className: string): void {
+    if (!this.element.classList.contains(className)) this.element.classList.add(className);
+  }
+
+  public addClasses(classesNames: Array<string>): void {
+    for (const className of classesNames) {
+      if (!this.element.classList.contains(className)) this.element.classList.add(className);
+    }
+  }
+
+  public removeClass(className: string): void {
+    this.element.classList.remove(className);
+  }
+
   private setAttributes(): void {
     if (this.id) {
       this.element.id = this.id;

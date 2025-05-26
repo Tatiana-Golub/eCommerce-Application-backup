@@ -2,6 +2,7 @@ import { PageWrapper } from '@app/page';
 import { router } from '@app/router';
 import type BaseComponent from '@common-components/base-component';
 import { createDiv } from '@common-components/base-component-factory';
+import { SdkApi } from './utils/api/commerce-sdk-api';
 import './app.scss';
 
 class App {
@@ -21,14 +22,50 @@ class App {
 
   public setupRoutes(): void {
     router.addRoute('#/', () => {
-      this.pageWrapper.openNotFound();
+      router.navigate('#/main');
     });
 
     router.addRoute('#/main', () => {
-      this.pageWrapper.openNotFound();
+      this.pageWrapper.openMain();
     });
 
     router.addRoute('#/not-found', () => {
+      this.pageWrapper.openNotFound();
+    });
+
+    router.addRoute('#/store', () => {
+      this.pageWrapper.openStore();
+    });
+
+    router.addRoute('#/about-us', () => {
+      this.pageWrapper.openAboutUs();
+    });
+
+    router.addRoute('#/cart', () => {
+      this.pageWrapper.openCart();
+    });
+
+    router.addRoute('#/login', () => {
+      if (SdkApi().isLoggedIn()) {
+        router.navigate('#/main');
+      } else {
+        this.pageWrapper.openLogin();
+      }
+    });
+
+    router.addRoute('#/registration', () => {
+      if (SdkApi().isLoggedIn()) {
+        router.navigate('#/main');
+      } else {
+        this.pageWrapper.openRegistration();
+      }
+    });
+
+    router.addRoute('#/profile', () => {
+      this.pageWrapper.openProfile();
+    });
+
+    router.addRoute('*', () => {
       this.pageWrapper.openNotFound();
     });
   }

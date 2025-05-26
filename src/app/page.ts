@@ -1,11 +1,20 @@
 import BaseComponent from '@common-components/base-component';
 import { Tags } from '@common-components/tags';
 import { NotFound } from '@components/404/404';
+import { Header } from './components/header/header';
+import { Login } from './components/login/login';
+import { Main } from './components/main/main';
+import { Registration } from './components/registration/registration';
+import { PlaceholderPage } from './components/under-construction/under-construction';
 import './page.scss';
 
-// TODO: Clean up comments in this component
 export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
   private readonly notFound = NotFound();
+  private readonly main = Main();
+  private readonly header = Header();
+  private readonly login = Login();
+  private readonly registration = Registration();
+  private readonly placeholder = PlaceholderPage();
 
   constructor(id: string = 'page-wrapper-component', className: string = 'page-wrapper-component') {
     super(Tags.DIV, id, className);
@@ -13,27 +22,56 @@ export class PageWrapperComponent extends BaseComponent<HTMLDivElement> {
     this.init();
   }
 
-  /**
-   * On-demand open for routings in App.ts.
-   * Adds the notFound component to the page wrapper container.
-   */
   public openNotFound(): void {
-    this.notFound.appendTo(this.getElement());
+    this.renderAllComponentsExcept(this.notFound);
+  }
+
+  public openMain(): void {
+    this.renderAllComponentsExcept(this.main);
+  }
+
+  public openStore(): void {
+    this.renderAllComponentsExcept(this.placeholder);
+  }
+
+  public openAboutUs(): void {
+    this.renderAllComponentsExcept(this.placeholder);
+  }
+
+  public openCart(): void {
+    this.renderAllComponentsExcept(this.placeholder);
+  }
+
+  public openLogin(): void {
+    this.renderAllComponentsExcept(this.login);
+  }
+
+  public openRegistration(): void {
+    this.renderAllComponentsExcept(this.registration);
+  }
+
+  public openProfile(): void {
+    this.renderAllComponentsExcept(this.placeholder);
   }
 
   protected renderComponent(): void {
-    // If we need by default load component during rendering PageWrapperComponent
-    this.renderNotFoundComponent();
+    this.openMain();
   }
 
   protected addEventListeners(): void {
     return;
   }
 
-  private renderNotFoundComponent(): void {
-    console.log('openNotFound');
-    console.log(this.notFound);
-    this.notFound.appendTo(this.getElement());
+  private renderAllComponentsExcept(component: BaseComponent<HTMLDivElement>): void {
+    this.header.appendTo(this.getElement());
+    this.main.remove();
+    this.registration.remove();
+    this.notFound.remove();
+    this.login.remove();
+    this.registration.remove();
+    this.placeholder.remove();
+    component.appendTo(this.getElement());
+    // append footer
   }
 }
 

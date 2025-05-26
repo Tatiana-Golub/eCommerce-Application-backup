@@ -1,0 +1,14 @@
+.main-component {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  padding-top: 3rem;
+
+  .under-construction {
+    padding: 5rem 0 0;
+  }
+}
