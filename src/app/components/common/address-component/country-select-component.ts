@@ -25,6 +25,10 @@ export class CountrySelect extends BaseComponent<HTMLSelectElement> {
     this.init();
   }
 
+  public setActive(state: boolean): void {
+    this.getElement().disabled = !state;
+  }
+
   public getValue(): string {
     return this.getElement().value || '';
   }
