@@ -21,12 +21,12 @@ export abstract class BaseValidatingInputComponent extends BaseComponent<HTMLDiv
   private readonly label?: BaseComponent<HTMLLabelElement>;
   private readonly tooltip: BaseComponent<HTMLDivElement>;
   private readonly validationPair: Map<ValidatingRule, BaseComponent<HTMLSpanElement>> = new Map();
-  private readonly onInputChangedCallback: (() => void) | null;
+  private readonly onInputChangedCallback: (() => void) | undefined;
 
   constructor(
     id: string = '',
     className: string = 'validating-input-component',
-    onInputChangedCallback: (() => void) | null,
+    onInputChangedCallback: (() => void) | undefined,
     labelParameters: LabelParameters | undefined,
   ) {
     super(Tags.DIV, id, className);

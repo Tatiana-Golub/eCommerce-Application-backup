@@ -5,7 +5,7 @@ export class RadioButton extends BaseChoiceComponent {
   constructor(
     id: string = '',
     className: string = '',
-    onChangedCallback: (() => void) | null,
+    onChangedCallback: (() => void) | undefined,
     inputName: string,
     labelText: string,
     labelClass: string,
@@ -21,7 +21,7 @@ export class RadioButton extends BaseChoiceComponent {
 export const radioButton = (
   id: string = '',
   className: string = 'radio-button-component',
-  onChangedCallback: (() => void) | null,
+  onChangedCallback: (() => void) | undefined,
   inputName: string,
   labelText: string = '',
   labelClass: string = 'address-radio-button-text',

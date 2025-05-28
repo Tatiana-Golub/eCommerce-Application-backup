@@ -6,12 +6,12 @@ export abstract class BaseChoiceComponent extends BaseComponent<HTMLDivElement> 
   protected readonly input: BaseComponent<HTMLInputElement>;
   private readonly label: BaseComponent<HTMLSpanElement>;
 
-  private readonly onChangedCallback: (() => void) | null;
+  private readonly onChangedCallback: (() => void) | undefined;
 
   constructor(
     id: string = '',
     className: string = '',
-    onChangedCallback: (() => void) | null,
+    onChangedCallback: (() => void) | undefined,
     labelText: string,
     labelClass: string,
     inputType: string,

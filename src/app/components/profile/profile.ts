@@ -35,18 +35,8 @@ class ProfileComponent extends BaseComponent<HTMLDivElement> {
     this.addressWrapper = createDiv(undefined, 'address-wrapper');
     this.addAddressButton = this.createAddAddressButton();
 
-    this.address1 = profileAddressComponent(
-      undefined,
-      'profile-address-component',
-      'Address',
-      null,
-    );
-    this.address2 = profileAddressComponent(
-      undefined,
-      'profile-address-component',
-      'Address',
-      null,
-    );
+    this.address1 = profileAddressComponent(undefined, 'profile-address-component', 'Address');
+    this.address2 = profileAddressComponent(undefined, 'profile-address-component', 'Address');
 
     this.setAddresses();
 

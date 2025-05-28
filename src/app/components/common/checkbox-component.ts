@@ -5,7 +5,7 @@ export class Checkbox extends BaseChoiceComponent {
   constructor(
     id: string = '',
     className: string = '',
-    onChangedCallback: (() => void) | null,
+    onChangedCallback: (() => void) | undefined,
     labelText: string,
     labelClass: string,
     inputClass: string,
@@ -19,7 +19,7 @@ export class Checkbox extends BaseChoiceComponent {
 export const checkbox = (
   id: string = '',
   className: string = 'checkbox-component',
-  onChangedCallback: (() => void) | null,
+  onChangedCallback: (() => void) | undefined,
   checkboxText: string = '',
   labelClass: string = 'address-checkbox-text',
   inputClass: string = 'address-checkbox-input',

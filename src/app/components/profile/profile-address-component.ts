@@ -43,13 +43,13 @@ export class ProfileAddressComponent extends BaseComponent<HTMLDivElement> {
   private readonly saveButton: BaseComponent<HTMLButtonElement>;
   private readonly deleteButton: BaseComponent<HTMLButtonElement>;
 
-  private readonly onInputChangedCallback: (() => void) | null;
+  private readonly onInputChangedCallback: (() => void) | undefined;
 
   constructor(
     id: string = 'profile-address-component',
     className: string = 'profile-address-component',
     headerText: string,
-    onInputChangedCallback: (() => void) | null = null,
+    onInputChangedCallback: (() => void) | undefined,
   ) {
     super(Tags.DIV, id, className);
     this.onInputChangedCallback = onInputChangedCallback;
@@ -211,11 +211,11 @@ export class ProfileAddressComponent extends BaseComponent<HTMLDivElement> {
   }
 
   private createShippingRadio(): RadioButton {
-    return radioButton(undefined, 'address-radio', null, 'shipping', 'Default Shipping');
+    return radioButton(undefined, 'address-radio', undefined, 'shipping', 'Default Shipping');
   }
 
   private createBillingRadio(): RadioButton {
-    return radioButton(undefined, 'address-radio', null, 'billing', 'Default Billing');
+    return radioButton(undefined, 'address-radio', undefined, 'billing', 'Default Billing');
   }
 
   private createButtonsContainer(): BaseComponent<HTMLDivElement> {
@@ -248,6 +248,6 @@ export const profileAddressComponent = (
   id: string = 'profile-address-component',
   className: string = 'profile-address-component',
   headerText: string,
-  onInputChangedCallback: (() => void) | null = null,
+  onInputChangedCallback: (() => void) | undefined = undefined,
 ): ProfileAddressComponent =>
   new ProfileAddressComponent(id, className, headerText, onInputChangedCallback);
