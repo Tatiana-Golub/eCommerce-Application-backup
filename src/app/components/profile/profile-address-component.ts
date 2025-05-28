@@ -19,6 +19,10 @@ import type { RadioButton } from '../common/radio-button-component';
 import { radioButton } from '../common/radio-button-component';
 import { AddressBuilder } from '@/app/utils/api/bean/address-builder';
 
+const Classes = {
+  HIDDEN: 'hidden',
+};
+
 export class ProfileAddressComponent extends BaseComponent<HTMLDivElement> {
   private readonly coutriesPairs: Array<CountrySelectOptionPair> = [
     { value: 'US', text: 'United States' },
@@ -78,10 +82,16 @@ export class ProfileAddressComponent extends BaseComponent<HTMLDivElement> {
 
   public setEditable(): void {
     this.setActive(true);
+
+    this.editButton.addClass(Classes.HIDDEN);
+    this.saveButton.removeClass(Classes.HIDDEN);
   }
 
   public setUneditable(): void {
     this.setActive(false);
+
+    this.editButton.removeClass(Classes.HIDDEN);
+    this.saveButton.addClass(Classes.HIDDEN);
   }
 
   public setActive(state: boolean): void {
@@ -136,20 +146,17 @@ export class ProfileAddressComponent extends BaseComponent<HTMLDivElement> {
   }
 
   protected addEventListeners(): void {
-    this.saveButton.addEventListener('click', (event) => {
-      event.preventDefault();
+    this.saveButton.addEventListener('click', () => {
       this.setUneditable();
       console.log('save button clicked');
     });
 
-    this.editButton.addEventListener('click', (event) => {
-      event.preventDefault();
+    this.editButton.addEventListener('click', () => {
       this.setEditable();
       console.log('edit button clicked');
     });
 
-    this.deleteButton.addEventListener('click', (event) => {
-      event.preventDefault();
+    this.deleteButton.addEventListener('click', () => {
       console.log('delete button clicked');
     });
   }
