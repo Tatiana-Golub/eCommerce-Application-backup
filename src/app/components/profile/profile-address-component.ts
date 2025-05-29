@@ -13,10 +13,10 @@ import type { PostalCodeValidatingInput } from '@app/components/common/input/pos
 import { postalCodeValidatingInput } from '@app/components/common/input/postal-code-validating-input';
 import type { StreetValidatingInput } from '@app/components/common/input/street-validating-input';
 import { streetValidatingInput } from '@app/components/common/input/street-validating-input';
+import type { RadioButton } from '@app/components/common/radio-button-component';
+import { radioButton } from '@app/components/common/radio-button-component';
 import { Tags } from '@app/components/common/tags';
 import type { BaseAddress } from '@commercetools/platform-sdk';
-import type { RadioButton } from '../common/radio-button-component';
-import { radioButton } from '../common/radio-button-component';
 import { AddressBuilder } from '@/app/utils/api/bean/address-builder';
 
 const Classes = {
